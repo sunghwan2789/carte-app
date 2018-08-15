@@ -1,12 +1,8 @@
 import * as React from 'react';
-import { IconButton, Typography } from '@material-ui/core';
-import { ChevronLeft, ChevronRight } from '@material-ui/icons';
+import { Typography } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import * as dayjs from 'dayjs';
-import { reaction, action } from 'mobx';
-import { observer, inject } from 'mobx-react';
-import DateState from '../stores/DateState';
-import { DateNavigationStore } from '../stores/dateNavigationStore';
+import { observer } from 'mobx-react';
 
 const styles = createStyles({
   date: {

@@ -1,4 +1,27 @@
-import DateNavigation from '../models/DateNavigation';
+import { observable, action } from "mobx";
+import * as dayjs from "dayjs";
 
-export default new DateNavigation();
-export type DateNavigationStore = DateNavigation;
+export class DateNavigationStore {
+  @observable
+  currentDate: dayjs.Dayjs = dayjs();
+
+  @observable
+  navigationUnit: dayjs.UnitType = "day";
+
+  @action
+  forward() {
+    this.navigate(1);
+  }
+
+  @action
+  backward() {
+    this.navigate(-1);
+  }
+
+  @action
+  private navigate(amount: number) {
+    this.currentDate = this.currentDate.add(amount, this.navigationUnit);
+  }
+};
+
+export default new DateNavigationStore();

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { DateNavigationStore } from '../stores/dateNavigationStore';
 import Navigator from '../components/Navigator';
-import { action } from 'mobx';
 import NavigateButtons from '../components/NavigateButtons';
 import NavigateUnitSelect from '../components/NavigateUnitSelect';
 import * as dayjs from 'dayjs';
