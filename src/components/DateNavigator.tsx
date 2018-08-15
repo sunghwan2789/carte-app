@@ -3,6 +3,9 @@ import { IconButton, Typography } from '@material-ui/core';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import * as dayjs from 'dayjs';
+import { reaction, action } from 'mobx';
+import { observer } from 'mobx-react';
+import DateState from '../stores/DateState';
 
 const styles = createStyles({
   navigator: {
@@ -15,43 +18,27 @@ const styles = createStyles({
   },
 });
 
-interface IProps extends WithStyles<typeof styles> {}
+interface IProps extends WithStyles<typeof styles> {
+  dateState: DateState;
+  navigationUnit: dayjs.UnitType;
+}
 
-interface IState {
-  viewingDate: dayjs.Dayjs,
-};
-
-export default withStyles(styles)(class extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      viewingDate: dayjs()
-    };
-  }
-
+@observer
+class DateNavigator extends React.Component<IProps> {
+  @action
   handlePrevious = () => {
-    const { viewingDate } = this.state;
-    this.setState({
-      ...this.state,
-      // TODO: UnitType도 state로 관리
-      // 일간/주간/월간 식단
-      viewingDate: viewingDate.add(-1, 'day'),
-    })
+    const { dateState, navigationUnit } = this.props;
+    dateState.currentDate = dateState.currentDate.add(-1, navigationUnit);
   }
 
+  @action
   handleNext = () => {
-    const { viewingDate } = this.state;
-    this.setState({
-      ...this.state,
-      // TODO: UnitType도 state로 관리
-      // 일간/주간/월간 식단
-      viewingDate: viewingDate.add(1, 'day'),
-    })
+    const { dateState, navigationUnit } = this.props;
+    dateState.currentDate = dateState.currentDate.add(1, navigationUnit);
   }
 
   render() {
-    const { classes } = this.props;
-    const { viewingDate } = this.state;
+    const { classes, dateState } = this.props;
 
     return (
       <React.Fragment>
@@ -64,9 +51,11 @@ export default withStyles(styles)(class extends React.Component<IProps, IState> 
           <ChevronRight />
         </IconButton>
         <Typography variant="title" className={classes.date}>
-          {viewingDate.format('YYYY년 M월 D일')}
+          {dateState.currentDate.format('YYYY년 M월 D일')}
         </Typography>
       </React.Fragment>
     );
   }
-});
+}
+
+export default withStyles(styles)(DateNavigator);

@@ -5,17 +5,22 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles, createStyles, Theme } from '@material-ui/core';
 import DateNavigator from './DateNavigator';
+import DateState from '../stores/DateState';
+import { observable } from 'mobx';
 
 const styles = (theme: Theme) => createStyles({
   appBarSpacer: theme.mixins.toolbar,
 });
+
+
+const dateState = new DateState();
 
 const App = withStyles(styles)(({ classes }) =>
   <React.Fragment>
     <CssBaseline />
     <AppBar position="fixed">
       <Toolbar disableGutters>
-        <DateNavigator />
+        <DateNavigator dateState={dateState} navigationUnit="day" />
       </Toolbar>
     </AppBar>
     <main>
