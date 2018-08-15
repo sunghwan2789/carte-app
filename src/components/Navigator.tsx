@@ -9,11 +9,6 @@ import DateState from '../stores/DateState';
 import { DateNavigationStore } from '../stores/dateNavigationStore';
 
 const styles = createStyles({
-  navigator: {
-    width: 32,
-    height: 32,
-    color: "inherit",
-  },
   date: {
     color: "inherit",
   },
@@ -21,8 +16,6 @@ const styles = createStyles({
 
 interface IProps extends WithStyles<typeof styles> {
   currentDate: dayjs.Dayjs;
-  handleBackward?: () => void;
-  handleForward?: () => void;
 }
 
 @observer
@@ -31,19 +24,9 @@ class Navigator extends React.Component<IProps> {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
-        <IconButton className={classes.navigator}
-          onClick={this.props.handleBackward}>
-          <ChevronLeft />
-        </IconButton>
-        <IconButton className={classes.navigator}
-          onClick={this.props.handleForward}>
-          <ChevronRight />
-        </IconButton>
-        <Typography variant="title" className={classes.date}>
-          {this.props.currentDate.format('YYYY년 M월 D일')}
-        </Typography>
-      </React.Fragment>
+      <Typography variant="title" className={classes.date}>
+        {this.props.currentDate.format('YYYY년 M월 D일')}
+      </Typography>
     );
   }
 }
