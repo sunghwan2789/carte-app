@@ -20,45 +20,28 @@ const styles = createStyles({
 });
 
 interface IProps extends WithStyles<typeof styles> {
+  currentDate: dayjs.Dayjs;
+  handleBackward?: () => void;
+  handleForward?: () => void;
 }
 
-interface IPropsInjected extends IProps {
-  dateNavigationStore: DateNavigationStore;
-}
-
-@inject('dateNavigationStore')
 @observer
 class Navigator extends React.Component<IProps> {
-  @action
-  handlePrevious = () => {
-    this.injected.dateNavigationStore.backward();
-  }
-
-  @action
-  handleNext = () => {
-    this.injected.dateNavigationStore.forward();
-  }
-
-  get injected() {
-    return this.props as IPropsInjected;
-  }
-
   render() {
     const { classes } = this.props;
-    const { dateNavigationStore } = this.injected;
 
     return (
       <React.Fragment>
         <IconButton className={classes.navigator}
-          onClick={this.handlePrevious}>
+          onClick={this.props.handleBackward}>
           <ChevronLeft />
         </IconButton>
         <IconButton className={classes.navigator}
-          onClick={this.handleNext}>
+          onClick={this.props.handleForward}>
           <ChevronRight />
         </IconButton>
         <Typography variant="title" className={classes.date}>
-          {dateNavigationStore.currentDate.format('YYYY년 M월 D일')}
+          {this.props.currentDate.format('YYYY년 M월 D일')}
         </Typography>
       </React.Fragment>
     );

@@ -7,6 +7,7 @@ import { withStyles, createStyles, Theme } from '@material-ui/core';
 import Navigator from './Navigator';
 import DateState from '../stores/DateState';
 import { observable } from 'mobx';
+import NavigatorContainer from '../containers/NavigatorContainer';
 
 const styles = (theme: Theme) => createStyles({
   appBarSpacer: theme.mixins.toolbar,
@@ -17,7 +18,7 @@ const App = withStyles(styles)(({ classes }) =>
     <CssBaseline />
     <AppBar position="fixed">
       <Toolbar disableGutters>
-        <Navigator />
+        <NavigatorContainer />
       </Toolbar>
     </AppBar>
     <main>
