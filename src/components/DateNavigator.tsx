@@ -17,12 +17,19 @@ const styles = createStyles({
 
 interface IProps extends WithStyles<typeof styles> {}
 
-export default withStyles(styles)(class extends React.Component<IProps> {
-  state = {
-    viewingDate: dayjs(),
+interface IState {
+  viewingDate: dayjs.Dayjs,
+};
+
+export default withStyles(styles)(class extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      viewingDate: dayjs()
+    };
   }
 
-  handlePrevious() {
+  handlePrevious = () => {
     const { viewingDate } = this.state;
     this.setState({
       ...this.state,
@@ -32,7 +39,7 @@ export default withStyles(styles)(class extends React.Component<IProps> {
     })
   }
 
-  handleNext() {
+  handleNext = () => {
     const { viewingDate } = this.state;
     this.setState({
       ...this.state,
@@ -49,11 +56,11 @@ export default withStyles(styles)(class extends React.Component<IProps> {
     return (
       <React.Fragment>
         <IconButton className={classes.navigator}
-          onClick={() => this.handlePrevious()}>
+          onClick={this.handlePrevious}>
           <ChevronLeft />
         </IconButton>
         <IconButton className={classes.navigator}
-          onClick={() => this.handleNext()}>
+          onClick={this.handleNext}>
           <ChevronRight />
         </IconButton>
         <Typography variant="title" className={classes.date}>
