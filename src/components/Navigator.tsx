@@ -28,7 +28,7 @@ interface IPropsInjected extends IProps {
 
 @inject('dateNavigationStore')
 @observer
-class DateNavigator extends React.Component<IProps> {
+class Navigator extends React.Component<IProps> {
   @action
   handlePrevious = () => {
     this.injected.dateNavigationStore.backward();
@@ -65,4 +65,4 @@ class DateNavigator extends React.Component<IProps> {
   }
 }
 
-export default withStyles(styles)(DateNavigator);
+export default withStyles(styles)(Navigator);

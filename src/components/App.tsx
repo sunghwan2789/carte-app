@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles, createStyles, Theme } from '@material-ui/core';
-import DateNavigator from './DateNavigator';
+import Navigator from './Navigator';
 import DateState from '../stores/DateState';
 import { observable } from 'mobx';
 
@@ -17,7 +17,7 @@ const App = withStyles(styles)(({ classes }) =>
     <CssBaseline />
     <AppBar position="fixed">
       <Toolbar disableGutters>
-        <DateNavigator />
+        <Navigator />
       </Toolbar>
     </AppBar>
     <main>
