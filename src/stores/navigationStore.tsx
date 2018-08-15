@@ -1,7 +1,7 @@
 import { observable, action } from "mobx";
 import * as dayjs from "dayjs";
 
-export class DateNavigationStore {
+export class NavigationStore {
   @observable
   currentDate: dayjs.Dayjs = dayjs();
 
@@ -24,4 +24,4 @@ export class DateNavigationStore {
   }
 };
 
-export default new DateNavigationStore();
+export default new NavigationStore();

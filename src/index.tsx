@@ -3,10 +3,10 @@ import * as ReactDOM from 'react-dom';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'mobx-react';
-import dateNavigationStore from './stores/dateNavigationStore';
+import navigationStore from './stores/navigationStore';
 
 const stores = {
-  dateNavigationStore,
+  navigationStore,
 }
 
 ReactDOM.render(

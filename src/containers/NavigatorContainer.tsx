@@ -1,28 +1,28 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { DateNavigationStore } from '../stores/dateNavigationStore';
+import { NavigationStore } from '../stores/navigationStore';
 import Navigator from '../components/Navigator';
 import NavigateButtons from '../components/NavigateButtons';
 import NavigateUnitSelect from '../components/NavigateUnitSelect';
 import * as dayjs from 'dayjs';
 
 interface IPropsInjected {
-  dateNavigationStore: DateNavigationStore;
+  navigationStore: NavigationStore;
 }
 
-@inject('dateNavigationStore')
+@inject('navigationStore')
 @observer
 class NavigatorContainer extends React.Component {
   handleBackward = () => {
-    this.injected.dateNavigationStore.backward();
+    this.injected.navigationStore.backward();
   }
 
   handleForward = () => {
-    this.injected.dateNavigationStore.forward();
+    this.injected.navigationStore.forward();
   }
 
   handleUnitChange = (unit: dayjs.UnitType) => {
-    this.injected.dateNavigationStore.navigationUnit = unit;
+    this.injected.navigationStore.navigationUnit = unit;
   }
 
   get injected() {
@@ -30,7 +30,7 @@ class NavigatorContainer extends React.Component {
   }
 
   render() {
-    const { dateNavigationStore: store } = this.injected;
+    const { navigationStore: store } = this.injected;
 
     return (
       <React.Fragment>
