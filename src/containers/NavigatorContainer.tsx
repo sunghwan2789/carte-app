@@ -4,6 +4,8 @@ import { DateNavigationStore } from '../stores/dateNavigationStore';
 import Navigator from '../components/Navigator';
 import { action } from 'mobx';
 import NavigateButtons from '../components/NavigateButtons';
+import NavigateUnitSelect from '../components/NavigateUnitSelect';
+import * as dayjs from 'dayjs';
 
 interface IPropsInjected {
   dateNavigationStore: DateNavigationStore;
@@ -20,19 +22,26 @@ class NavigatorContainer extends React.Component {
     this.injected.dateNavigationStore.forward();
   }
 
+  handleUnitChange = (unit: dayjs.UnitType) => {
+    this.injected.dateNavigationStore.navigationUnit = unit;
+  }
+
   get injected() {
     return this.props as IPropsInjected;
   }
 
   render() {
-    const { dateNavigationStore } = this.injected;
+    const { dateNavigationStore: store } = this.injected;
 
     return (
       <React.Fragment>
         <NavigateButtons
           handleBackward={this.handleBackward}
           handleForward={this.handleForward} />
-        <Navigator currentDate={dateNavigationStore.currentDate} />
+        <Navigator currentDate={store.currentDate} />
+        <NavigateUnitSelect
+          navigateUnit={store.navigationUnit}
+          handleChange={this.handleUnitChange} />
       </React.Fragment>
     );
   }
