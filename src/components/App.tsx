@@ -12,15 +12,12 @@ const styles = (theme: Theme) => createStyles({
   appBarSpacer: theme.mixins.toolbar,
 });
 
-
-const dateState = new DateState();
-
 const App = withStyles(styles)(({ classes }) =>
   <React.Fragment>
     <CssBaseline />
     <AppBar position="fixed">
       <Toolbar disableGutters>
-        <DateNavigator dateState={dateState} navigationUnit="day" />
+        <DateNavigator />
       </Toolbar>
     </AppBar>
     <main>
