@@ -16,16 +16,38 @@ const styles = createStyles({
 
 interface IProps extends WithStyles<typeof styles> {
   currentDate: dayjs.Dayjs;
+  navigateUnit: dayjs.UnitType;
 }
 
 @observer
 class Navigator extends React.Component<IProps> {
+
+  getWeekNumberOfMonth() {
+    const { currentDate } = this.props;
+    const startDateOfStartWeekOfMonth = currentDate.startOf('month').startOf('week');
+    return currentDate.diff(startDateOfStartWeekOfMonth, 'week') + 1;
+  }
+
+  formatDate() {
+    const { navigateUnit, currentDate } = this.props;
+
+    switch (navigateUnit) {
+      case 'day':
+        return currentDate.format('YYYY년 M월 D일');
+      case 'week':
+        return `${currentDate.format('YYYY년 M월')} ${this.getWeekNumberOfMonth()}주`;
+      case 'month':
+        return currentDate.format('YYYY년 M월');
+    }
+    return '';
+  }
+
   render() {
     const { classes } = this.props;
 
     return (
       <Typography variant="title" className={classes.date}>
-        {this.props.currentDate.format('YYYY년 M월 D일')}
+        {this.formatDate()}
       </Typography>
     );
   }

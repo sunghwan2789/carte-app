@@ -38,7 +38,7 @@ class NavigatorContainer extends React.Component {
         <NavigateButtons
           handleBackward={this.handleBackward}
           handleForward={this.handleForward} />
-        <Navigator currentDate={store.currentDate} />
+        <Navigator currentDate={store.currentDate} navigateUnit={store.navigationUnit} />
         <NavigateUnitSelect
           navigateUnit={store.navigationUnit}
           handleChange={this.handleUnitChange} />
