@@ -1,28 +1,15 @@
 import * as React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import { withStyles, createStyles, Theme } from '@material-ui/core';
-import NavigatorContainer from '../containers/NavigatorContainer';
+import { CssBaseline } from '@material-ui/core';
+import { Switch, Route } from 'react-router';
+import { HashRouter } from 'react-router-dom';
+import CartePage from './CartePage';
 
-const styles = (theme: Theme) => createStyles({
-  appBarSpacer: theme.mixins.toolbar,
-});
-
-const App = withStyles(styles)(({ classes }) =>
+export default () =>
+<HashRouter>
   <React.Fragment>
     <CssBaseline />
-    <AppBar position="fixed">
-      <Toolbar disableGutters>
-        <NavigatorContainer />
-      </Toolbar>
-    </AppBar>
-    <main>
-      <div className={classes.appBarSpacer}></div>
-      <Button variant="contained" color="primary">OK</Button>
-    </main>
+    <Switch>
+      <Route path="/" component={CartePage} />
+    </Switch>
   </React.Fragment>
-);
-
-export default App;
+</HashRouter>;
