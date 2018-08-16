@@ -7,15 +7,25 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import ListItemLink from './ListItemLink';
 import ListItemNavLink from './ListItemNavLink';
+import { UnitType } from 'dayjs';
+import { inject, observer } from 'mobx-react';
+import { NavigationStore } from '../stores/navigationStore';
+import { action } from 'mobx';
 
 interface IProps extends RouteComponentProps<any> {
 
+}
+
+interface IPropsInjected extends IProps {
+  navigationStore: NavigationStore;
 }
 
 interface IState {
   isDrawerOpened: boolean;
 }
 
+@inject('navigationStore')
+@observer
 class CartePage extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -24,11 +34,20 @@ class CartePage extends React.Component<IProps, IState> {
     };
   }
 
+  get injected() {
+    return this.props as IPropsInjected;
+  }
+
   toggleDrawer = () => {
     this.setState({
       ...this.state,
       isDrawerOpened: !this.state.isDrawerOpened,
     });
+  }
+
+  @action
+  handleUnitChange = (newUnit: UnitType) => {
+    this.injected.navigationStore.navigationUnit = newUnit;
   }
 
   render() {
@@ -59,19 +78,19 @@ class CartePage extends React.Component<IProps, IState> {
               <ListItemText primary="울산강남고등학교" secondary="울산 팔등로" />
             </ListItem>
             <Divider />
-            <ListItem button>
+            <ListItem onClick={() => this.handleUnitChange('day')} button>
               <ListItemIcon>
                 <ViewDay />
               </ListItemIcon>
               <ListItemText primary="일간" />
             </ListItem>
-            <ListItem button>
+            <ListItem onClick={() => this.handleUnitChange('week')} button>
               <ListItemIcon>
                 <ViewWeek />
               </ListItemIcon>
               <ListItemText primary="주간" />
             </ListItem>
-            <ListItem button>
+            <ListItem onClick={() => this.handleUnitChange('month')} button>
               <ListItemIcon>
                 <ViewModule />
               </ListItemIcon>

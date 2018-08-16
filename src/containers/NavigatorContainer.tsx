@@ -38,9 +38,6 @@ class NavigatorContainer extends React.Component {
           handleBackward={this.handleBackward}
           handleForward={this.handleForward} />
         <Navigator currentDate={store.currentDate} navigateUnit={store.navigationUnit} />
-        <NavigateUnitSelect
-          navigateUnit={store.navigationUnit}
-          handleChange={this.handleUnitChange} />
       </React.Fragment>
     );
   }
