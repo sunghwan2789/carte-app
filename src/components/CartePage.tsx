@@ -59,24 +59,24 @@ class CartePage extends React.Component<IProps, IState> {
               <ListItemText primary="울산강남고등학교" secondary="울산 팔등로" />
             </ListItem>
             <Divider />
-            <ListItemNavLink button to="/day" activeClassName="__________">
-                <ListItemIcon>
-                  <ViewDay />
-                </ListItemIcon>
-                <ListItemText primary="일간" />
-            </ListItemNavLink>
-            <ListItemNavLink button to="/week" activeClassName="__________">
+            <ListItem button>
+              <ListItemIcon>
+                <ViewDay />
+              </ListItemIcon>
+              <ListItemText primary="일간" />
+            </ListItem>
+            <ListItem button>
               <ListItemIcon>
                 <ViewWeek />
               </ListItemIcon>
               <ListItemText primary="주간" />
-            </ListItemNavLink>
-            <ListItemNavLink button to="/month" activeClassName="__________">
+            </ListItem>
+            <ListItem button>
               <ListItemIcon>
                 <ViewModule />
               </ListItemIcon>
               <ListItemText primary="월간" />
-            </ListItemNavLink>
+            </ListItem>
             <Divider />
             <ListItemLink button to="/highlights">
               <ListItemIcon>
