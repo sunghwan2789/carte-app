@@ -11,6 +11,7 @@ import { UnitType } from 'dayjs';
 import { inject, observer } from 'mobx-react';
 import navigationStore from '../stores/navigationStore';
 import { action, observable } from 'mobx';
+import schoolsStore from '../stores/schoolsStore';
 
 const styles = (theme: Theme) => createStyles({
 
@@ -62,9 +63,20 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
                 </Grid>
               </Grid>
             </ListSubheader>
-            <ListItem>
-              <ListItemText primary="울산강남고등학교" secondary="울산 팔등로" />
-            </ListItem>
+            {
+              typeof schoolsStore.selectedSchool !== 'undefined'
+              ? (
+                <ListItem>
+                  <ListItemText
+                    primary={schoolsStore.selectedSchool.name}
+                    secondary={schoolsStore.selectedSchool.address} />
+                </ListItem>
+              ) : (
+                <ListItem>
+                  <ListItemText primary="선택 안함" />
+                </ListItem>
+              )
+            }
             <Divider />
             <ListItem button onClick={() => this.handleUnitChange('day')}>
               <ListItemIcon>
