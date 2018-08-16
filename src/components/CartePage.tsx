@@ -10,7 +10,7 @@ import ListItemNavLink from './ListItemNavLink';
 import { UnitType } from 'dayjs';
 import { inject, observer } from 'mobx-react';
 import { NavigationStore } from '../stores/navigationStore';
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 
 interface IProps extends RouteComponentProps<any> {
 
@@ -20,29 +20,19 @@ interface IPropsInjected extends IProps {
   navigationStore: NavigationStore;
 }
 
-interface IState {
-  isDrawerOpened: boolean;
-}
-
 @inject('navigationStore')
 @observer
-class CartePage extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      isDrawerOpened: true,
-    };
-  }
+class CartePage extends React.Component<IProps> {
+  @observable
+  isDrawerOpened: boolean = true;
 
   get injected() {
     return this.props as IPropsInjected;
   }
 
+  @action
   toggleDrawer = () => {
-    this.setState({
-      ...this.state,
-      isDrawerOpened: !this.state.isDrawerOpened,
-    });
+    this.isDrawerOpened = !this.isDrawerOpened;
   }
 
   @action
@@ -64,7 +54,7 @@ class CartePage extends React.Component<IProps, IState> {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer open={this.state.isDrawerOpened} onClose={this.toggleDrawer}>
+        <Drawer open={this.isDrawerOpened} onClose={this.toggleDrawer}>
           <List component="nav">
             <ListSubheader component="div" disableSticky>
               <Grid container>
