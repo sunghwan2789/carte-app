@@ -20,7 +20,7 @@ function createLink({innerRef, ...props}: Props) {
   return <Link {...props}/>
 }
 
-export class ListItemLink extends React.PureComponent<Props> {
+export default class ListItemLink extends React.PureComponent<Props> {
   render() {
     return <ListItem {...this.props} component={createLink}/>
   }
