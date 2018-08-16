@@ -9,26 +9,17 @@ import ListItemLink from './ListItemLink';
 import ListItemNavLink from './ListItemNavLink';
 import { UnitType } from 'dayjs';
 import { inject, observer } from 'mobx-react';
-import { NavigationStore } from '../stores/navigationStore';
+import navigationStore from '../stores/navigationStore';
 import { action, observable } from 'mobx';
 
 interface IProps extends RouteComponentProps<any> {
 
 }
 
-interface IPropsInjected extends IProps {
-  navigationStore: NavigationStore;
-}
-
-@inject('navigationStore')
 @observer
 class CartePage extends React.Component<IProps> {
   @observable
   isDrawerOpened: boolean = true;
-
-  get injected() {
-    return this.props as IPropsInjected;
-  }
 
   @action
   toggleDrawer = () => {
@@ -37,7 +28,7 @@ class CartePage extends React.Component<IProps> {
 
   @action
   handleUnitChange = (newUnit: UnitType) => {
-    this.injected.navigationStore.navigationUnit = newUnit;
+    navigationStore.navigationUnit = newUnit;
   }
 
   render() {
