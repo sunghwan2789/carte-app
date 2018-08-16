@@ -4,6 +4,7 @@
     "@material-ui/icons": "^2.0.2",
     "dayjs": "^1.7.5",
     "mobx": "^5.0.3",
+    "mobx-persist": "^0.4.1",
     "mobx-react": "^5.2.5",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

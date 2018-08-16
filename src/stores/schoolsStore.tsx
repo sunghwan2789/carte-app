@@ -1,10 +1,12 @@
 import { observable } from "mobx";
 import School from "../models/School";
+import { persist, create } from 'mobx-persist';
 
 export class SchoolsStore {
   @observable
   isLoading: boolean = false;
 
+  @persist('object')
   @observable
   selectedSchool?: School;
 
@@ -15,4 +17,8 @@ export class SchoolsStore {
   schools: School[] = [];
 };
 
-export default new SchoolsStore();
+const schoolStore = new SchoolsStore();
+
+export default schoolStore;
+
+create()('carte-v1-schools', schoolStore);
