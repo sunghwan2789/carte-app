@@ -4,6 +4,7 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'mobx-react';
 import navigationStore from './stores/navigationStore';
+import { HashRouter } from 'react-router-dom';
 
 const stores = {
   navigationStore,
@@ -11,7 +12,9 @@ const stores = {
 
 ReactDOM.render(
   <Provider {...stores}>
-    <App />
+    <HashRouter>
+      <App />
+    </HashRouter>
   </Provider>,
   document.getElementById('root')
 );
