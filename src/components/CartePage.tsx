@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid } from '@material-ui/core';
+import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles } from '@material-ui/core';
 import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette } from '@material-ui/icons';
 import NavigatorContainer from '../containers/NavigatorContainer';
 import * as logo from '../../public/icon.png';
@@ -12,12 +12,12 @@ import { inject, observer } from 'mobx-react';
 import navigationStore from '../stores/navigationStore';
 import { action, observable } from 'mobx';
 
-interface IProps extends RouteComponentProps<any> {
+const styles = (theme: Theme) => createStyles({
 
-}
+});
 
 @observer
-class CartePage extends React.Component<IProps> {
+class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<typeof styles>> {
   @observable
   isDrawerOpened: boolean = true;
 
@@ -119,4 +119,4 @@ class CartePage extends React.Component<IProps> {
   }
 }
 
-export default withRouter(CartePage);
+export default withStyles(styles)(withRouter(CartePage));
