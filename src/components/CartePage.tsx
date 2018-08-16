@@ -21,9 +21,6 @@ class CartePage extends React.Component<IProps> {
   @observable
   isDrawerOpened: boolean = true;
 
-  @observable
-  navigateUrl?: string;
-
   @action
   toggleDrawer = () => {
     this.isDrawerOpened = !this.isDrawerOpened;
@@ -31,7 +28,7 @@ class CartePage extends React.Component<IProps> {
 
   @action
   handleNavigate = (url: string) => {
-    this.navigateUrl = url;
+    this.props.history.push(url);
   }
 
   @action
@@ -40,10 +37,6 @@ class CartePage extends React.Component<IProps> {
   }
 
   render() {
-    if (typeof this.navigateUrl !== 'undefined') {
-      return <Redirect push to={this.navigateUrl} />;
-    }
-
     return (
       <React.Fragment>
         <AppBar position="sticky">
