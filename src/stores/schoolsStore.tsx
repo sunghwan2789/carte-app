@@ -12,15 +12,7 @@ export class SchoolsStore {
   schoolCount: number = 0;
 
   @observable
-  schools: School[] = [
-    {
-      code: 'H100000675',
-      name: '울산강남고등학교',
-      address: '울산광역시 남구 팔등로 115',
-      courseCode: '4',
-      domainCode: 'H10',
-    },
-  ];
+  schools: School[] = [];
 };
 
 export default new SchoolsStore();

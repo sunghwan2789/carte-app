@@ -3,19 +3,41 @@ import { AppBar, Toolbar, IconButton, Typography, WithStyles, Theme, createStyle
 import { ArrowBack } from '@material-ui/icons';
 import { RouteComponentProps, withRouter } from 'react-router';
 import schoolsStore from '../stores/schoolsStore';
-import { action } from 'mobx';
+import { action, runInAction } from 'mobx';
 import School from '../models/School';
+import { observer } from 'mobx-react';
 
 const styles = (theme: Theme) => createStyles({
 
 });
 
+@observer
 class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<typeof styles>> {
 
   @action
   handleSchoolSelect = (school: School) => {
     schoolsStore.selectedSchool = school;
     this.props.history.replace('/');
+  }
+
+  @action
+  handleSearch = async (query: string) => {
+    let res = await fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
+      q: query,
+    })}`);
+    let data = await res.json();
+    let schools = data.map((i: any) => {
+      let school = new School();
+      school.code = i.Code;
+      school.name = i.Name;
+      school.address = i.Address;
+      school.courseCode = i.CourseCode;
+      school.domainCode = i.DomainCode;
+      return school;
+    });
+    runInAction(() => {
+      schoolsStore.schools = schools;
+    });
   }
 
   render() {
@@ -26,14 +48,15 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
             <IconButton onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>
-            <TextField placeholder="학교 검색" fullWidth />
+            <TextField type="search" placeholder="학교 검색" fullWidth
+              onChange={e => this.handleSearch(e.target.value)} />
           </Toolbar>
         </AppBar>
         <main>
           <List>
             {schoolsStore.schools.map(school => (
               <React.Fragment key={school.code}>
-                <ListItem onClick={() => this.handleSchoolSelect(school)}>
+                <ListItem button onClick={() => this.handleSchoolSelect(school)}>
                   <ListItemText primary={school.name} secondary={school.address} />
                 </ListItem>
                 <Divider />
