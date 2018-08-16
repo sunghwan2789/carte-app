@@ -6,6 +6,7 @@ import schoolsStore from '../stores/schoolsStore';
 import { action, runInAction } from 'mobx';
 import School from '../models/School';
 import { observer } from 'mobx-react';
+import { debounce } from 'lodash';
 
 const styles = (theme: Theme) => createStyles({
 
@@ -21,7 +22,7 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
   }
 
   @action
-  handleSearch = async (query: string) => {
+  handleSearch = debounce(async (query: string) => {
     let res = await fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
       q: query,
     })}`);
@@ -38,7 +39,7 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
     runInAction(() => {
       schoolsStore.schools = schools;
     });
-  }
+  }, 500)
 
   render() {
     return (
