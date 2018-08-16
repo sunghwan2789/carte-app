@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import * as dayjs from "dayjs";
 
 export class NavigationStore {
@@ -7,6 +7,17 @@ export class NavigationStore {
 
   @observable
   navigationUnit: dayjs.UnitType = "day";
+
+  @computed
+  get currentDates(): dayjs.Dayjs[] {
+    const startDate = this.currentDate.startOf(this.navigationUnit);
+    const endDate = this.currentDate.endOf(this.navigationUnit);
+    let dates = [];
+    for (let date = startDate; date.isBefore(endDate); date.add(1, 'day')) {
+      dates.push(date);
+    }
+    return dates;
+  }
 
   @action
   forward() {
