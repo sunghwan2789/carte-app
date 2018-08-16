@@ -22,7 +22,7 @@ class CartePage extends React.Component<IProps> {
   isDrawerOpened: boolean = true;
 
   @observable
-  redirectUrl?: string;
+  navigateUrl?: string;
 
   @action
   toggleDrawer = () => {
@@ -30,8 +30,8 @@ class CartePage extends React.Component<IProps> {
   }
 
   @action
-  redirectTo = (url: string) => {
-    this.redirectUrl = url;
+  handleNavigate = (url: string) => {
+    this.navigateUrl = url;
   }
 
   @action
@@ -40,8 +40,8 @@ class CartePage extends React.Component<IProps> {
   }
 
   render() {
-    if (typeof this.redirectUrl !== 'undefined') {
-      return <Redirect to={this.redirectUrl} />;
+    if (typeof this.navigateUrl !== 'undefined') {
+      return <Redirect push to={this.navigateUrl} />;
     }
 
     return (
@@ -63,7 +63,7 @@ class CartePage extends React.Component<IProps> {
               <Grid container>
                 <Grid item xs>학교</Grid>
                 <Grid item>
-                  <Button size="small" onClick={() => this.redirectTo('/schools')}>
+                  <Button size="small" onClick={() => this.handleNavigate('/schools')}>
                     변경
                   </Button>
                 </Grid>
@@ -92,25 +92,25 @@ class CartePage extends React.Component<IProps> {
               <ListItemText primary="월간" />
             </ListItem>
             <Divider />
-            <ListItem button onClick={() => this.redirectTo('/highlights')}>
+            <ListItem button onClick={() => this.handleNavigate('/highlights')}>
               <ListItemIcon>
                 <Star />
               </ListItemIcon>
               <ListItemText primary="하이라이트" />
             </ListItem>
-            <ListItem button onClick={() => this.redirectTo('/theme')}>
+            <ListItem button onClick={() => this.handleNavigate('/theme')}>
               <ListItemIcon>
                 <Palette />
               </ListItemIcon>
               <ListItemText primary="테마" />
             </ListItem>
-            <ListItem button onClick={() => this.redirectTo('/share')}>
+            <ListItem button onClick={() => this.handleNavigate('/share')}>
               <ListItemIcon>
                 <Share />
               </ListItemIcon>
               <ListItemText primary="공유" />
             </ListItem>
-            <ListItem button onClick={() => this.redirectTo('/help')}>
+            <ListItem button onClick={() => this.handleNavigate('/help')}>
               <ListItemIcon>
                 <Help />
               </ListItemIcon>
