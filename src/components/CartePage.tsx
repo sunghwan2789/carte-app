@@ -58,8 +58,8 @@ class CartePage extends React.Component<IProps> {
           </Toolbar>
         </AppBar>
         <Drawer open={this.isDrawerOpened} onClose={this.toggleDrawer}>
-          <List component="nav">
-            <ListSubheader component="div" disableSticky>
+          <List>
+            <ListSubheader disableSticky>
               <Grid container>
                 <Grid item xs>학교</Grid>
                 <Grid item>
@@ -69,7 +69,7 @@ class CartePage extends React.Component<IProps> {
                 </Grid>
               </Grid>
             </ListSubheader>
-            <ListItem component="div">
+            <ListItem>
               <ListItemText primary="울산강남고등학교" secondary="울산 팔등로" />
             </ListItem>
             <Divider />
