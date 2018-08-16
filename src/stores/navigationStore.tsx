@@ -1,10 +1,12 @@
 import { observable, action, computed } from "mobx";
 import * as dayjs from "dayjs";
+import { persist, create } from "mobx-persist";
 
 export class NavigationStore {
   @observable
   currentDate: dayjs.Dayjs = dayjs();
 
+  @persist
   @observable
   navigationUnit: dayjs.UnitType = "day";
 
@@ -35,4 +37,8 @@ export class NavigationStore {
   }
 };
 
-export default new NavigationStore();
+const navigationStore = new NavigationStore();
+
+export default navigationStore;
+
+create()('carte-v1-navigation', navigationStore);
