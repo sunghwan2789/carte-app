@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, L
 import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette } from '@material-ui/icons';
 import NavigatorContainer from '../containers/NavigatorContainer';
 import * as logo from '../../public/icon.png';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import ListItemLink from './ListItemLink';
 import ListItemNavLink from './ListItemNavLink';
@@ -21,9 +21,17 @@ class CartePage extends React.Component<IProps> {
   @observable
   isDrawerOpened: boolean = true;
 
+  @observable
+  redirectUrl?: string;
+
   @action
   toggleDrawer = () => {
     this.isDrawerOpened = !this.isDrawerOpened;
+  }
+
+  @action
+  redirectTo = (url: string) => {
+    this.redirectUrl = url;
   }
 
   @action
@@ -32,6 +40,10 @@ class CartePage extends React.Component<IProps> {
   }
 
   render() {
+    if (typeof this.redirectUrl !== 'undefined') {
+      return <Redirect to={this.redirectUrl} />;
+    }
+
     return (
       <React.Fragment>
         <AppBar position="sticky">
@@ -51,7 +63,9 @@ class CartePage extends React.Component<IProps> {
               <Grid container>
                 <Grid item xs>학교</Grid>
                 <Grid item>
-                  <Button size="small">변경</Button>
+                  <Button size="small" onClick={() => this.redirectTo('/schools')}>
+                    변경
+                  </Button>
                 </Grid>
               </Grid>
             </ListSubheader>
@@ -59,49 +73,49 @@ class CartePage extends React.Component<IProps> {
               <ListItemText primary="울산강남고등학교" secondary="울산 팔등로" />
             </ListItem>
             <Divider />
-            <ListItem onClick={() => this.handleUnitChange('day')} button>
+            <ListItem button onClick={() => this.handleUnitChange('day')}>
               <ListItemIcon>
                 <ViewDay />
               </ListItemIcon>
               <ListItemText primary="일간" />
             </ListItem>
-            <ListItem onClick={() => this.handleUnitChange('week')} button>
+            <ListItem button onClick={() => this.handleUnitChange('week')}>
               <ListItemIcon>
                 <ViewWeek />
               </ListItemIcon>
               <ListItemText primary="주간" />
             </ListItem>
-            <ListItem onClick={() => this.handleUnitChange('month')} button>
+            <ListItem button onClick={() => this.handleUnitChange('month')}>
               <ListItemIcon>
                 <ViewModule />
               </ListItemIcon>
               <ListItemText primary="월간" />
             </ListItem>
             <Divider />
-            <ListItemLink button to="/highlights">
+            <ListItem button onClick={() => this.redirectTo('/highlights')}>
               <ListItemIcon>
                 <Star />
               </ListItemIcon>
               <ListItemText primary="하이라이트" />
-            </ListItemLink>
-            <ListItemLink button to="/theme">
+            </ListItem>
+            <ListItem button onClick={() => this.redirectTo('/theme')}>
               <ListItemIcon>
                 <Palette />
               </ListItemIcon>
               <ListItemText primary="테마" />
-            </ListItemLink>
-            <ListItemLink button to="/share">
+            </ListItem>
+            <ListItem button onClick={() => this.redirectTo('/share')}>
               <ListItemIcon>
                 <Share />
               </ListItemIcon>
               <ListItemText primary="공유" />
-            </ListItemLink>
-            <ListItemLink button to="/help">
+            </ListItem>
+            <ListItem button onClick={() => this.redirectTo('/help')}>
               <ListItemIcon>
                 <Help />
               </ListItemIcon>
               <ListItemText primary="도움말" />
-            </ListItemLink>
+            </ListItem>
           </List>
         </Drawer>
         <main>
