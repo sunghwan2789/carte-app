@@ -5,6 +5,11 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'mobx-react';
 import navigationStore from './stores/navigationStore';
 import { HashRouter } from 'react-router-dom';
+import { configure } from 'mobx';
+
+configure({
+  enforceActions: true,
+});
 
 const stores = {
   navigationStore,
