@@ -12,7 +12,7 @@ import { UnitType, Dayjs } from 'dayjs';
 import { inject, observer } from 'mobx-react';
 import navigationStore from '../stores/navigationStore';
 import { action, observable } from 'mobx';
-import schoolsStore from '../stores/schoolsStore';
+import schoolsStore from '../stores/schoolStore';
 import CarteDay from './CarteDay';
 import carteStore from '../stores/carteStore';
 
@@ -24,6 +24,10 @@ const styles = (theme: Theme) => createStyles({
 class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<typeof styles>> {
   @observable
   isDrawerOpened: boolean = true;
+
+  componentDidMount() {
+    carteStore.loadCartes();
+  }
 
   @action
   toggleDrawer = () => {
@@ -38,6 +42,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
   @action
   handleUnitChange = (newUnit: UnitType) => {
     navigationStore.navigationUnit = newUnit;
+    carteStore.loadCartes();
   }
 
   render() {
@@ -127,7 +132,9 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
           </List>
         </Drawer>
         <main>
-          <CarteDay carte={carteStore.getCarte(dayjs())} />
+          {
+            <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />
+          }
         </main>
       </React.Fragment>
     );

@@ -11,11 +11,16 @@ const styles = createStyles({
 
 interface IProps {
   carte: Carte
+  isLoading: boolean
 }
 
 class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
   render() {
     const { classes } = this.props;
+    console.log(this.props);
+    if (this.props.isLoading) {
+      return <p>식단표 받는 중...</p>;
+    }
     return (
       <div className={classes.root}>
         {this.props.carte.meals.map(meal => (
