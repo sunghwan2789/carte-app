@@ -1,4 +1,4 @@
-import { observable, computed, reaction, action, runInAction, ObservableMap } from 'mobx';
+import { observable, computed, reaction, action, runInAction, ObservableMap, flow } from 'mobx';
 import navigationStore from './navigationStore';
 import Carte from '../models/Carte';
 import * as dayjs from 'dayjs';
@@ -9,7 +9,7 @@ import { find } from 'lodash';
 export class CarteStore {
 
   @observable
-  isLoading = true
+  isLoading: boolean = true
 
   @observable
   cartes: ObservableMap<number, Carte> = observable.map();
@@ -32,8 +32,7 @@ export class CarteStore {
     return this.cartes.get(date.unix())!;
   }
 
-  @action
-  loadCartes() {
+  loadCartes = flow(function* (this: CarteStore) {
     console.log('selectedSchool', schoolStore.selectedSchool);
     // FIXME: do not run at initialization
     if (typeof schoolStore.selectedSchool === 'undefined') {
@@ -46,20 +45,17 @@ export class CarteStore {
     const { domainCode, courseCode, code } = schoolStore.selectedSchool;
     const year = navigationStore.currentDate.year();
     const month = navigationStore.currentDate.month() + 1;
-    fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}/${year}/${month}`)
-      .then(res => res.json())
-      .then(action((data: any) => {
-        console.log('loading complete', data);
-        data.forEach((i: any) => {
-          let carte = new Carte();
-          carte.date = dayjs(i.date);
-          carte.meals = i.meals.map((j: any) => j as Meal);
-          this.cartes.set(carte.date.unix(), carte);
-        });
-        console.log('loading complete', this.cartes);
-        this.isLoading = false;
-      }));
-  }
+    let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}/${year}/${month}`);
+    let json = yield res.json();
+
+    json.forEach((i: any) => {
+      let carte = new Carte();
+      carte.date = dayjs(i.date);
+      carte.meals = i.meals.map((j: any) => j as Meal);
+      this.cartes.set(carte.date.unix(), carte);
+    });
+    this.isLoading = false;
+  })
 }
 
 let carteStore = new CarteStore();
