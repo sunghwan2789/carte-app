@@ -10,11 +10,13 @@ import * as dayjs from 'dayjs';
 import { UnitType, Dayjs } from 'dayjs';
 import { inject, observer } from 'mobx-react';
 import { action, observable } from 'mobx';
-import schoolsStore from '../stores/schoolStore';
+import schoolStore from '../stores/schoolStore';
 import CarteDay from './CarteDay';
 import carteStore from '../stores/carteStore';
 import NavigateButtons from './NavigateButtons';
 import Navigator from './Navigator';
+import School from '../models/School';
+import { isEqual } from 'lodash';
 
 const styles = (theme: Theme) => createStyles({
 
@@ -23,9 +25,9 @@ const styles = (theme: Theme) => createStyles({
 @observer
 class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<typeof styles>> {
   @observable
-  isDrawerOpened: boolean = true;
+  isDrawerOpened: boolean = false
 
-  componentDidMount() {
+  componentWillMount() {
     carteStore.loadCartes();
   }
 
@@ -47,13 +49,19 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
 
   handleBackward = () => {
     carteStore.backward();
+    carteStore.loadCartes();
   }
 
   handleForward = () => {
     carteStore.forward();
+    carteStore.loadCartes();
   }
 
   render() {
+    if (typeof schoolStore.selectedSchool === 'undefined') {
+      return <Redirect to="/schools" push />;
+    }
+
     return (
       <React.Fragment>
         <AppBar position="sticky">
@@ -83,12 +91,12 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               </Grid>
             </ListSubheader>
             {
-              typeof schoolsStore.selectedSchool !== 'undefined'
+              typeof schoolStore.selectedSchool !== 'undefined'
               ? (
                 <ListItem>
                   <ListItemText
-                    primary={schoolsStore.selectedSchool.name}
-                    secondary={schoolsStore.selectedSchool.address} />
+                    primary={schoolStore.selectedSchool.name}
+                    secondary={schoolStore.selectedSchool.address} />
                 </ListItem>
               ) : (
                 <ListItem>

@@ -17,8 +17,7 @@ interface IProps {
 class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
   render() {
     const { classes } = this.props;
-    console.log(this.props);
-    if (this.props.isLoading) {
+    if (!this.props.carte || this.props.isLoading) {
       return <p>식단표 받는 중...</p>;
     }
     return (

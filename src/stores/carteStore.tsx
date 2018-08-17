@@ -5,26 +5,27 @@ import schoolStore from './schoolStore';
 import Meal from '../models/Meal';
 import { find } from 'lodash';
 import { persist } from 'mobx-persist';
+import School from '../models/School';
+import { isEqual } from 'lodash';
 
 export class CarteStore {
   @observable
-  currentDate: dayjs.Dayjs = dayjs();
+  currentDate: dayjs.Dayjs = dayjs().startOf('day');
 
   @persist
   @observable
-  navigationUnit: dayjs.UnitType = "day";
+  navigationUnit: dayjs.UnitType = 'day';
 
   @observable
-  isLoading: boolean = true
+  isLoading: boolean = false
 
+  @persist('map')
   @observable
   cartes: ObservableMap<number, Carte> = observable.map();
 
-  constructor() {
-    // FIXME: MOVE THIS TO CARTE_PAGE
-    reaction(() => schoolStore.selectedSchool, () => {
-      this.cartes.clear();
-    });
+  @action
+  clear() {
+    this.cartes.clear();
   }
 
   @action
@@ -52,7 +53,6 @@ export class CarteStore {
     return dates;
   }
 
-  @computed
   get currentCartes(): Carte[] {
     // FIXME: ERROR AFTER MONTH CHANGE
     console.log('currentCartes', this.cartes);
@@ -63,17 +63,30 @@ export class CarteStore {
     return this.cartes.get(date.unix())!;
   }
 
+
+  @persist('object')
+  private previousSchool?: School
+
   loadCartes = flow(function* (this: CarteStore) {
-    console.log('selectedSchool', schoolStore.selectedSchool);
-    // FIXME: do not run at initialization
-    if (typeof schoolStore.selectedSchool === 'undefined') {
+    const school = schoolStore.selectedSchool;
+
+    if (!isEqual(this.previousSchool, school)) {
+      this.clear();
+      this.previousSchool = school;
+    }
+
+    if (typeof school === 'undefined') {
       return;
     }
-    console.log('loadCartes', schoolStore.selectedSchool.code);
+
+    // TODO: IMPLEMENT FORCE REFRESH AT CARTE_PAGE
+    if (this.cartes.has(this.currentDate.unix())) {
+      return;
+    }
 
     this.isLoading = true;
 
-    const { domainCode, courseCode, code } = schoolStore.selectedSchool;
+    const { domainCode, courseCode, code } = school;
     const year = this.currentDate.year();
     const month = this.currentDate.month() + 1;
     let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}/${year}/${month}`);
