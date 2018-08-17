@@ -1,10 +1,7 @@
 import { Dayjs } from 'dayjs';
-import Food from './Food';
+import Meal from './Meal';
 
 export default class Carte {
   date: Dayjs
-  breakfast?: Food[]
-  lunch?: Food[]
-  dinner?: Food[]
-  tea?: Food[]
+  meals: Meal[]
 }

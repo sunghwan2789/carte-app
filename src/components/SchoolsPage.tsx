@@ -29,11 +29,11 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
     let data = await res.json();
     let schools = data.map((i: any) => {
       let school = new School();
-      school.code = i.Code;
-      school.name = i.Name;
-      school.address = i.Address;
-      school.courseCode = i.CourseCode;
-      school.domainCode = i.DomainCode;
+      school.code = i.school_code;
+      school.domainCode = i.comain_code;
+      school.courseCode = i.course_code;
+      school.name = i.name;
+      school.address = i.address;
       return school;
     });
     runInAction(() => {

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Food from '../models/Food';
 
 interface IProps {
-  food: Food
+  food: string
 }
 
 class CarteFood extends React.Component<IProps> {

@@ -12,13 +12,19 @@ export class CarteStore {
   getCarte(date: Dayjs): Carte {
     return {
       date,
-      breakfast: [
-        '아침',
-        '엔 고기',
-      ],
-      dinner: [
-        '저녁',
-        '은 고기',
+      meals: [
+        {
+          name: '[조식]',
+          foods: [
+            '엔 고기',
+          ],
+        },
+        {
+          name: '[석식]',
+          foods: [
+            '은 고기고기',
+          ],
+        },
       ],
     };
   }

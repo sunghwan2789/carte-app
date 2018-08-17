@@ -18,9 +18,12 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {this.props.carte['breakfast']!.map(food => {
-          return <CarteFood key={food} food={food} />;
-        })}
+        {this.props.carte.meals.map(meal => (
+          <React.Fragment key={meal.name}>
+            <Typography variant="subheading">{meal.name}</Typography>
+            {meal.foods.map(food => <CarteFood key={food} food={food} />)}
+          </React.Fragment>
+        ))}
       </div>
     );
   }
