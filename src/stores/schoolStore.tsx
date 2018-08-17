@@ -17,6 +17,4 @@ export class SchoolStore {
   schools: School[] = [];
 };
 
-const schoolStore = new SchoolStore();
-
-export default schoolStore;
+export default new SchoolStore();

@@ -37,8 +37,4 @@ export class NavigationStore {
   }
 };
 
-const navigationStore = new NavigationStore();
-
-export default navigationStore;
-
-create()('carte-v1-navigation', navigationStore);
+export default new NavigationStore();
