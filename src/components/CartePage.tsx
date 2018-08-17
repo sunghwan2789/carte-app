@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles } from '@material-ui/core';
 import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette } from '@material-ui/icons';
-import NavigatorContainer from '../containers/NavigatorContainer';
 import * as logo from '../../public/icon.png';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -10,11 +9,12 @@ import ListItemNavLink from './ListItemNavLink';
 import * as dayjs from 'dayjs';
 import { UnitType, Dayjs } from 'dayjs';
 import { inject, observer } from 'mobx-react';
-import navigationStore from '../stores/navigationStore';
 import { action, observable } from 'mobx';
 import schoolsStore from '../stores/schoolStore';
 import CarteDay from './CarteDay';
 import carteStore from '../stores/carteStore';
+import NavigateButtons from './NavigateButtons';
+import Navigator from './Navigator';
 
 const styles = (theme: Theme) => createStyles({
 
@@ -41,8 +41,16 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
 
   @action
   handleUnitChange = (newUnit: UnitType) => {
-    navigationStore.navigationUnit = newUnit;
+    carteStore.navigationUnit = newUnit;
     carteStore.loadCartes();
+  }
+
+  handleBackward = () => {
+    carteStore.backward();
+  }
+
+  handleForward = () => {
+    carteStore.forward();
   }
 
   render() {
@@ -53,7 +61,10 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
             <IconButton onClick={this.toggleDrawer}>
               <img src="icon.png" width="48" height="48" />
             </IconButton>
-            <NavigatorContainer />
+            <NavigateButtons
+              handleBackward={this.handleBackward}
+              handleForward={this.handleForward} />
+            <Navigator currentDate={carteStore.currentDate} navigateUnit={carteStore.navigationUnit} />
             <IconButton title="새로고침">
               <Refresh />
             </IconButton>

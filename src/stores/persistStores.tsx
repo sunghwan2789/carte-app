@@ -2,7 +2,7 @@ import { observable, action } from 'mobx';
 import { create } from 'mobx-persist';
 
 import schoolStore from './schoolStore';
-import navigationStore from './navigationStore';
+import carteStore from './carteStore';
 
 class PersistStores {
   @observable
@@ -19,7 +19,7 @@ const hydrate = create();
 let done = 0;
 const stores = [
   schoolStore,
-  navigationStore,
+  carteStore,
 ];
 
 for (let store of stores) {
