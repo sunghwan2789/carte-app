@@ -15,7 +15,7 @@ export class NavigationStore {
     const startDate = this.currentDate.startOf(this.navigationUnit);
     const endDate = this.currentDate.endOf(this.navigationUnit);
     let dates = [];
-    for (let date = startDate; date.isBefore(endDate); date.add(1, 'day')) {
+    for (let date = startDate; date.isBefore(endDate); date = date.add(1, 'day')) {
       dates.push(date);
     }
     return dates;
