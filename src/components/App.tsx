@@ -1,26 +1,28 @@
 import * as React from 'react';
 import { CssBaseline } from '@material-ui/core';
+import { HashRouter } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import CartePage from './CartePage';
 import SchoolsPage from './SchoolsPage';
 
-import persistStores from '../stores/persistStores';
 import { observer } from 'mobx-react';
+import persistStores from '../stores/persistStores';
 import LoadingPage from './LoadingPage';
 
 export default observer(() => (
-  <React.Fragment>
-    <CssBaseline />
+  <CssBaseline>
     {
       persistStores.isLoading
       ? (
         <LoadingPage />
       ) : (
-        <Switch>
-          <Route exact path="/" component={CartePage} />
-          <Route path="/schools" component={SchoolsPage} />
-        </Switch>
+        <HashRouter>
+          <Switch>
+            <Route exact path="/" component={CartePage} />
+            <Route path="/schools" component={SchoolsPage} />
+          </Switch>
+        </HashRouter>
       )
     }
-  </React.Fragment>
-));
+  </CssBaseline>
+))
