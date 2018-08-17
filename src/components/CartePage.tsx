@@ -7,11 +7,14 @@ import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import ListItemLink from './ListItemLink';
 import ListItemNavLink from './ListItemNavLink';
-import { UnitType } from 'dayjs';
+import * as dayjs from 'dayjs';
+import { UnitType, Dayjs } from 'dayjs';
 import { inject, observer } from 'mobx-react';
 import navigationStore from '../stores/navigationStore';
 import { action, observable } from 'mobx';
 import schoolsStore from '../stores/schoolsStore';
+import CarteDay from './CarteDay';
+import carteStore from '../stores/carteStore';
 
 const styles = (theme: Theme) => createStyles({
 
@@ -124,7 +127,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
           </List>
         </Drawer>
         <main>
-          <Button variant="contained" color="primary">OK</Button>
+          <CarteDay carte={carteStore.getCarte(dayjs())} />
         </main>
       </React.Fragment>
     );
