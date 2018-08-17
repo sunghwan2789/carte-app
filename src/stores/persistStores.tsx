@@ -21,7 +21,7 @@ const stores = [
   schoolStore,
   carteStore,
 ];
-
+setTimeout(()=>{
 for (let store of stores) {
   hydrate(`${prefix}${store.constructor.name}`, store)
     .then(action(() => {
@@ -30,3 +30,4 @@ for (let store of stores) {
       }
     }));
 }
+},3000);
