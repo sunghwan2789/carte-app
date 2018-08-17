@@ -4,12 +4,23 @@ import { Switch, Route } from 'react-router';
 import CartePage from './CartePage';
 import SchoolsPage from './SchoolsPage';
 
-export default () => (
+import persistStores from '../stores/persistStores';
+import { observer } from 'mobx-react';
+import LoadingPage from './LoadingPage';
+
+export default observer(() => (
   <React.Fragment>
     <CssBaseline />
-    <Switch>
-      <Route exact path="/" component={CartePage} />
-      <Route path="/schools" component={SchoolsPage} />
-    </Switch>
+    {
+      persistStores.isLoading
+      ? (
+        <LoadingPage />
+      ) : (
+        <Switch>
+          <Route exact path="/" component={CartePage} />
+          <Route path="/schools" component={SchoolsPage} />
+        </Switch>
+      )
+    }
   </React.Fragment>
-);
+));
