@@ -1,4 +1,4 @@
-import { observable, computed, reaction, action, runInAction } from 'mobx';
+import { observable, computed, reaction, action, runInAction, ObservableMap } from 'mobx';
 import navigationStore from './navigationStore';
 import Carte from '../models/Carte';
 import * as dayjs from 'dayjs';
@@ -12,23 +12,24 @@ export class CarteStore {
   isLoading = true
 
   @observable
-  cartes: Carte[] = []
+  cartes: ObservableMap<number, Carte> = observable.map();
 
   constructor() {
     // FIXME: MOVE THIS TO CARTE_PAGE
     reaction(() => schoolStore.selectedSchool, () => {
-      this.cartes = [];
+      this.cartes.clear();
     });
   }
 
   @computed
   get currentCartes(): Carte[] {
+    // FIXME: ERROR AFTER MONTH CHANGE
     console.log('currentCartes', this.cartes);
     return navigationStore.currentDates.map(date => this.getCarte(date));
   }
 
   getCarte(date: dayjs.Dayjs): Carte {
-    return find(this.cartes, i => i.date.isSame(date))!;
+    return this.cartes.get(date.unix())!;
   }
 
   @action
@@ -53,7 +54,7 @@ export class CarteStore {
           let carte = new Carte();
           carte.date = dayjs(i.date);
           carte.meals = i.meals.map((j: any) => j as Meal);
-          this.cartes.push(carte);
+          this.cartes.set(carte.date.unix(), carte);
         });
         console.log('loading complete', this.cartes);
         this.isLoading = false;
