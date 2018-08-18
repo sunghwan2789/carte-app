@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles, SwipeableDrawer } from '@material-ui/core';
-import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette } from '@material-ui/icons';
+import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles, SwipeableDrawer, FormControl, FormControlLabel } from '@material-ui/core';
+import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette, ExpandLess, ExpandMore } from '@material-ui/icons';
 import * as logo from '../../public/icon.png';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -17,6 +17,8 @@ import NavigateButtons from './NavigateButtons';
 import Navigator from './Navigator';
 import School from '../models/School';
 import { isEqual } from 'lodash';
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 const styles = (theme: Theme) => createStyles({
 
@@ -62,6 +64,21 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
     carteStore.loadCartes();
   }
 
+  @observable
+  isDayPicking: boolean = false
+
+  @action
+  toggleDayPicker = () => {
+    this.isDayPicking = !this.isDayPicking;
+  }
+
+  @action
+  handleDateChange = (date: Date) => {
+    this.isDayPicking = false;
+    carteStore.currentDate = dayjs(date).startOf('day');
+    carteStore.loadCartes();
+  }
+
   render() {
     if (typeof schoolStore.selectedSchool === 'undefined') {
       // return <Redirect to="/schools" push />;
@@ -78,6 +95,9 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               handleBackward={this.handleBackward}
               handleForward={this.handleForward} />
             <Navigator currentDate={carteStore.currentDate} navigateUnit={carteStore.navigationUnit} />
+            <IconButton onClick={this.toggleDayPicker}>
+              {this.isDayPicking ? <ExpandLess /> : <ExpandMore />}
+            </IconButton>
             <IconButton title="새로고침" onClick={() => this.handleRefresh()}>
               <Refresh />
             </IconButton>
@@ -157,7 +177,12 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
         </SwipeableDrawer>
         <main>
           {
-            <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />
+            this.isDayPicking
+            ? <DayPicker
+                initialMonth={carteStore.currentDate.toDate()}
+                todayButton="오늘"
+                onDayClick={(day) => this.handleDateChange(day)} />
+            : <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />
           }
         </main>
       </React.Fragment>
