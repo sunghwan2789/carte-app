@@ -47,6 +47,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
   handleUnitChange = (newUnit: UnitType) => {
     carteStore.navigationUnit = newUnit;
     carteStore.loadCartes();
+    this.toggleDrawer();
   }
 
   handleBackward = () => {
