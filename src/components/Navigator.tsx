@@ -23,13 +23,18 @@ class Navigator extends React.Component<IProps> {
     const startDateOfStartWeekOfMonth = currentDate.startOf('month').startOf('week');
     return currentDate.diff(startDateOfStartWeekOfMonth, 'week') + 1;
   }
+  getShortDayName() {
+    const { currentDate } = this.props;
+    const names = '일월화수목금토';
+    return names.charAt(currentDate.day());
+  }
 
   formatDate() {
     const { navigateUnit, currentDate } = this.props;
 
     switch (navigateUnit) {
       case 'day':
-        return currentDate.format('YYYY년 M월 D일');
+        return `${currentDate.format('YYYY년 M월 D일')} (${this.getShortDayName()})`;
       case 'week':
         return `${currentDate.format('YYYY년 M월')} ${this.getWeekNumberOfMonth()}주`;
       case 'month':
