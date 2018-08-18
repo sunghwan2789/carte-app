@@ -3,6 +3,7 @@ import Meal from './Meal';
 import { serializable, identifier, reference, list, object, date, custom, PropSchema } from 'serializr';
 
 // TODO: WATCH serializr date schema
+// see https://github.com/mobxjs/serializr/blob/master/src/types/date.js
 class dayjsSchema implements PropSchema {
   serializer(obj: dayjs.Dayjs) {
     return obj.valueOf();

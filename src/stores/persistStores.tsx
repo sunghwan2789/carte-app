@@ -21,7 +21,6 @@ const stores = [
   { id: 'school-store', store: schoolStore },
   { id: 'carte-store',  store: carteStore },
 ];
-setTimeout(()=>{
 for (let { id, store } of stores) {
   hydrate(`${prefix}${id}`, store)
     .then(action(() => {
@@ -30,4 +29,3 @@ for (let { id, store } of stores) {
       }
     }));
 }
-},3000);

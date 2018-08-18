@@ -55,8 +55,6 @@ export class CarteStore {
   }
 
   get currentCartes(): Carte[] {
-    // FIXME: ERROR AFTER MONTH CHANGE
-    console.log('currentCartes', this.cartes);
     return this.currentDates.map(date => this.getCarte(date));
   }
 
@@ -79,7 +77,6 @@ export class CarteStore {
       return;
     }
 
-    // TODO: IMPLEMENT FORCE REFRESH AT CARTE_PAGE
     if (typeof this.getCarte(this.currentDate) !== 'undefined') {
       return;
     }
