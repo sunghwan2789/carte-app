@@ -1,12 +1,13 @@
 import { observable } from 'mobx';
 import School from '../models/School';
 import { persist, create } from 'mobx-persist';
+import { serializable, object, reference } from 'serializr';
 
 export class SchoolStore {
   @observable
   isLoading: boolean = false;
 
-  @persist('object')
+  @serializable(object(School))
   @observable
   selectedSchool?: School;
 

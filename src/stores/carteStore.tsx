@@ -7,7 +7,7 @@ import { find } from 'lodash';
 import { persist } from 'mobx-persist';
 import School from '../models/School';
 import { isEqual } from 'lodash';
-import { serializable, object, map, list, primitive, date, serialize, deserialize } from 'serializr';
+import { serializable, object, map, list, primitive, date, serialize, deserialize, reference } from 'serializr';
 
 export class CarteStore {
   @observable
@@ -64,9 +64,7 @@ export class CarteStore {
     return this.cartes.find(i => i.date.isSame(date))!;
   }
 
-
-  // FIXME: change this to observable(School...)
-  @persist('object')
+  @serializable(object(School))
   private previousSchool?: School
 
   loadCartes = flow(function* (this: CarteStore) {
