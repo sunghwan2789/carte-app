@@ -1,4 +1,4 @@
-import { observable, computed, reaction, action, runInAction, ObservableMap, flow } from 'mobx';
+import { observable, computed, reaction, action, runInAction, IObservableArray, flow } from 'mobx';
 import Carte from '../models/Carte';
 import * as dayjs from 'dayjs';
 import schoolStore from './schoolStore';
@@ -7,21 +7,22 @@ import { find } from 'lodash';
 import { persist } from 'mobx-persist';
 import School from '../models/School';
 import { isEqual } from 'lodash';
+import { serializable, object, map, list, primitive, date, serialize, deserialize } from 'serializr';
 
 export class CarteStore {
   @observable
   currentDate: dayjs.Dayjs = dayjs().startOf('day');
 
-  @persist
+  @serializable(primitive())
   @observable
   navigationUnit: dayjs.UnitType = 'day';
 
   @observable
   isLoading: boolean = false
 
-  @persist('map')
+  @serializable(list(object(Carte)))
   @observable
-  cartes: ObservableMap<number, Carte> = observable.map();
+  cartes: IObservableArray<Carte> = observable.array();
 
   @action
   clear() {
@@ -60,10 +61,11 @@ export class CarteStore {
   }
 
   getCarte(date: dayjs.Dayjs): Carte {
-    return this.cartes.get(date.unix())!;
+    return this.cartes.find(i => i.date.isSame(date))!;
   }
 
 
+  // FIXME: change this to observable(School...)
   @persist('object')
   private previousSchool?: School
 
@@ -80,7 +82,7 @@ export class CarteStore {
     }
 
     // TODO: IMPLEMENT FORCE REFRESH AT CARTE_PAGE
-    if (this.cartes.has(this.currentDate.unix())) {
+    if (typeof this.getCarte(this.currentDate) !== 'undefined') {
       return;
     }
 
@@ -92,11 +94,12 @@ export class CarteStore {
     let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}/${year}/${month}`);
     let json = yield res.json();
 
+    // TODO: map(Carte.fromJSON(i))
     json.forEach((i: any) => {
       let carte = new Carte();
       carte.date = dayjs(i.date);
       carte.meals = i.meals.map((j: any) => j as Meal);
-      this.cartes.set(carte.date.unix(), carte);
+      this.cartes.push(carte);
     });
     this.isLoading = false;
   })
