@@ -57,6 +57,11 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
     carteStore.loadCartes();
   }
 
+  handleRefresh = () => {
+    carteStore.clear();
+    carteStore.loadCartes();
+  }
+
   render() {
     if (typeof schoolStore.selectedSchool === 'undefined') {
       return <Redirect to="/schools" push />;
@@ -73,7 +78,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               handleBackward={this.handleBackward}
               handleForward={this.handleForward} />
             <Navigator currentDate={carteStore.currentDate} navigateUnit={carteStore.navigationUnit} />
-            <IconButton title="새로고침">
+            <IconButton title="새로고침" onClick={() => this.handleRefresh()}>
               <Refresh />
             </IconButton>
           </Toolbar>
