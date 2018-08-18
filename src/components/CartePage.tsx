@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles } from '@material-ui/core';
+import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles, SwipeableDrawer } from '@material-ui/core';
 import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette } from '@material-ui/icons';
 import * as logo from '../../public/icon.png';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
@@ -64,7 +64,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
 
   render() {
     if (typeof schoolStore.selectedSchool === 'undefined') {
-      return <Redirect to="/schools" push />;
+      // return <Redirect to="/schools" push />;
     }
 
     return (
@@ -83,8 +83,8 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer open={this.isDrawerOpened} onClose={this.toggleDrawer}>
-          <List>
+        <SwipeableDrawer open={this.isDrawerOpened} onOpen={this.toggleDrawer} onClose={this.toggleDrawer}>
+          <List style={{ maxWidth: '100vw' }}>
             <ListSubheader disableSticky>
               <Grid container>
                 <Grid item xs>학교</Grid>
@@ -105,7 +105,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
                 </ListItem>
               ) : (
                 <ListItem>
-                  <ListItemText primary="선택 안함" />
+                  <ListItemText primary="학교를 선택하세요" />
                 </ListItem>
               )
             }
@@ -154,7 +154,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               <ListItemText primary="도움말" />
             </ListItem>
           </List>
-        </Drawer>
+        </SwipeableDrawer>
         <main>
           {
             <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />
