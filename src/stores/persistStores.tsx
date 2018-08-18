@@ -18,12 +18,12 @@ const hydrate = create();
 
 let done = 0;
 const stores = [
-  schoolStore,
-  carteStore,
+  { id: 'school-store', store: schoolStore },
+  { id: 'carte-store',  store: carteStore },
 ];
 setTimeout(()=>{
-for (let store of stores) {
-  hydrate(`${prefix}${store.constructor.name}`, store)
+for (let { id, store } of stores) {
+  hydrate(`${prefix}${id}`, store)
     .then(action(() => {
       if (++done == stores.length) {
         persistStores.isLoading = false;
