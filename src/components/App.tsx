@@ -10,7 +10,8 @@ import persistStores from '../stores/persistStores';
 import LoadingPage from './LoadingPage';
 
 export default observer(() => (
-  <CssBaseline>
+  <React.Fragment>
+    <CssBaseline />
     {
       persistStores.isLoading
       ? (
@@ -24,5 +25,5 @@ export default observer(() => (
         </HashRouter>
       )
     }
-  </CssBaseline>
+  </React.Fragment>
 ))
