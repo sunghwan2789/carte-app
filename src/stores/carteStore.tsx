@@ -8,6 +8,7 @@ import { persist } from 'mobx-persist';
 import School from '../models/School';
 import { isEqual } from 'lodash';
 import { serializable, object, map, list, primitive, date, serialize, deserialize, reference } from 'serializr';
+import * as _ from 'lodash';
 
 export class CarteStore {
   @observable
@@ -66,7 +67,7 @@ export class CarteStore {
   private previousSchool?: School
 
   // FIXME: catch exception and toggle `isLoading`
-  loadCartes = flow(function* (this: CarteStore) {
+  loadCartes = _.debounce(flow(function* (this: CarteStore) {
     const school = schoolStore.selectedSchool;
 
     if (!isEqual(this.previousSchool, school)) {
@@ -100,7 +101,7 @@ export class CarteStore {
       this.cartes.push(carte);
     });
     this.isLoading = false;
-  })
+  }), 400)
 }
 
 let carteStore = new CarteStore();
