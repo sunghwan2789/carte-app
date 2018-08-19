@@ -87,7 +87,9 @@ export class CarteStore {
     const { domainCode, courseCode, code } = school;
     const year = this.currentDate.year();
     const month = this.currentDate.month() + 1;
-    let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}/${year}/${month}`);
+    let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}?${new URLSearchParams({
+      date: `${year}-${month}`,
+    })}`);
     let json = yield res.json();
 
     // TODO: map(Carte.fromJSON(i))
