@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles, SwipeableDrawer, FormControl, FormControlLabel, Dialog } from '@material-ui/core';
-import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette, ExpandLess, ExpandMore } from '@material-ui/icons';
+import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette, ExpandLess, ExpandMore, Message } from '@material-ui/icons';
 import * as logo from '../../public/icon.png';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -128,42 +128,48 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               </ListItemIcon>
               <ListItemText primary="일간" />
             </ListItem>
-            <ListItem button onClick={() => this.handleUnitChange('week')}>
+            <ListItem button onClick={() => alert('미구현이에요~~~\n많이들 필요하시면 만들게요~~~') && this.handleUnitChange('week')}>
               <ListItemIcon>
                 <ViewWeek />
               </ListItemIcon>
               <ListItemText primary="주간" />
             </ListItem>
-            <ListItem button onClick={() => this.handleUnitChange('month')}>
+            <ListItem button onClick={() => alert('미구현이에요~~~\n많이들 필요하시면 만들게요~~~') && this.handleUnitChange('month')}>
               <ListItemIcon>
                 <ViewModule />
               </ListItemIcon>
               <ListItemText primary="월간" />
             </ListItem>
             <Divider />
-            <ListItem button onClick={() => this.handleNavigate('/highlights')}>
+            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/highlights')}>
               <ListItemIcon>
                 <Star />
               </ListItemIcon>
               <ListItemText primary="하이라이트" />
             </ListItem>
-            <ListItem button onClick={() => this.handleNavigate('/theme')}>
+            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/theme')}>
               <ListItemIcon>
                 <Palette />
               </ListItemIcon>
               <ListItemText primary="테마" />
             </ListItem>
-            <ListItem button onClick={() => this.handleNavigate('/share')}>
+            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/share')}>
               <ListItemIcon>
                 <Share />
               </ListItemIcon>
               <ListItemText primary="공유" />
             </ListItem>
-            <ListItem button onClick={() => this.handleNavigate('/help')}>
+            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/help')}>
               <ListItemIcon>
                 <Help />
               </ListItemIcon>
               <ListItemText primary="도움말" />
+            </ListItem>
+            <ListItem button onClick={() => this.handleNavigate('/inquiry')}>
+              <ListItemIcon>
+                <Message />
+              </ListItemIcon>
+              <ListItemText primary="의견 보내기" />
             </ListItem>
           </List>
         </SwipeableDrawer>
