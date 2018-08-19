@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, WithStyles, Theme, createStyles, withStyles, TextField, List, ListItem, ListItemText, Divider, Input } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { RouteComponentProps, withRouter } from 'react-router';
-import schoolsStore from '../stores/schoolStore';
+import schoolStore from '../stores/schoolStore';
 import { action, runInAction } from 'mobx';
 import School from '../models/School';
 import { observer } from 'mobx-react';
@@ -17,28 +17,14 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
 
   @action
   handleSchoolSelect = (school: School) => {
-    schoolsStore.selectedSchool = school;
+    schoolStore.selectedSchool = school;
     this.props.history.replace('/');
   }
 
   @action
-  handleSearch = debounce(async (query: string) => {
-    let res = await fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
-      q: query,
-    })}`);
-    let data = await res.json();
-    let schools = data.map((i: any) => {
-      let school = new School();
-      school.code = i.school_code;
-      school.domainCode = i.domain_code;
-      school.courseCode = i.course_code;
-      school.name = i.name;
-      school.address = i.address;
-      return school;
-    });
-    runInAction(() => {
-      schoolsStore.schools = schools;
-    });
+  handleSearch = debounce((query: string) => {
+    schoolStore.setQuery(query);
+    schoolStore.loadSchools();
   }, 500)
 
   render() {
@@ -58,7 +44,7 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
         </AppBar>
         <main>
           <List>
-            {schoolsStore.schools.map(school => (
+            {schoolStore.schools.map(school => (
               <React.Fragment key={school.code}>
                 <ListItem button onClick={() => this.handleSchoolSelect(school)}>
                   <ListItemText primary={school.name} secondary={school.address} />

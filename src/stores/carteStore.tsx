@@ -65,6 +65,7 @@ export class CarteStore {
   @serializable(object(School))
   private previousSchool?: School
 
+  // FIXME: catch exception and toggle `isLoading`
   loadCartes = flow(function* (this: CarteStore) {
     const school = schoolStore.selectedSchool;
 
