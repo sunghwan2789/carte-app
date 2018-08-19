@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles, SwipeableDrawer, FormControl, FormControlLabel } from '@material-ui/core';
+import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles, SwipeableDrawer, FormControl, FormControlLabel, Dialog } from '@material-ui/core';
 import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette, ExpandLess, ExpandMore } from '@material-ui/icons';
 import * as logo from '../../public/icon.png';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
@@ -27,7 +27,7 @@ const styles = (theme: Theme) => createStyles({
 @observer
 class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<typeof styles>> {
   @observable
-  isDrawerOpened: boolean = false
+  isDrawerOpened: boolean = typeof schoolStore.selectedSchool === 'undefined'
 
   componentWillMount() {
     carteStore.loadCartes();
@@ -168,9 +168,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
           </List>
         </SwipeableDrawer>
         <main>
-          {
-            <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />
-          }
+          {carteStore.navigationUnit === 'day' && <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />}
         </main>
       </React.Fragment>
     );
