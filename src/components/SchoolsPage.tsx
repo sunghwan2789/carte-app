@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, WithStyles, Theme, createStyles, withStyles, TextField, List, ListItem, ListItemText, Divider } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, WithStyles, Theme, createStyles, withStyles, TextField, List, ListItem, ListItemText, Divider, Input } from '@material-ui/core';
 import { ArrowBack } from '@material-ui/icons';
 import { RouteComponentProps, withRouter } from 'react-router';
 import schoolsStore from '../stores/schoolStore';
@@ -46,11 +46,14 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
       <React.Fragment>
         <AppBar position="sticky">
           <Toolbar>
-            <IconButton onClick={this.props.history.goBack}>
+            <IconButton color="inherit" onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>
-            <TextField type="search" placeholder="학교 검색" fullWidth
-              onChange={e => this.handleSearch(e.target.value)} />
+            <Input type="search"
+              placeholder="학교 검색"
+              onChange={e => this.handleSearch(e.target.value)}
+              fullWidth
+              style={{color:'inherit'}} />
           </Toolbar>
         </AppBar>
         <main>
