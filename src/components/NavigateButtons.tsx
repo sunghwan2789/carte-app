@@ -7,6 +7,7 @@ const styles = createStyles({
   root: {
     marginLeft: 8,
     marginRight: 8,
+    display: 'flex',
   },
   btn: {
     width: 32,
