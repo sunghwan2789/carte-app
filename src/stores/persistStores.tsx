@@ -13,19 +13,16 @@ const persistStores = new PersistStores();
 
 export default persistStores;
 
-const prefix = 'carte-v1-';
-const hydrate = create();
+let tasks = [];
 
-let done = 0;
+const hydrate = create();
+const prefix = 'carte-v1-';
 const stores = [
   { id: 'school-store', store: schoolStore },
   { id: 'carte-store',  store: carteStore },
 ];
 for (let { id, store } of stores) {
-  hydrate(`${prefix}${id}`, store)
-    .then(action(() => {
-      if (++done == stores.length) {
-        persistStores.isLoading = false;
-      }
-    }));
+  tasks.push(hydrate(`${prefix}${id}`, store));
 }
+
+Promise.all(tasks).then(action(() => persistStores.isLoading = false));
