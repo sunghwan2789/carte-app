@@ -38,6 +38,7 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
             <Input type="search"
               placeholder="학교 검색"
               onChange={e => this.handleSearch(e.target.value)}
+              autoFocus
               fullWidth
               style={{color:'inherit'}} />
           </Toolbar>
