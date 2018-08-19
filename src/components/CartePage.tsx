@@ -65,18 +65,9 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
     carteStore.loadCartes();
   }
 
-  @observable
-  isDayPicking: boolean = false
-
   @action
-  toggleDayPicker = () => {
-    this.isDayPicking = !this.isDayPicking;
-  }
-
-  @action
-  handleDateChange = (date: Date) => {
-    this.isDayPicking = false;
-    carteStore.currentDate = dayjs(date).startOf('day');
+  handleDateChange = (date: dayjs.Dayjs) => {
+    carteStore.currentDate = date;
     carteStore.loadCartes();
   }
 
@@ -95,11 +86,11 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
             <NavigateButtons
               handleBackward={this.handleBackward}
               handleForward={this.handleForward} />
-            <Navigator currentDate={carteStore.currentDate} navigateUnit={carteStore.navigationUnit} />
-            <IconButton onClick={this.toggleDayPicker}>
-              {this.isDayPicking ? <ExpandLess /> : <ExpandMore />}
-            </IconButton>
-            <IconButton title="새로고침" onClick={() => this.handleRefresh()}>
+            <Navigator
+              currentDate={carteStore.currentDate}
+              navigateUnit={carteStore.navigationUnit}
+              handleDateChange={this.handleDateChange} />
+            <IconButton color="inherit" title="새로고침" onClick={() => this.handleRefresh()}>
               <Refresh />
             </IconButton>
           </Toolbar>
@@ -178,12 +169,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
         </SwipeableDrawer>
         <main>
           {
-            this.isDayPicking
-            ? <DayPicker
-                initialMonth={carteStore.currentDate.toDate()}
-                todayButton="오늘"
-                onDayClick={(day) => this.handleDateChange(day)} />
-            : <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />
+            <CarteDay carte={carteStore.currentCartes[0]} isLoading={carteStore.isLoading} />
           }
         </main>
       </React.Fragment>
