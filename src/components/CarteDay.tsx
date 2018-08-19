@@ -55,8 +55,8 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
         </AppBar>
         <List>
           {this.currentMeal && this.currentMeal.foods.map(food => (
-            <React.Fragment>
-              <ListItem key={food} style={{backgroundColor:'white'}}>
+            <React.Fragment key={food}>
+              <ListItem style={{backgroundColor:'white'}}>
                 <ListItemText primary={food} />
               </ListItem>
               <Divider />
