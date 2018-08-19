@@ -64,7 +64,7 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
                 </ListItem>
                 <Divider />
               </React.Fragment>
-            ) : <div style={{display:'flex',justifyContent:'center',paddingTop:16}}>식단이 없다아...</div>
+            ) : <div style={{display:'flex',justifyContent:'center',paddingTop:16}}>식단을 선택하세요<br/>(없을 수도 있어요..!)</div>
           }
         </List>
       </div>
