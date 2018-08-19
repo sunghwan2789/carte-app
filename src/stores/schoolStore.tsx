@@ -38,21 +38,23 @@ export class SchoolStore {
 
     this.isLoading = true;
 
-    let res = yield fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
-      q: this.query,
-    })}`);
-    let data = yield res.json();
+    try {
+      let res = yield fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
+        q: this.query,
+      })}`);
+      let data = yield res.json();
 
-    this.schools.clear();
-    data.forEach((i: any) => {
-      let school = new School();
-      school.code = i['school_code'];
-      school.domainCode = i['domain_code'];
-      school.courseCode = i['course_code'];
-      school.name = i['name'];
-      school.address = i['address'];
-      this.schools.push(school);
-    });
+      this.schools.clear();
+      data.forEach((i: any) => {
+        let school = new School();
+        school.code = i['school_code'];
+        school.domainCode = i['domain_code'];
+        school.courseCode = i['course_code'];
+        school.name = i['name'];
+        school.address = i['address'];
+        this.schools.push(school);
+      });
+    } catch ($e) {}
     this.isLoading = false;
   })
 };

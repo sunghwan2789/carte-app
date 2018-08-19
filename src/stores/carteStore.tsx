@@ -88,18 +88,20 @@ export class CarteStore {
     const { domainCode, courseCode, code } = school;
     const year = this.currentDate.year();
     const month = this.currentDate.month() + 1;
-    let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}?${new URLSearchParams({
-      date: `${year}-${month}`,
-    })}`);
-    let json = yield res.json();
+    try {
+      let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}?${new URLSearchParams({
+        date: `${year}-${month}`,
+      })}`);
+      let json = yield res.json();
 
-    // TODO: map(Carte.fromJSON(i))
-    json.forEach((i: any) => {
-      let carte = new Carte();
-      carte.date = dayjs(i.date);
-      carte.meals = i.meals.map((j: any) => j as Meal);
-      this.cartes.push(carte);
-    });
+      // TODO: map(Carte.fromJSON(i))
+      json.forEach((i: any) => {
+        let carte = new Carte();
+        carte.date = dayjs(i.date);
+        carte.meals = i.meals.map((j: any) => j as Meal);
+        this.cartes.push(carte);
+      });
+    } catch ($e) {}
     this.isLoading = false;
   }), 400)
 }

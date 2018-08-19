@@ -38,8 +38,10 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
 
   render() {
     const { classes } = this.props;
-    if (!this.props.carte || this.props.isLoading) {
+    if (this.props.isLoading) {
       return <div style={{display:'flex',justifyContent:'center',paddingTop:16}}><CircularProgress /></div>;
+    } else if (!this.props.carte) {
+      return <div style={{display:'flex',justifyContent:'center',paddingTop:16}}>식단이 없다아...</div>
     }
     return (
       <div className={classes.root}>
@@ -54,14 +56,16 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
           </Tabs>
         </AppBar>
         <List>
-          {this.currentMeal && this.currentMeal.foods.map(food => (
-            <React.Fragment key={food}>
-              <ListItem style={{backgroundColor:'white'}}>
-                <ListItemText primary={food} />
-              </ListItem>
-              <Divider />
-            </React.Fragment>
-          ))}
+          {this.currentMeal
+            ? this.currentMeal.foods.map(food =>
+              <React.Fragment key={food}>
+                <ListItem style={{backgroundColor:'white'}}>
+                  <ListItemText primary={food} />
+                </ListItem>
+                <Divider />
+              </React.Fragment>
+            ) : <div style={{display:'flex',justifyContent:'center',paddingTop:16}}>식단이 없다아...</div>
+          }
         </List>
       </div>
     );
