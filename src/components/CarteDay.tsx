@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { WithStyles, createStyles, withStyles, Typography, AppBar, Tabs, Tab, Card, CardHeader, List, ListItem, ListItemText, Divider } from '@material-ui/core';
+import { WithStyles, createStyles, withStyles, Typography, AppBar, Tabs, Tab, Card, CardHeader, List, ListItem, ListItemText, Divider, CircularProgress } from '@material-ui/core';
 import Carte from '../models/Carte';
 import CarteFood from './CarteFood';
 import Meal from '../models/Meal';
@@ -39,7 +39,7 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
   render() {
     const { classes } = this.props;
     if (!this.props.carte || this.props.isLoading) {
-      return <p>식단표 받는 중...</p>;
+      return <div style={{display:'flex',justifyContent:'center',paddingTop:16}}><CircularProgress /></div>;
     }
     return (
       <div className={classes.root}>
