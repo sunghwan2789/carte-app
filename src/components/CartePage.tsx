@@ -78,7 +78,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
 
     return (
       <React.Fragment>
-        <AppBar position="sticky">
+        <AppBar position="static">
           <Toolbar>
             <IconButton onClick={this.toggleDrawer}>
               <img src="icon.png" width="48" height="48" />
