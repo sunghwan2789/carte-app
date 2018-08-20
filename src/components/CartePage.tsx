@@ -93,7 +93,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
         <AppBar position="static">
           <Toolbar>
             <IconButton onClick={this.toggleDrawer}>
-              <img src="icon.png" width="48" height="48" />
+              <img src={`${process.env.PUBLIC_URL}/icon.png`} width="48" height="48" />
             </IconButton>
             <NavigateButtons
               handleBackward={this.handleBackward}

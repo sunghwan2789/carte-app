@@ -38,7 +38,7 @@ export class SchoolStore {
     this.isLoading = true;
 
     try {
-      let res: Response = yield fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
+      let res: Response = yield fetch(`/carte/api/v1/schools?${new URLSearchParams({
         q: this.query,
       })}`);
       if (!res.ok) {

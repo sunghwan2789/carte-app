@@ -88,7 +88,7 @@ export class CarteStore {
     const year = this.currentDate.year();
     const month = this.currentDate.month() + 1;
     try {
-      let res: Response = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}?${new URLSearchParams({
+      let res: Response = yield fetch(`/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}?${new URLSearchParams({
         date: `${year}-${month}`,
       })}`);
       if (!res.ok) {
