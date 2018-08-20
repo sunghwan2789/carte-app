@@ -10,6 +10,7 @@ import * as dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 import DayPicker from 'react-day-picker';
+import DayPickerKoreanUtils from '../lib/DayPickerKoreanUtils';
 
 const styles = createStyles({
   date: {
@@ -102,7 +103,8 @@ class Navigator extends React.Component<IProps> {
             <DayPicker
               selectedDays={this.props.currentDate.toDate()}
               initialMonth={this.props.currentDate.toDate()}
-              onDayClick={this.handleDayPick} />
+              localeUtils={DayPickerKoreanUtils}
+              onDayClick={this.handleDayPick}/>
           </Paper>
         </Popper>
       </React.Fragment>
