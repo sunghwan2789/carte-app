@@ -66,7 +66,6 @@ export class CarteStore {
   @serializable(object(School))
   private previousSchool?: School
 
-  // FIXME: catch exception and toggle `isLoading`
   loadCartes = _.debounce(flow(function* (this: CarteStore) {
     const school = schoolStore.selectedSchool;
 
@@ -89,9 +88,13 @@ export class CarteStore {
     const year = this.currentDate.year();
     const month = this.currentDate.month() + 1;
     try {
-      let res = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}?${new URLSearchParams({
+      let res: Response = yield fetch(`https://bloodcat.com/carte/api/v1/cartes/${domainCode}/${courseCode}/${code}?${new URLSearchParams({
         date: `${year}-${month}`,
       })}`);
+      if (!res.ok) {
+        throw res.status;
+      }
+
       let json = yield res.json();
 
       // TODO: map(Carte.fromJSON(i))
@@ -101,8 +104,11 @@ export class CarteStore {
         carte.meals = i.meals.map((j: any) => j as Meal);
         this.cartes.push(carte);
       });
-    } catch ($e) {}
-    this.isLoading = false;
+    } catch ($e) {
+      // TODO: notify what happened
+    } finally {
+      this.isLoading = false;
+    }
   }), 400)
 }
 

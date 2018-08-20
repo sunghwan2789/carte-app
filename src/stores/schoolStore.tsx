@@ -28,7 +28,6 @@ export class SchoolStore {
     }
   }
 
-  // FIXME: catch exception and toggle `isLoading`
   loadSchools = flow(function* (this: SchoolStore) {
     if (!this.shouldFetch || !this.query) {
       return;
@@ -39,9 +38,13 @@ export class SchoolStore {
     this.isLoading = true;
 
     try {
-      let res = yield fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
+      let res: Response = yield fetch(`https://bloodcat.com/carte/api/v1/schools?${new URLSearchParams({
         q: this.query,
       })}`);
+      if (!res.ok) {
+        throw res.status;
+      }
+
       let data = yield res.json();
 
       this.schools.clear();
@@ -54,8 +57,11 @@ export class SchoolStore {
         school.address = i['address'];
         this.schools.push(school);
       });
-    } catch ($e) {}
-    this.isLoading = false;
+    } catch ($e) {
+      // TODO: notify what happened
+    } finally {
+      this.isLoading = false;
+    }
   })
 };
 
