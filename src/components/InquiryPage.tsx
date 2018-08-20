@@ -47,7 +47,7 @@ class InquiryPage extends React.Component<RouteComponentProps<any> & WithStyles<
             <IconButton color="inherit" onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>
-            <Typography variant="title" color="inherit" style={{flexGrow:1}}>고객의 소리</Typography>
+            <Typography variant="title" color="inherit" style={{flexGrow:1}}>의견 보내기</Typography>
             <IconButton color="inherit" type="submit">
               <Send />
             </IconButton>
