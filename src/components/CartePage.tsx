@@ -18,7 +18,7 @@ import ViewDay from '@material-ui/icons/ViewDay';
 import ViewWeek from '@material-ui/icons/ViewWeek';
 import ViewModule from '@material-ui/icons/ViewModule';
 import Palette from '@material-ui/icons/Palette';
-import Message from '@material-ui/icons/Message';
+import Feedback from '@material-ui/icons/Feedback';
 import Info from '@material-ui/icons/Info';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import * as dayjs from 'dayjs';
@@ -171,9 +171,9 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               </ListItemIcon>
               <ListItemText primary="정보" />
             </ListItem>
-            <ListItem button onClick={() => this.handleNavigate('/inquiry')}>
+            <ListItem button onClick={() => this.handleNavigate('/feedback')}>
               <ListItemIcon>
-                <Message />
+                <Feedback />
               </ListItemIcon>
               <ListItemText primary="의견 보내기" />
             </ListItem>
