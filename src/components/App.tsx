@@ -9,6 +9,7 @@ import { observer } from 'mobx-react';
 import persistStores from '../stores/persistStores';
 import LoadingPage from './LoadingPage';
 import InquiryPage from './InquiryPage';
+import InfoPage from './InfoPage';
 
 export default observer(() => (
   <React.Fragment>
@@ -22,6 +23,7 @@ export default observer(() => (
           <Switch>
             <Route exact path="/" component={CartePage} />
             <Route path="/schools" component={SchoolsPage} />
+            <Route path="/info" component={InfoPage} />
             <Route path="/inquiry" component={InquiryPage} />
           </Switch>
         </HashRouter>

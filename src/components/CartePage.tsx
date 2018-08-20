@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppBar, Toolbar, Button, Drawer, IconButton, List, ListItem, Divider, ListItemText, ListItemIcon, ListSubheader, Grid, WithStyles, createStyles, Theme, withStyles, SwipeableDrawer, FormControl, FormControlLabel, Dialog } from '@material-ui/core';
-import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette, ExpandLess, ExpandMore, Message } from '@material-ui/icons';
+import { Star, Help, Refresh, ViewDay, ViewWeek, ViewModule, Share, Palette, ExpandLess, ExpandMore, Message, Info } from '@material-ui/icons';
 import * as logo from '../../public/icon.png';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -153,17 +153,11 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               </ListItemIcon>
               <ListItemText primary="테마" />
             </ListItem>
-            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/share')}>
+            <ListItem button onClick={() => this.handleNavigate('/info')}>
               <ListItemIcon>
-                <Share />
+                <Info />
               </ListItemIcon>
-              <ListItemText primary="공유" />
-            </ListItem>
-            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/help')}>
-              <ListItemIcon>
-                <Help />
-              </ListItemIcon>
-              <ListItemText primary="도움말" />
+              <ListItemText primary="정보" />
             </ListItem>
             <ListItem button onClick={() => this.handleNavigate('/inquiry')}>
               <ListItemIcon>
