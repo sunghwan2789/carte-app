@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Select, MenuItem, FormControl } from '@material-ui/core';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import * as dayjs from 'dayjs';
 
 interface IProps {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CssBaseline } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { HashRouter } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import CartePage from './CartePage';

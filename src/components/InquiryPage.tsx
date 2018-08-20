@@ -1,12 +1,14 @@
 import * as React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, WithStyles, Theme, createStyles, withStyles, TextField, List, ListItem, ListItemText, Divider, Input } from '@material-ui/core';
-import { ArrowBack, Send } from '@material-ui/icons';
+import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import Send from '@material-ui/icons/Send';
 import { RouteComponentProps, withRouter } from 'react-router';
-import schoolStore from '../stores/schoolStore';
-import { action, runInAction } from 'mobx';
-import School from '../models/School';
 import { observer } from 'mobx-react';
-import { debounce } from 'lodash';
 
 const styles = (theme: Theme) => createStyles({
 

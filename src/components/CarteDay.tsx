@@ -1,8 +1,14 @@
 import * as React from 'react';
-import { WithStyles, createStyles, withStyles, Typography, AppBar, Tabs, Tab, Card, CardHeader, List, ListItem, ListItemText, Divider, CircularProgress } from '@material-ui/core';
+import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Carte from '../models/Carte';
-import CarteFood from './CarteFood';
-import Meal from '../models/Meal';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as dayjs from 'dayjs';

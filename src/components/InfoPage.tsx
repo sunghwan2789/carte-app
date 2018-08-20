@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, WithStyles, Theme, createStyles, withStyles, TextField, List, ListItem, ListItemText, Divider, Input, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Icon, Grid } from '@material-ui/core';
-import { ArrowBack, ExpandMore, Refresh } from '@material-ui/icons';
+import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Grid from '@material-ui/core/Grid';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Refresh from '@material-ui/icons/Refresh';
 import { RouteComponentProps, withRouter } from 'react-router';
-import schoolStore from '../stores/schoolStore';
-import { action, runInAction } from 'mobx';
-import School from '../models/School';
 import { observer } from 'mobx-react';
-import { debounce } from 'lodash';
-import { Link } from 'react-router-dom';
 
 const styles = (theme: Theme) => createStyles({
   heading: {

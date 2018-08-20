@@ -1,7 +1,11 @@
 import * as React from 'react';
-import { Typography, Button, ButtonBase, Icon, Popper, Paper } from '@material-ui/core';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import { ExpandLess, ExpandMore, ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import * as dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
@@ -79,12 +83,10 @@ class Navigator extends React.Component<IProps> {
           <Typography variant="title" className={classes.date}>
             {this.formatDate()}
           </Typography>
-          <Icon /*color="secondary"*/>
-            {this.isDayPicking
-              ? <ArrowDropUp />
-              : <ArrowDropDown />
-            }
-          </Icon>
+          {this.isDayPicking
+            ? <ArrowDropUp />
+            : <ArrowDropDown />
+          }
         </Button>
         <Popper
           open={this.isDayPicking}
