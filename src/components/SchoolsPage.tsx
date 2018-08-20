@@ -14,7 +14,7 @@ import schoolStore from '../stores/schoolStore';
 import { action, runInAction } from 'mobx';
 import School from '../models/School';
 import { observer } from 'mobx-react';
-import { debounce } from 'lodash';
+import debounce from 'lodash-es/debounce';
 
 const styles = (theme: Theme) => createStyles({
 

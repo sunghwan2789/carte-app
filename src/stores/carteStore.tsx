@@ -3,12 +3,11 @@ import Carte from '../models/Carte';
 import * as dayjs from 'dayjs';
 import schoolStore from './schoolStore';
 import Meal from '../models/Meal';
-import { find } from 'lodash';
 import { persist } from 'mobx-persist';
 import School from '../models/School';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
+import debounce from 'lodash-es/debounce';
 import { serializable, object, map, list, primitive, date, serialize, deserialize, reference } from 'serializr';
-import * as _ from 'lodash';
 
 export class CarteStore {
   @observable
@@ -66,7 +65,7 @@ export class CarteStore {
   @serializable(object(School))
   private previousSchool?: School
 
-  loadCartes = _.debounce(flow(function* (this: CarteStore) {
+  loadCartes = debounce(flow(function* (this: CarteStore) {
     const school = schoolStore.selectedSchool;
 
     if (!isEqual(this.previousSchool, school)) {
@@ -112,6 +111,4 @@ export class CarteStore {
   }), 400)
 }
 
-let carteStore = new CarteStore();
-
-export default carteStore;
+export default new CarteStore();
