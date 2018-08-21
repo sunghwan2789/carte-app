@@ -20,6 +20,7 @@ import ViewModule from '@material-ui/icons/ViewModule';
 import Palette from '@material-ui/icons/Palette';
 import Feedback from '@material-ui/icons/Feedback';
 import Info from '@material-ui/icons/Info';
+import Menu from '@material-ui/icons/Menu';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import * as dayjs from 'dayjs';
 import { UnitType, Dayjs } from 'dayjs';
@@ -92,8 +93,8 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
       <React.Fragment>
         <AppBar position="static">
           <Toolbar>
-            <IconButton onClick={this.toggleDrawer}>
-              <img src={`${process.env.PUBLIC_URL}/icon.png`} width="48" height="48" />
+            <IconButton color="inherit" onClick={this.toggleDrawer}>
+              <Menu />
             </IconButton>
             <NavigateButtons
               handleBackward={this.handleBackward}
