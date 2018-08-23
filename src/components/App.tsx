@@ -8,6 +8,7 @@ import SchoolsPage from './SchoolsPage';
 import { observer } from 'mobx-react';
 import persistStores from '../stores/persistStores';
 import LoadingPage from './LoadingPage';
+import HighlightsPage from './HighlightsPage';
 import FeedbackPage from './FeedbackPage';
 import InfoPage from './InfoPage';
 
@@ -23,6 +24,7 @@ export default observer(() => (
           <Switch>
             <Route exact path="/" component={CartePage} />
             <Route path="/schools" component={SchoolsPage} />
+            <Route path="/highlights" component={HighlightsPage} />
             <Route path="/info" component={InfoPage} />
             <Route path="/feedback" component={FeedbackPage} />
           </Switch>
