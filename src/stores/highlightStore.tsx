@@ -23,6 +23,11 @@ class HighlightStore {
     this.highlights.push(new Highlight());
     this.highlights.pop();
   }
+
+  @action
+  delete(highlight: Highlight) {
+    this.highlights.splice(this.highlights.findIndex(i => i.id === highlight.id));
+  }
 }
 
 export default new HighlightStore();

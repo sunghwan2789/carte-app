@@ -15,6 +15,7 @@ import Delete from '@material-ui/icons/Delete';
 import highlightStore from '../stores/highlightStore';
 import { Button } from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
+import { observer } from 'mobx-react';
 
 const styles = (theme: Theme) => createStyles({
   list: {
@@ -27,7 +28,13 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
+@observer
 class HighlightsPage extends React.Component<RouteComponentProps<any> & WithStyles<typeof styles>> {
+
+  deleteHighlight(highlight: Highlight) {
+    highlightStore.delete(highlight);
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -49,7 +56,7 @@ class HighlightsPage extends React.Component<RouteComponentProps<any> & WithStyl
                 <ListItemText primary={i.name} secondary={i.words.join(', ')}
                   primaryTypographyProps={{ style: {...i.style, display: 'inline' } }} />
                 <ListItemSecondaryAction>
-                  <IconButton>
+                  <IconButton onClick={() => this.deleteHighlight(i)}>
                     <Delete />
                   </IconButton>
                 </ListItemSecondaryAction>
