@@ -43,7 +43,9 @@ class HighlightsPage extends React.Component<RouteComponentProps<any> & WithStyl
         <main>
           <List className={classes.list}>
             {highlightStore.highlights.map(i => (
-              <ListItem button divider key={i.id}>
+              <ListItem button divider key={i.id}
+                onClick={() => this.props.history.push(`/highlights/${i.id}/edit`)}
+              >
                 <ListItemText primary={i.name} secondary={i.words.join(', ')}
                   primaryTypographyProps={{ style: {...i.style, display: 'inline' } }} />
                 <ListItemSecondaryAction>

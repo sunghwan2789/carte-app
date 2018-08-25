@@ -8,5 +8,5 @@ export default class Highlight {
   @serializable(list(primitive()))
   words: string[] = []
   @serializable(map(primitive()))
-  style: object = {}
+  style: any = {}
 }

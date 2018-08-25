@@ -5,6 +5,7 @@ import { serializable, list, object } from 'serializr';
 
 class HighlightStore {
   @serializable(list(object(Highlight)))
+  @observable
   highlights: IObservableArray<Highlight> = observable.array()
 
   @action
@@ -15,6 +16,12 @@ class HighlightStore {
 
   find(id: string) {
     return this.highlights.find(i => i.id === id);
+  }
+
+  @action
+  update() {
+    this.highlights.push(new Highlight());
+    this.highlights.pop();
   }
 }
 
