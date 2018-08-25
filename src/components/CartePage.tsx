@@ -154,7 +154,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               <ListItemText primary="월간" />
             </ListItem>
             <Divider />
-            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/highlights')}>
+            <ListItem button onClick={() => this.handleNavigate('/highlights')}>
               <ListItemIcon>
                 <Star />
               </ListItemIcon>
