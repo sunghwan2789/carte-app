@@ -12,6 +12,7 @@ import Carte from '../models/Carte';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as dayjs from 'dayjs';
+import CarteFood from './CarteFood';
 
 const styles = createStyles({
   root: {
@@ -66,7 +67,7 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
             ? this.currentMeal.foods.map(food =>
               <React.Fragment key={food}>
                 <ListItem style={{backgroundColor:'white'}}>
-                  <ListItemText primary={food} />
+                  <ListItemText primary={<CarteFood food={food} />} />
                 </ListItem>
                 <Divider />
               </React.Fragment>
