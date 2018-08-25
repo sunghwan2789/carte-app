@@ -11,6 +11,8 @@ import LoadingPage from './LoadingPage';
 import HighlightsPage from './HighlightsPage';
 import FeedbackPage from './FeedbackPage';
 import InfoPage from './InfoPage';
+import HighlightNew from './HighlightNew';
+import HighlightEdit from './HighlightEdit';
 
 export default observer(() => (
   <React.Fragment>
@@ -23,10 +25,12 @@ export default observer(() => (
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Switch>
             <Route exact path="/" component={CartePage} />
-            <Route path="/schools" component={SchoolsPage} />
-            <Route path="/highlights" component={HighlightsPage} />
-            <Route path="/info" component={InfoPage} />
-            <Route path="/feedback" component={FeedbackPage} />
+            <Route exact path="/schools" component={SchoolsPage} />
+            <Route exact path="/highlights" component={HighlightsPage} />
+            <Route exact path="/highlights/new" component={HighlightNew} />
+            <Route exact path="/highlights/:id/edit" component={HighlightEdit} />
+            <Route exact path="/info" component={InfoPage} />
+            <Route exact path="/feedback" component={FeedbackPage} />
           </Switch>
         </BrowserRouter>
       )
