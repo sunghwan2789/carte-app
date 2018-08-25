@@ -12,19 +12,23 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Delete from '@material-ui/icons/Delete';
+import highlightStore from '../stores/highlightStore';
+import { Button } from '@material-ui/core';
+import Add from '@material-ui/icons/Add';
 
 const styles = (theme: Theme) => createStyles({
   list: {
     backgroundColor: theme.palette.background.paper,
   },
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+  }
 });
 
 class HighlightsPage extends React.Component<RouteComponentProps<any> & WithStyles<typeof styles>> {
   render() {
-    let hi = new Highlight();
-    hi.name = '가리는 거';
-    hi.words = ['오징어', '가지'];
-    hi.style = { color: 'red', backgroundColor: '#f99' };
     const { classes } = this.props;
     return (
       <React.Fragment>
@@ -38,17 +42,24 @@ class HighlightsPage extends React.Component<RouteComponentProps<any> & WithStyl
         </AppBar>
         <main>
           <List className={classes.list}>
-            <ListItem button divider>
-              <ListItemText primary={hi.name} secondary={hi.words.join(', ')}
-                primaryTypographyProps={{ style: {...hi.style, display: 'inline' } }} />
-              <ListItemSecondaryAction>
-                <IconButton>
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
+            {highlightStore.highlights.map(i => (
+              <ListItem button divider key={i.id}>
+                <ListItemText primary={i.name} secondary={i.words.join(', ')}
+                  primaryTypographyProps={{ style: {...i.style, display: 'inline' } }} />
+                <ListItemSecondaryAction>
+                  <IconButton>
+                    <Delete />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
           </List>
         </main>
+        <Button variant="fab" className={classes.fab} color="secondary"
+          onClick={() => this.props.history.push('/highlights/new')}
+        >
+          <Add />
+        </Button>
       </React.Fragment>
     );
   }

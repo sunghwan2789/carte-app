@@ -1,11 +1,11 @@
 import Highlight from '../models/Highlight';
 import * as uuidv4 from 'uuid/v4';
-import { IObservableArray, action } from 'mobx';
+import { IObservableArray, action, observable } from 'mobx';
 import { serializable, list, object } from 'serializr';
 
 class HighlightStore {
   @serializable(list(object(Highlight)))
-  highlights: IObservableArray<Highlight>
+  highlights: IObservableArray<Highlight> = observable.array()
 
   @action
   add(highlight: Highlight) {

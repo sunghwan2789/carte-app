@@ -85,12 +85,14 @@ class HighlightNew extends React.Component<RouteComponentProps<any> & WithStyles
     return ret;
   }
 
-  handleSave = () => {
+  handleSave = (e: any) => {
+    e.preventDefault();
     let item = new Highlight();
-    item.name = this.name;
-    item.words = this.words;
+    item.name = e.target.name.value;
+    item.words = e.target.words.value.split('\n').map((i: string) => i.trim()).filter((i: string) => i.length);
     item.style = this.style;
     highlightStore.add(item);
+    this.props.history.goBack();
   }
 
   @action
@@ -159,10 +161,10 @@ class HighlightNew extends React.Component<RouteComponentProps<any> & WithStyles
         </AppBar>
         <List>
           <ListItem>
-            <TextField label="이름" fullWidth />
+            <TextField name="name" label="이름" fullWidth />
           </ListItem>
           <ListItem divider>
-            <TextField label="단어" multiline fullWidth />
+            <TextField name="words" label="단어" multiline fullWidth />
           </ListItem>
         </List>
         <List subheader={<ListSubheader disableSticky>스타일</ListSubheader>}>
