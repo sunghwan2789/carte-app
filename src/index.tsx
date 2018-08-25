@@ -5,6 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { configure } from 'mobx';
 import 'core-js/fn/array/find';
 import 'core-js/fn/array/find-index';
+import 'core-js/fn/array/from';
 import 'url-search-params-polyfill';
 
 configure({
