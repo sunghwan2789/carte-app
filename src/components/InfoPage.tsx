@@ -13,6 +13,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Refresh from '@material-ui/icons/Refresh';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 
 const styles = (theme: Theme) => createStyles({
   heading: {
@@ -66,7 +67,7 @@ class InfoPage extends React.Component<RouteComponentProps<any> & WithStyles<typ
               <div>
                 <Typography paragraph>
                   교육청에서 발췌한 알레르기 정보에요.
-                  {/*<Link to="/highlights">*/}하이라이트{/*</Link>*/} 기능으로 주의할 음식을 표시해보세요!
+                  {<Link to="/highlights">하이라이트</Link>} 기능으로 주의할 음식을 표시해보세요!
                   미리 확인하고 아프지 맙시다...
                 </Typography>
                 <Grid container>
@@ -105,6 +106,20 @@ class InfoPage extends React.Component<RouteComponentProps<any> & WithStyles<typ
                   <strong>전국 학교 식단표</strong>는 나이스에서 식단표를 가져옵니다.
                   이 식단표를 작성하시는 분께서 "고"나 "조" 같은 이해할 수 없는 글자를 입력하신 것으로 보이네요...
                   대충 걸러서 봐주세요... ㅎ하.
+                </Typography>
+              </div>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+              <Typography className={classes.heading}>하이라이트는 어떤 순서로 적용되나요?</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <div>
+                <Typography paragraph>
+                {<Link to="/highlights">하이라이트</Link>}는 오름차순으로 적용합니다.
+                즉, 위에 있는 규칙을 우선하여 적용하는 것이죠.
+                차후, 목록 재정렬 기능을 추가할 예정입니다.
                 </Typography>
               </div>
             </ExpansionPanelDetails>
