@@ -171,15 +171,16 @@ class HighlightNew extends React.Component<RouteComponentProps<any> & WithStyles
         </AppBar>
         <List>
           <ListItem>
-            <TextField name="name" label="이름" fullWidth />
+            <TextField name="name" label="이름" fullWidth required />
           </ListItem>
-          <ListItem divider>
-            <TextField name="words" label="단어" multiline fullWidth />
+          <ListItem>
+            <TextField name="words" label="단어" helperText="줄바꿈으로 여러 단어를 사용할 수 있습니다." multiline fullWidth />
           </ListItem>
+          <Divider />
         </List>
         <List subheader={<ListSubheader disableSticky>스타일</ListSubheader>}>
           <ListItem>
-            <ListItemText primary="미리보기" primaryTypographyProps={{ style: { ...this.style, display: 'inline' } }} />
+            <ListItemText primary={<span style={this.style}>미리보기</span>} />
           </ListItem>
           <ListItem button onClick={() => this.pickColor('배경색 선택', 'backgroundColor')}>
             <ListItemText primary="배경색" secondary={this.backgroundColor} />

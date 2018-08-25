@@ -53,8 +53,7 @@ class HighlightsPage extends React.Component<RouteComponentProps<any> & WithStyl
               <ListItem button divider key={i.id}
                 onClick={() => this.props.history.push(`/highlights/${i.id}/edit`)}
               >
-                <ListItemText primary={i.name} secondary={i.words.join(', ')}
-                  primaryTypographyProps={{ style: {...i.style, display: 'inline' } }} />
+                <ListItemText primary={<span style={i.style}>{i.name}</span>} secondary={i.words.join(', ')} />
                 <ListItemSecondaryAction>
                   <IconButton onClick={() => this.deleteHighlight(i)}>
                     <Delete />
