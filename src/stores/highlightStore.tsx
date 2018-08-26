@@ -26,7 +26,7 @@ class HighlightStore {
 
   @action
   delete(highlight: Highlight) {
-    this.highlights.splice(this.highlights.findIndex(i => i.id === highlight.id));
+    this.highlights.splice(this.highlights.findIndex(i => i.id === highlight.id), 1);
   }
 }
 
