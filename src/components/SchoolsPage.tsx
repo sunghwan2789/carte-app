@@ -39,7 +39,7 @@ class SchoolsPage extends React.Component<RouteComponentProps<any> & WithStyles<
     return (
       <React.Fragment>
         <AppBar position="sticky">
-          <Toolbar>
+          <Toolbar disableGutters variant="dense">
             <IconButton color="inherit" onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>

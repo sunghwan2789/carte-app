@@ -159,7 +159,7 @@ class HighlightNew extends React.Component<RouteComponentProps<any> & WithStyles
     return (
       <form onSubmit={this.handleSave}>
         <AppBar position="sticky">
-          <Toolbar>
+          <Toolbar disableGutters variant="dense">
             <IconButton color="inherit" onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>

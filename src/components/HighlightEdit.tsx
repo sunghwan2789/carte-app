@@ -161,7 +161,7 @@ class HighlightEdit extends React.Component<RouteComponentProps<any> & WithStyle
     return (
       <form onSubmit={this.handleSave}>
         <AppBar position="sticky">
-          <Toolbar>
+          <Toolbar disableGutters variant="dense">
             <IconButton color="inherit" onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>
