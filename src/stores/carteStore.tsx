@@ -11,7 +11,10 @@ import { serializable, object, map, list, primitive, date, serialize, deserializ
 
 export class CarteStore {
   @observable
-  currentDate: dayjs.Dayjs = dayjs().startOf('day');
+  currentDate: dayjs.Dayjs =
+    dayjs().hour() < 19
+    ? dayjs().startOf('day')
+    : dayjs().startOf('day').add(1, 'day');
 
   @serializable(primitive())
   @observable

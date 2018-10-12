@@ -31,8 +31,9 @@ class CarteDay extends React.Component<IProps & WithStyles<typeof styles>> {
   @observable
   currentMealName: string =
     dayjs().hour() < 9 ? '조식'
-    : dayjs().hour() < 14 ? '중식'
-    : '석식';
+    : dayjs().hour() < 13 ? '중식'
+    : dayjs().hour() < 19 ? '석식'
+    : '조식';
 
   @action
   handleMealChange = (name: string) => {
