@@ -13,6 +13,7 @@ const styles = createStyles({
   btn: {
     width: 32,
     height: 32,
+    padding: '0 12px',
     color: "inherit",
   },
 });

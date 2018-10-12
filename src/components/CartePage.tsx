@@ -141,13 +141,13 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               </ListItemIcon>
               <ListItemText primary="일간" />
             </ListItem>
-            <ListItem button onClick={() => alert('미구현이에요~~~\n많이들 필요하시면 만들게요~~~') && this.handleUnitChange('week')}>
+            <ListItem button onClick={() => alert('미구현이에요~~~\n많이들 필요하시면 만들게요~~~') /*&& this.handleUnitChange('week')*/}>
               <ListItemIcon>
                 <ViewWeek />
               </ListItemIcon>
               <ListItemText primary="주간" />
             </ListItem>
-            <ListItem button onClick={() => alert('미구현이에요~~~\n많이들 필요하시면 만들게요~~~') && this.handleUnitChange('month')}>
+            <ListItem button onClick={() => alert('미구현이에요~~~\n많이들 필요하시면 만들게요~~~') /*&& this.handleUnitChange('month')*/}>
               <ListItemIcon>
                 <ViewModule />
               </ListItemIcon>
@@ -160,7 +160,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
               </ListItemIcon>
               <ListItemText primary="하이라이트" />
             </ListItem>
-            <ListItem button onClick={() => alert('제작중이에요~~~') && this.handleNavigate('/theme')}>
+            <ListItem button onClick={() => alert('제작중이에요~~~') /*&& this.handleNavigate('/theme')*/}>
               <ListItemIcon>
                 <Palette />
               </ListItemIcon>
