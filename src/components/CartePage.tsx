@@ -92,7 +92,7 @@ class CartePage extends React.Component<RouteComponentProps<any> & WithStyles<ty
     return (
       <React.Fragment>
         <AppBar position="static">
-          <Toolbar disableGutters variant="dense">
+          <Toolbar>
             <IconButton color="inherit" onClick={this.toggleDrawer}>
               <Menu />
             </IconButton>

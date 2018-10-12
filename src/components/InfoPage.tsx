@@ -29,7 +29,7 @@ class InfoPage extends React.Component<RouteComponentProps<any> & WithStyles<typ
     return (
       <div>
         <AppBar position="sticky">
-          <Toolbar disableGutters variant="dense">
+          <Toolbar>
             <IconButton color="inherit" onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>

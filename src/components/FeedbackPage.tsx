@@ -45,7 +45,7 @@ class InquiryPage extends React.Component<RouteComponentProps<any> & WithStyles<
     return (
       <form action="/carte/send.php" method="post" onSubmit={this.handleSend}>
         <AppBar position="sticky">
-          <Toolbar disableGutters variant="dense">
+          <Toolbar>
             <IconButton color="inherit" onClick={this.props.history.goBack}>
               <ArrowBack />
             </IconButton>
