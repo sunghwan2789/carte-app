@@ -2,5 +2,9 @@
   "/api": {
     "target": "https://bloodcat.com/carte/",
     "changeOrigin": true
+  },
+  "/carte/send.php": {
+    "target": "https://bloodcat.com/",
+    "changeOrigin": true
   }
 }

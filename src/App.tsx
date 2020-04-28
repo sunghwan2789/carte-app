@@ -21,7 +21,7 @@ export default function App() {
         <Route exact path="/highlights/new" component={HighlightNew} />
         <Route exact path="/highlights/:id/edit" component={HighlightEdit} /> */}
           <Route exact path="/info" component={InfoPage} />
-          {/* <Route exact path="/feedback" component={FeedbackPage} /> */}
+          <Route exact path="/feedback" component={FeedbackPage} />
         </Switch>
       </BrowserRouter>
     </>
