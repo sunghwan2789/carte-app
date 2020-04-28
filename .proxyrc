@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://bloodcat.com/carte/",
+    "changeOrigin": true
+  }
+}
