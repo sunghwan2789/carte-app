@@ -11,14 +11,6 @@ import ArrowBack from '@material-ui/icons/ArrowBack';
 import { useHistory } from 'react-router-dom';
 import { delay } from '../utils';
 
-type SchoolDto = {
-  school_code: string;
-  domain_code: string;
-  course_code: string;
-  name: string;
-  address: string;
-};
-
 export default function SchoolsPage() {
   const history = useHistory();
   const [query, setQuery] = useState('');
