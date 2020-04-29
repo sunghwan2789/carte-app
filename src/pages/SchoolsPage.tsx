@@ -10,11 +10,13 @@ import Input from '@material-ui/core/Input';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import { useHistory } from 'react-router-dom';
 import { delay } from '../utils';
+import { useSchool } from '../contexts/SchoolContext';
 
 export default function SchoolsPage() {
   const history = useHistory();
   const [query, setQuery] = useState('');
   const [schools, setSchools] = useState<SchoolDto[]>([]);
+  const [_, setSchool] = useSchool();
 
   useEffect(() => {
     let isCanceled = false;
@@ -48,7 +50,7 @@ export default function SchoolsPage() {
   }, [query]);
 
   function handleSchoolSelect(school: SchoolDto) {
-    // TODO: set School Context value
+    setSchool(school);
     history.push('/');
   }
 

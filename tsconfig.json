@@ -5,7 +5,7 @@
     "moduleResolution": "Node",
     "target": "ES2019",
     "jsx": "react",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
       "*": ["node_modules/*"]
     }
