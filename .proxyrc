@@ -1,6 +1,6 @@
 {
-  "/api": {
-    "target": "https://bloodcat.com/carte/",
+  "/carte/api": {
+    "target": "https://bloodcat.com/",
     "changeOrigin": true
   },
   "/carte/send.php": {
