@@ -36,7 +36,7 @@ export default function CartePage() {
   const [currentDate, setCurrentDate] = useState(
     dayjs().hour() < 19
       ? dayjs().startOf('day')
-      : dayjs().startOf('day').add(1, 'day')
+      : dayjs().startOf('day').add(1, 'day'),
   );
   const [navigationUnit, setNavigationUnit] = useState<OpUnitType>('day');
   const history = useHistory();
@@ -56,7 +56,7 @@ export default function CartePage() {
       return `/carte/api/v1/cartes/${domain_code}/${course_code}/${school_code}?${new URLSearchParams(
         {
           date: `${year}-${month}`,
-        }
+        },
       )}`;
     }
 
@@ -99,7 +99,7 @@ export default function CartePage() {
 
     // TODO: fetch cartes incrementally from startDate to endDate
     const observingCartes = Array.from(getObservingDates()).map(
-      (date) => cartes.find((carte) => date.isSame(carte.date, 'date'))!
+      (date) => cartes.find((carte) => date.isSame(carte.date, 'date'))!,
     );
 
     setCurrentCartes(observingCartes);
@@ -192,7 +192,7 @@ export default function CartePage() {
             onClick={
               () =>
                 alert(
-                  '미구현이에요~~~\n많이들 필요하시면 만들게요~~~'
+                  '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
                 ) /*&& handleUnitChange('week')*/
             }
           >
@@ -206,7 +206,7 @@ export default function CartePage() {
             onClick={
               () =>
                 alert(
-                  '미구현이에요~~~\n많이들 필요하시면 만들게요~~~'
+                  '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
                 ) /*&& handleUnitChange('month')*/
             }
           >

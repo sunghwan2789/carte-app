@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) =>
       bottom: theme.spacing(2),
       right: theme.spacing(2),
     },
-  })
+  }),
 );
 
 export default function HighlightsPage() {

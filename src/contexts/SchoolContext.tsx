@@ -31,7 +31,7 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
 
 export function useSchool(): [
   SchoolState,
-  Dispatch<SetStateAction<SchoolState>>
+  Dispatch<SetStateAction<SchoolState>>,
 ] {
   const context = useContext(SchoolContext);
   if (!context) {

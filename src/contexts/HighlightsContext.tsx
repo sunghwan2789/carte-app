@@ -24,7 +24,7 @@ export const HighlightsContext = createContext<{
 
 function highlightsReducer(
   state: HighlightsState,
-  action: Action
+  action: Action,
 ): HighlightsState {
   switch (action.type) {
     case 'CREATE': {
@@ -39,7 +39,7 @@ function highlightsReducer(
     case 'DELETE': {
       return state!.splice(
         state!.findIndex((highlight) => highlight.id === action.highlight.id),
-        1
+        1,
       );
     }
   }

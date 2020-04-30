@@ -22,7 +22,7 @@ export default function HighlightEdit() {
   const [highlights, dispatch] = useHighlights();
   const highlight = useMemo(
     () => highlights?.find((highlight) => highlight.id === highlightId),
-    [highlightId, highlights]
+    [highlightId, highlights],
   );
 
   const [name, setName] = useState(highlight?.name);
@@ -132,7 +132,7 @@ export default function HighlightEdit() {
                 e.target.value
                   .split('\n')
                   .map((word) => word.trim())
-                  .filter(Boolean)
+                  .filter(Boolean),
               )
             }
           />

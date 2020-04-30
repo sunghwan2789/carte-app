@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
       padding: '0 12px',
       color: 'inherit',
     },
-  })
+  }),
 );
 
 type NavigateButtonsProps = {

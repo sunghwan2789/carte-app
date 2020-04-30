@@ -31,7 +31,7 @@ export default function SchoolsPage() {
       const result = await fetch(
         `/carte/api/v1/schools?${new URLSearchParams({
           q: query,
-        })}`
+        })}`,
       );
       if (!result.ok || isCanceled) {
         return;

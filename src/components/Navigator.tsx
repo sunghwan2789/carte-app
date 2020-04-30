@@ -21,7 +21,7 @@ const useStyles = makeStyles(() =>
     date: {
       color: 'inherit',
     },
-  })
+  }),
 );
 
 export default function Navigator({

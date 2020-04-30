@@ -23,7 +23,7 @@ const useStyles = makeStyles(() =>
     root: {
       overflow: 'hidden',
     },
-  })
+  }),
 );
 
 export default function CarteDay({ carte, isLoading }: CarteDayProps) {
@@ -43,7 +43,7 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
   });
   const meal = useMemo(
     () => carte?.meals.find((meal) => meal.name === mealName),
-    [carte, mealName]
+    [carte, mealName],
   );
 
   if (isLoading) {
