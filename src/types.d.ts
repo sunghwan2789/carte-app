@@ -15,3 +15,10 @@ type MealDto = {
   name: string;
   foods: string[];
 };
+
+type Highlight = {
+  id: string;
+  name: string;
+  words: string[];
+  style: never;
+};
