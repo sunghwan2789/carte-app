@@ -9,24 +9,27 @@ import HighlightEdit from './pages/HighlightEdit';
 import InfoPage from './pages/InfoPage';
 import { CssBaseline } from '@material-ui/core';
 import { SchoolProvider } from './contexts/SchoolContext';
+import { HighlightsProvider } from './contexts/HighlightsContext';
 
 export default function App() {
   return (
     <>
       <CssBaseline />
-      <SchoolProvider>
-        <BrowserRouter basename="/">
-          <Switch>
-            <Route exact path="/" component={CartePage} />
-            <Route exact path="/schools" component={SchoolsPage} />
-            {/* <Route exact path="/highlights" component={HighlightsPage} /> */}
-            {/* <Route exact path="/highlights/new" component={HighlightNew} /> */}
-            {/* <Route exact path="/highlights/:id/edit" component={HighlightEdit} /> */}
-            <Route exact path="/info" component={InfoPage} />
-            <Route exact path="/feedback" component={FeedbackPage} />
-          </Switch>
-        </BrowserRouter>
-      </SchoolProvider>
+      <HighlightsProvider>
+        <SchoolProvider>
+          <BrowserRouter basename="/">
+            <Switch>
+              <Route exact path="/" component={CartePage} />
+              <Route exact path="/schools" component={SchoolsPage} />
+              {/* <Route exact path="/highlights" component={HighlightsPage} /> */}
+              {/* <Route exact path="/highlights/new" component={HighlightNew} /> */}
+              {/* <Route exact path="/highlights/:id/edit" component={HighlightEdit} /> */}
+              <Route exact path="/info" component={InfoPage} />
+              <Route exact path="/feedback" component={FeedbackPage} />
+            </Switch>
+          </BrowserRouter>
+        </SchoolProvider>
+      </HighlightsProvider>
     </>
   );
 }
