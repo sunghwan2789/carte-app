@@ -87,7 +87,7 @@ export default function CartePage() {
     }
 
     // TODO: get carte from cache faster
-    if (!cartes.some((carte) => currentDate.isSame(carte.date))) {
+    if (!cartes.some((carte) => currentDate.isSame(carte.date, 'date'))) {
       fetchCartes();
     }
 
@@ -111,7 +111,7 @@ export default function CartePage() {
 
     // TODO: fetch cartes incrementally from startDate to endDate
     const observingCartes = Array.from(getObservingDates()).map(
-      (date) => cartes.find((carte) => date.isSame(carte.date))!
+      (date) => cartes.find((carte) => date.isSame(carte.date, 'date'))!
     );
 
     setCurrentCartes(observingCartes);
