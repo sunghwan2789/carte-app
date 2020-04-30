@@ -33,7 +33,7 @@ import {
   Link,
   useHistory,
 } from 'react-router-dom';
-import dayjs, { Dayjs, UnitType } from 'dayjs';
+import dayjs, { Dayjs, OpUnitType } from 'dayjs';
 import CarteDay from '../components/CarteDay';
 import NavigateButtons from '../components/NavigateButtons';
 import Navigator from '../components/Navigator';
@@ -50,7 +50,7 @@ export default function CartePage() {
       ? dayjs().startOf('day')
       : dayjs().startOf('day').add(1, 'day')
   );
-  const [navigationUnit, setNavigationUnit] = useState<UnitType>('day');
+  const [navigationUnit, setNavigationUnit] = useState<OpUnitType>('day');
   const history = useHistory();
   const [currentCartes, setCurrentCartes] = useState<CarteDto[]>([]);
 
@@ -135,7 +135,7 @@ export default function CartePage() {
   function handleNavigate(url: string) {
     history.push(url);
   }
-  function handleUnitChange(unit: UnitType) {
+  function handleUnitChange(unit: OpUnitType) {
     setNavigationUnit(unit);
     toggleDrawer();
   }
