@@ -1,18 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import {
-  WithStyles,
-  Theme,
-  createStyles,
-  withStyles,
-  makeStyles,
-} from '@material-ui/core/styles';
-import {
-  RouteComponentProps,
-  withRouter,
-  useHistory,
-  useRouteMatch,
-  useParams,
-} from 'react-router-dom';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { useHistory, useParams } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -44,7 +32,6 @@ export default function HighlightEdit() {
   const history = useHistory();
   const [colorPickerTitle, setColorPickerTitle] = useState<string>();
   const [colorPickerName, setColorPickerName] = useState<string>();
-  const classes = useStyles();
 
   function handleSave(e: any) {
     e.preventDefault();
@@ -204,11 +191,3 @@ export default function HighlightEdit() {
     </form>
   );
 }
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    list: {
-      backgroundColor: theme.palette.background.paper,
-    },
-  })
-);

@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {
-  WithStyles,
-  Theme,
-  createStyles,
-  withStyles,
-} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -26,13 +20,7 @@ import Palette from '@material-ui/icons/Palette';
 import Feedback from '@material-ui/icons/Feedback';
 import Info from '@material-ui/icons/Info';
 import Menu from '@material-ui/icons/Menu';
-import {
-  withRouter,
-  RouteComponentProps,
-  Redirect,
-  Link,
-  useHistory,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import dayjs, { Dayjs, OpUnitType } from 'dayjs';
 import CarteDay from '../components/CarteDay';
 import NavigateButtons from '../components/NavigateButtons';
