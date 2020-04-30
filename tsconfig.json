@@ -4,12 +4,8 @@
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "target": "ES2019",
-    "jsx": "react",
-    "baseUrl": "./src",
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "jsx": "react"
   },
-  "exclude": ["node_modules", "build", ".cache"],
+  "exclude": ["node_modules", "build", ".cache", ".parcel-cache"],
   "include": ["src/**/*"]
 }
