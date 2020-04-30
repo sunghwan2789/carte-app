@@ -14,6 +14,10 @@ import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import dayjs, { Dayjs, OpUnitType } from 'dayjs';
 import DayPicker from 'react-day-picker';
 import DayPickerKoreanUtils from '../lib/DayPickerKoreanUtils';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 
 type NavigatorProps = {
   currentDate: Dayjs;
@@ -28,7 +32,6 @@ export default function Navigator({
 }: NavigatorProps) {
   const [isDayPicking, setIsDayPicking] = useState(false);
   const classes = useStyles();
-  const dayPickerRef = useRef<HTMLElement>();
 
   function toggleDayPicker() {
     setIsDayPicking(!isDayPicking);
@@ -74,7 +77,6 @@ export default function Navigator({
   return (
     <>
       <Button
-        buttonRef={dayPickerRef}
         fullWidth
         color="inherit"
         style={{ justifyContent: 'start', padding: 0 }}
@@ -83,27 +85,29 @@ export default function Navigator({
         <Typography variant="h6" className={classes.date}>
           {formatDate()}
         </Typography>
-        {isDayPicking ? <ArrowDropUp /> : <ArrowDropDown />}
       </Button>
-      <Popper
-        open={isDayPicking}
-        anchorEl={dayPickerRef.current}
-        placement="bottom-start"
-        modifiers={{
-          flip: {
-            enabled: false,
-          },
-        }}
-      >
-        <Paper>
+      <Dialog open={isDayPicking}>
+        <DialogTitle>식단표 기준 날짜 선택</DialogTitle>
+        <DialogContent>
           <DayPicker
             selectedDays={currentDate.toDate()}
             initialMonth={currentDate.toDate()}
             localeUtils={DayPickerKoreanUtils}
             onDayClick={handleDayPick}
           />
-        </Paper>
-      </Popper>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={toggleDayPicker} color="secondary">
+            취소
+          </Button>
+          <Button
+            onClick={() => handleDayPick(dayjs().toDate())}
+            color="primary"
+          >
+            오늘
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
