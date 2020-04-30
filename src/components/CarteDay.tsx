@@ -32,7 +32,7 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
   const classes = useStyles();
 
   useEffect(() => {
-    setMeal(carte.meals.find((meal) => meal.name === mealName));
+    setMeal(carte?.meals.find((meal) => meal.name === mealName));
   }, [carte, mealName]);
 
   function handleMealChange(mealName: MealName) {
