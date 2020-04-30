@@ -38,7 +38,7 @@ export default function ColorPickDialog({
         <CompactPicker color={color} onChangeComplete={handleChange} />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCancel} color="primary">
+        <Button onClick={handleCancel} color="secondary">
           취소
         </Button>
         <Button onClick={handleOk} color="primary">
