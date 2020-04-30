@@ -16,7 +16,7 @@ type NavigatorProps = {
   handleDateChange?: (date: Dayjs) => void;
 };
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     date: {
       color: 'inherit',

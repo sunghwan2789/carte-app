@@ -16,7 +16,7 @@ export default function SchoolsPage() {
   const history = useHistory();
   const [query, setQuery] = useState('');
   const [schools, setSchools] = useState<SchoolDto[]>([]);
-  const [_, setSchool] = useSchool();
+  const [, setSchool] = useSchool();
 
   useEffect(() => {
     let isCanceled = false;

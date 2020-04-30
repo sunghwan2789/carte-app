@@ -18,7 +18,7 @@ type CarteDayProps = {
 
 type MealName = '조식' | '중식' | '석식';
 
-const useStyles = makeStyles((theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       overflow: 'hidden',
