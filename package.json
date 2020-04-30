@@ -44,6 +44,7 @@
     "@material-ui/icons": "^4.9.1",
     "dayjs": "^1.8.25",
     "react": "^16.13.1",
+    "react-day-picker": "^7.4.8",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "styled-components": "^5.1.0"

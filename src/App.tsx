@@ -17,7 +17,7 @@ export default function App() {
       <SchoolProvider>
         <BrowserRouter basename="/">
           <Switch>
-            {/* <Route exact path="/" component={CartePage} /> */}
+            <Route exact path="/" component={CartePage} />
             <Route exact path="/schools" component={SchoolsPage} />
             {/* <Route exact path="/highlights" component={HighlightsPage} /> */}
             {/* <Route exact path="/highlights/new" component={HighlightNew} /> */}
