@@ -21,58 +21,8 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
-import { CompactPicker, ColorResult } from 'react-color';
-import { DialogProps } from '@material-ui/core/Dialog';
 import { useHighlights } from '../contexts/HighlightsContext';
-
-type ColorPickDialogProps = {
-  title: string;
-  name: string;
-  handleClose: (value?: string) => void;
-};
-
-function ColorPickDialog({
-  title,
-  name,
-  handleClose,
-  ...props
-}: ColorPickDialogProps & DialogProps) {
-  const [color, setColor] = useState('');
-
-  function handleChange(color: ColorResult) {
-    setColor(color.hex);
-  }
-
-  function handleCancel() {
-    handleClose();
-  }
-
-  function handleOk() {
-    handleClose(color);
-  }
-
-  return (
-    <Dialog {...props}>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        <CompactPicker onChangeComplete={handleChange} />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleCancel} color="primary">
-          취소
-        </Button>
-        <Button onClick={handleOk} color="primary">
-          확인
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
+import ColorPickDialog from '../components/ColorPickerDialog';
 
 export default function HighlightNew() {
   const [_, dispatch] = useHighlights();
@@ -80,9 +30,8 @@ export default function HighlightNew() {
   const [words, setWords] = useState<string[]>([]);
   const [style, setStyle] = useState<React.CSSProperties>();
   const history = useHistory();
-  const [colorPickerTitle, setColorPickerTitle] = useState('');
-  const [colorPickerName, setColorPickerName] = useState('');
-  const [isColorPickerPicking, setIsColorPickerPicking] = useState(false);
+  const [colorPickerTitle, setColorPickerTitle] = useState<string>();
+  const [colorPickerName, setColorPickerName] = useState<string>();
   const classes = useStyles();
 
   function handleSave(e: any) {
@@ -110,14 +59,13 @@ export default function HighlightNew() {
   function pickColor(title: string, name: string) {
     setColorPickerTitle(title);
     setColorPickerName(name);
-    setIsColorPickerPicking(true);
   }
 
   function handleColorChange(color?: string) {
-    setIsColorPickerPicking(false);
     if (color) {
-      setStyle({ ...style, [colorPickerName]: color });
+      setStyle({ ...style, [colorPickerName!]: color });
     }
+    setColorPickerName(undefined);
   }
 
   function toggleBackgroundColor() {
@@ -193,7 +141,7 @@ export default function HighlightNew() {
           <ListItemText primary="배경색" secondary={style?.backgroundColor} />
           <ListItemSecondaryAction>
             <Switch
-              checked={!!style?.backgroundColor}
+              checked={Boolean(style?.backgroundColor)}
               onClick={() =>
                 !style?.backgroundColor
                   ? pickColor('배경색 선택', 'backgroundColor')
@@ -206,7 +154,7 @@ export default function HighlightNew() {
           <ListItemText primary="글자색" secondary={style?.color} />
           <ListItemSecondaryAction>
             <Switch
-              checked={!!style?.color}
+              checked={Boolean(style?.color)}
               onClick={() =>
                 !style?.color
                   ? pickColor('글자색 선택', 'color')
@@ -226,9 +174,8 @@ export default function HighlightNew() {
         </ListItem>
       </List>
       <ColorPickDialog
-        open={isColorPickerPicking}
+        open={Boolean(colorPickerName)}
         title={colorPickerTitle}
-        name={colorPickerName}
         handleClose={handleColorChange}
       />
     </form>
