@@ -18,7 +18,7 @@ type MealDto = {
 
 type Highlight = {
   id?: string;
-  name: string;
+  name?: string;
   words: string[];
   style: any;
 };

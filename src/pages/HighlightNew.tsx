@@ -6,7 +6,13 @@ import {
   withStyles,
   makeStyles,
 } from '@material-ui/core/styles';
-import { RouteComponentProps, withRouter, useHistory } from 'react-router-dom';
+import {
+  RouteComponentProps,
+  withRouter,
+  useHistory,
+  useRouteMatch,
+  useParams,
+} from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,10 +31,16 @@ import { useHighlights } from '../contexts/HighlightsContext';
 import ColorPickDialog from '../components/ColorPickerDialog';
 
 export default function HighlightNew() {
-  const [_, dispatch] = useHighlights();
-  const [name, setName] = useState('');
-  const [words, setWords] = useState<string[]>([]);
-  const [style, setStyle] = useState<React.CSSProperties>();
+  const { highlightId } = useParams();
+  const [highlights, dispatch] = useHighlights();
+  const highlight = useMemo(
+    () => highlights?.find((highlight) => highlight.id === highlightId),
+    [highlightId, highlights]
+  );
+
+  const [name, setName] = useState(highlight?.name);
+  const [words, setWords] = useState(highlight?.words ?? []);
+  const [style, setStyle] = useState(highlight?.style as React.CSSProperties);
   const history = useHistory();
   const [colorPickerTitle, setColorPickerTitle] = useState<string>();
   const [colorPickerName, setColorPickerName] = useState<string>();
@@ -36,14 +48,26 @@ export default function HighlightNew() {
 
   function handleSave(e: any) {
     e.preventDefault();
-    dispatch({
-      type: 'CREATE',
-      highlight: {
-        name,
-        words,
-        style,
-      },
-    });
+    if (!highlight) {
+      dispatch({
+        type: 'CREATE',
+        highlight: {
+          name,
+          words,
+          style,
+        },
+      });
+    } else {
+      dispatch({
+        type: 'UPDATE',
+        highlight: {
+          ...highlight,
+          name,
+          words,
+          style,
+        },
+      });
+    }
     history.goBack();
   }
 
@@ -105,7 +129,6 @@ export default function HighlightNew() {
             name="name"
             label="이름"
             fullWidth
-            required
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -117,13 +140,13 @@ export default function HighlightNew() {
             helperText="줄바꿈으로 여러 단어를 사용할 수 있습니다."
             multiline
             fullWidth
-            value={words}
+            value={words.join('\n')}
             onChange={(e) =>
               setWords(
                 e.target.value
                   .split('\n')
-                  .map((i: string) => i.trim())
-                  .filter((i: string) => i.length)
+                  .map((word) => word.trim())
+                  .filter(Boolean)
               )
             }
           />
