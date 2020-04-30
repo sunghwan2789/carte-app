@@ -18,6 +18,14 @@ type CarteDayProps = {
 
 type MealName = '조식' | '중식' | '석식';
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      overflow: 'hidden',
+    },
+  })
+);
+
 export default function CarteDay({ carte, isLoading }: CarteDayProps) {
   const classes = useStyles();
   const [mealName, setMealName] = useState<MealName>(() => {
@@ -92,11 +100,3 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
     );
   }
 }
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      overflow: 'hidden',
-    },
-  })
-);

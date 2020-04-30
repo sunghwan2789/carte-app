@@ -7,6 +7,10 @@ import React, {
 } from 'react';
 
 type HighlightsState = Highlight[] | undefined;
+type Action =
+  | { type: 'CREATE'; highlight: Highlight }
+  | { type: 'UPDATE'; highlight: Highlight }
+  | { type: 'DELETE'; highlight: Highlight };
 
 const initialState: HighlightsState = [];
 
@@ -17,21 +21,6 @@ export const HighlightsContext = createContext<{
   state: initialState,
   dispatch: () => {},
 });
-
-export function HighlightsProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(highlightsReducer, initialState);
-
-  return (
-    <HighlightsContext.Provider value={{ state: state, dispatch }}>
-      {children}
-    </HighlightsContext.Provider>
-  );
-}
-
-type Action =
-  | { type: 'CREATE'; highlight: Highlight }
-  | { type: 'UPDATE'; highlight: Highlight }
-  | { type: 'DELETE'; highlight: Highlight };
 
 function highlightsReducer(
   state: HighlightsState,
@@ -54,6 +43,16 @@ function highlightsReducer(
       );
     }
   }
+}
+
+export function HighlightsProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(highlightsReducer, initialState);
+
+  return (
+    <HighlightsContext.Provider value={{ state: state, dispatch }}>
+      {children}
+    </HighlightsContext.Provider>
+  );
 }
 
 export function useHighlights(): [HighlightsState, Dispatch<Action>] {

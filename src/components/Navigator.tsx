@@ -16,6 +16,14 @@ type NavigatorProps = {
   handleDateChange?: (date: Dayjs) => void;
 };
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    date: {
+      color: 'inherit',
+    },
+  })
+);
+
 export default function Navigator({
   currentDate,
   navigateUnit,
@@ -102,11 +110,3 @@ export default function Navigator({
     </>
   );
 }
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    date: {
-      color: 'inherit',
-    },
-  })
-);

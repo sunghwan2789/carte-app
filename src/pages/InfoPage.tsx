@@ -13,6 +13,15 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Refresh from '@material-ui/icons/Refresh';
 import { Link, useHistory } from 'react-router-dom';
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  })
+);
+
 export default function InfoPage() {
   const history = useHistory();
   const classes = useStyles();
@@ -136,12 +145,3 @@ export default function InfoPage() {
     </div>
   );
 }
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  })
-);

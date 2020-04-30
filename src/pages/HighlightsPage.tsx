@@ -15,6 +15,19 @@ import Fab from '@material-ui/core/Fab';
 import Add from '@material-ui/icons/Add';
 import { useHighlights } from '../contexts/HighlightsContext';
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    list: {
+      backgroundColor: theme.palette.background.paper,
+    },
+    fab: {
+      position: 'absolute',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+  })
+);
+
 export default function HighlightsPage() {
   const [highlights, dispatch] = useHighlights();
   const classes = useStyles();
@@ -68,16 +81,3 @@ export default function HighlightsPage() {
     </>
   );
 }
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    list: {
-      backgroundColor: theme.palette.background.paper,
-    },
-    fab: {
-      position: 'absolute',
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
-    },
-  })
-);

@@ -4,6 +4,22 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      marginLeft: 8,
+      marginRight: 8,
+      display: 'flex',
+    },
+    btn: {
+      width: 32,
+      height: 32,
+      padding: '0 12px',
+      color: 'inherit',
+    },
+  })
+);
+
 type NavigateButtonsProps = {
   handleBackward?: () => void;
   handleForward?: () => void;
@@ -26,19 +42,3 @@ export default function NavigateButtons({
     </div>
   );
 }
-
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    root: {
-      marginLeft: 8,
-      marginRight: 8,
-      display: 'flex',
-    },
-    btn: {
-      width: 32,
-      height: 32,
-      padding: '0 12px',
-      color: 'inherit',
-    },
-  })
-);
