@@ -21,7 +21,7 @@ export default function App() {
             <Switch>
               <Route exact path="/" component={CartePage} />
               <Route exact path="/schools" component={SchoolsPage} />
-              {/* <Route exact path="/highlights" component={HighlightsPage} /> */}
+              <Route exact path="/highlights" component={HighlightsPage} />
               {/* <Route exact path="/highlights/new" component={HighlightNew} /> */}
               {/* <Route exact path="/highlights/:id/edit" component={HighlightEdit} /> */}
               <Route exact path="/info" component={InfoPage} />
