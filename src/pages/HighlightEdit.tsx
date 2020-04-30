@@ -30,7 +30,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { useHighlights } from '../contexts/HighlightsContext';
 import ColorPickDialog from '../components/ColorPickerDialog';
 
-export default function HighlightNew() {
+export default function HighlightEdit() {
   const { highlightId } = useParams();
   const [highlights, dispatch] = useHighlights();
   const highlight = useMemo(

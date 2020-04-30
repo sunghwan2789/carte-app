@@ -4,7 +4,7 @@ import CartePage from './pages/CartePage';
 import SchoolsPage from './pages/SchoolsPage';
 import HighlightsPage from './pages/HighlightsPage';
 import FeedbackPage from './pages/FeedbackPage';
-import HighlightNew from './pages/HighlightNew';
+import HighlightEdit from './pages/HighlightEdit';
 import InfoPage from './pages/InfoPage';
 import { CssBaseline } from '@material-ui/core';
 import { SchoolProvider } from './contexts/SchoolContext';
@@ -21,11 +21,11 @@ export default function App() {
               <Route exact path="/" component={CartePage} />
               <Route exact path="/schools" component={SchoolsPage} />
               <Route exact path="/highlights" component={HighlightsPage} />
-              <Route exact path="/highlights/new" component={HighlightNew} />
+              <Route exact path="/highlights/edit" component={HighlightEdit} />
               <Route
                 exact
-                path="/highlights/:highlightId/edit"
-                component={HighlightNew}
+                path="/highlights/edit/:highlightId"
+                component={HighlightEdit}
               />
               <Route exact path="/info" component={InfoPage} />
               <Route exact path="/feedback" component={FeedbackPage} />
