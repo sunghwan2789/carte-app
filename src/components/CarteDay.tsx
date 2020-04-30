@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -19,6 +19,7 @@ type CarteDayProps = {
 type MealName = '조식' | '중식' | '석식';
 
 export default function CarteDay({ carte, isLoading }: CarteDayProps) {
+  const classes = useStyles();
   const [mealName, setMealName] = useState<MealName>(() => {
     const hour = dayjs().hour();
 
@@ -32,16 +33,10 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
       return '조식';
     }
   });
-  const [meal, setMeal] = useState<MealDto>();
-  const classes = useStyles();
-
-  useEffect(() => {
-    setMeal(carte?.meals.find((meal) => meal.name === mealName));
-  }, [carte, mealName]);
-
-  function handleMealChange(mealName: MealName) {
-    setMealName(mealName);
-  }
+  const meal = useMemo(
+    () => carte?.meals.find((meal) => meal.name === mealName),
+    [carte, mealName]
+  );
 
   if (isLoading) {
     return (
@@ -63,7 +58,7 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Tabs value={mealName} onChange={(e, v) => handleMealChange(v)}>
+          <Tabs value={mealName} onChange={(e, v) => setMealName(v)}>
             {carte.meals.map((meal) => (
               <Tab key={meal.name} value={meal.name} label={meal.name} />
             ))}
