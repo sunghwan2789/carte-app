@@ -19,15 +19,19 @@ type CarteDayProps = {
 type MealName = '조식' | '중식' | '석식';
 
 export default function CarteDay({ carte, isLoading }: CarteDayProps) {
-  const [mealName, setMealName] = useState<MealName>(
-    dayjs().hour() < 9
-      ? '조식'
-      : dayjs().hour() < 13
-      ? '중식'
-      : dayjs().hour() < 19
-      ? '석식'
-      : '조식'
-  );
+  const [mealName, setMealName] = useState<MealName>(() => {
+    const hour = dayjs().hour();
+
+    if (hour < 9) {
+      return '조식';
+    } else if (hour < 13) {
+      return '중식';
+    } else if (hour < 19) {
+      return '석식';
+    } else {
+      return '조식';
+    }
+  });
   const [meal, setMeal] = useState<MealDto>();
   const classes = useStyles();
 
