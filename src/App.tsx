@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { CssBaseline } from '@material-ui/core';
 import CartePage from './pages/CartePage';
 import SchoolsPage from './pages/SchoolsPage';
 import HighlightsPage from './pages/HighlightsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import HighlightEdit from './pages/HighlightEdit';
 import InfoPage from './pages/InfoPage';
-import { CssBaseline } from '@material-ui/core';
 import { SchoolProvider } from './contexts/SchoolContext';
 import { HighlightsProvider } from './contexts/HighlightsContext';
 
