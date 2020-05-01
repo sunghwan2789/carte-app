@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-type HighlightsState = Highlight[] | undefined;
-type Action =
+type HighlightsState = Highlight[];
+type HighlightsAction =
   | { type: 'CREATE'; highlight: Highlight }
   | { type: 'UPDATE'; highlight: Highlight }
   | { type: 'DELETE'; highlight: Highlight };
@@ -17,7 +17,7 @@ const initialState: HighlightsState = [];
 
 export const HighlightsContext = createContext<{
   state: HighlightsState;
-  dispatch: Dispatch<Action>;
+  dispatch: Dispatch<HighlightsAction>;
 }>({
   state: initialState,
   dispatch: () => { },
@@ -25,7 +25,7 @@ export const HighlightsContext = createContext<{
 
 function highlightsReducer(
   state: HighlightsState,
-  action: Action,
+  action: HighlightsAction,
 ): HighlightsState {
   switch (action.type) {
     case 'CREATE': {
@@ -34,16 +34,19 @@ function highlightsReducer(
         id: uuidv4(),
       };
 
-      return [...state!, highlight];
+      return [...state, highlight];
     }
     case 'UPDATE': {
-      throw new Error('not implemented');
+      const highlight = state.find((i) => i.id === action.highlight.id);
+      Object.assign(highlight, action.highlight);
+      return state;
     }
     case 'DELETE': {
-      return state!.splice(
-        state!.findIndex((highlight) => highlight.id === action.highlight.id),
+      state.splice(
+        state.findIndex((highlight) => highlight.id === action.highlight.id),
         1,
       );
+      return state;
     }
     default: {
       throw new Error('Unhandled action type');
@@ -61,7 +64,7 @@ export function HighlightsProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useHighlights(): [HighlightsState, Dispatch<Action>] {
+export function useHighlights(): [HighlightsState, Dispatch<HighlightsAction>] {
   const context = useContext(HighlightsContext);
   if (!context) {
     throw new Error('useHighlights must be used within HighlightsProvider');
