@@ -1,4 +1,11 @@
-import React, { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+  useEffect,
+} from 'react';
 
 type SchoolState = SchoolDto | undefined;
 
@@ -12,9 +19,26 @@ export const SchoolContext = createContext<{
   setSchool: () => { },
 });
 
+const cacheKey = 'carte-v2-school';
+
+function init(): SchoolState {
+  const cache = localStorage.getItem(cacheKey);
+  if (cache) {
+    return JSON.parse(cache);
+  }
+  return initialState;
+}
+
 export function SchoolProvider({ children }: { children: React.ReactNode }) {
-  // TODO: load school from localStorage
-  const [school, setSchool] = useState(initialState);
+  const [school, setSchool] = useState(init);
+
+  useEffect(() => {
+    if (school) {
+      localStorage.setItem(cacheKey, JSON.stringify(school));
+    } else {
+      localStorage.removeItem(cacheKey);
+    }
+  }, [school]);
 
   return (
     <SchoolContext.Provider value={{ school, setSchool }}>

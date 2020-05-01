@@ -4,6 +4,7 @@ import React, {
   ReactNode,
   useContext,
   useReducer,
+  useEffect,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,6 +24,16 @@ export const HighlightsContext = createContext<{
   dispatch: () => { },
 });
 
+const cacheKey = 'carte-v2-highlights';
+
+function init(): HighlightsState {
+  const cache = localStorage.getItem(cacheKey);
+  if (cache) {
+    return JSON.parse(cache);
+  }
+  return initialState;
+}
+
 function highlightsReducer(
   state: HighlightsState,
   action: HighlightsAction,
@@ -39,14 +50,14 @@ function highlightsReducer(
     case 'UPDATE': {
       const highlight = state.find((i) => i.id === action.highlight.id);
       Object.assign(highlight, action.highlight);
-      return state;
+      return [...state];
     }
     case 'DELETE': {
       state.splice(
         state.findIndex((highlight) => highlight.id === action.highlight.id),
         1,
       );
-      return state;
+      return [...state];
     }
     default: {
       throw new Error('Unhandled action type');
@@ -55,7 +66,11 @@ function highlightsReducer(
 }
 
 export function HighlightsProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(highlightsReducer, initialState);
+  const [state, dispatch] = useReducer(highlightsReducer, initialState, init);
+
+  useEffect(() => {
+    localStorage.setItem(cacheKey, JSON.stringify(state));
+  }, [state]);
 
   return (
     <HighlightsContext.Provider value={{ state, dispatch }}>
