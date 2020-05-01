@@ -49,7 +49,7 @@ export function HighlightsProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(highlightsReducer, initialState);
 
   return (
-    <HighlightsContext.Provider value={{ state: state, dispatch }}>
+    <HighlightsContext.Provider value={{ state, dispatch }}>
       {children}
     </HighlightsContext.Provider>
   );

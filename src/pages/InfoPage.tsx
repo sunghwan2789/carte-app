@@ -13,14 +13,12 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Refresh from '@material-ui/icons/Refresh';
 import { Link, useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) =>
-  createStyles({
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  }),
-);
+const useStyles = makeStyles((theme) => createStyles({
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+}));
 
 export default function InfoPage() {
   const history = useHistory();
@@ -48,19 +46,21 @@ export default function InfoPage() {
           <ExpansionPanelDetails>
             <div>
               <Typography paragraph>
-                네! <strong>전국 학교 식단표</strong>는 여러분의 데이터를 아끼기
-                위해 특별하게 만들어졌습니다.
+                네!
+                {' '}
+                <strong>전국 학교 식단표</strong>
+                는 여러분의 데이터를 아끼기 위해 특별하게 만들어졌습니다.
               </Typography>
               <Typography paragraph>
                 일단, 인터넷에서 받은 데이터는 언제든 재활용하도록 되어있어요.
-                특히 식단표는 한 달 분량을 미리 받아 놓는답니다! 혹시나 받아
-                놓은 데이터가 오래되었거나 이상하면 그 페이지의 새로고침(
-                <Refresh fontSize="inherit" />) 버튼을 눌러주세요. 그러면
-                인터넷에서 새로운 데이터를 받아와요.
+                특히 식단표는 한 달 분량을 미리 받아 놓는답니다! 혹시나 받아 놓은 데이터가
+                오래되었거나 이상하면 그 페이지의 새로고침(
+                <Refresh fontSize="inherit" />
+                ) 버튼을 눌러주세요. 그러면 인터넷에서 새로운 데이터를 받아와요.
               </Typography>
               <Typography paragraph>
-                그러니까, 북마크에 추가하시거나 홈 화면 바로가기로 추가하시면 더
-                편리하게 사용하실 수 있는 거죠! 흠흠.
+                그러니까, 북마크에 추가하시거나 홈 화면 바로가기로 추가하시면 더 편리하게
+                사용하실 수 있는 거죠! 흠흠.
               </Typography>
             </div>
           </ExpansionPanelDetails>
@@ -75,8 +75,9 @@ export default function InfoPage() {
             <div>
               <Typography paragraph>
                 교육청에서 발췌한 알레르기 정보에요.
-                {<Link to="/highlights">하이라이트</Link>} 기능으로 주의할
-                음식을 표시해보세요! 미리 확인하고 아프지 맙시다...
+                <Link to="/highlights">하이라이트</Link>
+                {' '}
+                기능으로 주의할 음식을 표시해보세요! 미리 확인하고 아프지 맙시다...
               </Typography>
               <Grid container>
                 {[
@@ -117,10 +118,9 @@ export default function InfoPage() {
             <div>
               <Typography paragraph>앗... 아아...</Typography>
               <Typography paragraph>
-                <strong>전국 학교 식단표</strong>는 나이스에서 식단표를
-                가져옵니다. 이 식단표를 작성하시는 분께서 "고"나 "조" 같은
-                이해할 수 없는 글자를 입력하신 것으로 보이네요... 대충 걸러서
-                봐주세요... ㅎ하.
+                <strong>전국 학교 식단표</strong>
+                는 나이스에서 식단표를 가져옵니다. 이 식단표를 작성하시는 분께서 "고"나 "조" 같은
+                이해할 수 없는 글자를 입력하신 것으로 보이네요... 대충 걸러서 봐주세요... ㅎ하.
               </Typography>
             </div>
           </ExpansionPanelDetails>
@@ -134,8 +134,8 @@ export default function InfoPage() {
           <ExpansionPanelDetails>
             <div>
               <Typography paragraph>
-                {<Link to="/highlights">하이라이트</Link>}는 오름차순으로
-                적용합니다. 즉, 위에 있는 규칙을 우선하여 적용하는 것이죠. 차후,
+                <Link to="/highlights">하이라이트</Link>
+                는 오름차순으로 적용합니다. 즉, 위에 있는 규칙을 우선하여 적용하는 것이죠. 차후,
                 목록 재정렬 기능을 추가할 예정입니다.
               </Typography>
             </div>

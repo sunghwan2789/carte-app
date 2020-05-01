@@ -17,7 +17,7 @@ const DayPickerKoreanUtils: LocaleUtils = {
     return WEEKDAYS[weekday];
   },
   formatWeekdayLong(weekday) {
-    return WEEKDAYS[weekday] + '요일';
+    return `${WEEKDAYS[weekday]}요일`;
   },
   getFirstDayOfWeek() {
     return 0;

@@ -190,10 +190,9 @@ export default function CartePage() {
           <ListItem
             button
             onClick={
-              () =>
-                alert(
-                  '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
-                ) /*&& handleUnitChange('week')*/
+              () => alert(
+                '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
+              ) /* && handleUnitChange('week') */
             }
           >
             <ListItemIcon>
@@ -204,10 +203,9 @@ export default function CartePage() {
           <ListItem
             button
             onClick={
-              () =>
-                alert(
-                  '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
-                ) /*&& handleUnitChange('month')*/
+              () => alert(
+                '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
+              ) /* && handleUnitChange('month') */
             }
           >
             <ListItemIcon>
@@ -225,7 +223,7 @@ export default function CartePage() {
           <ListItem
             button
             onClick={
-              () => alert('제작중이에요~~~') /*&& handleNavigate('/theme')*/
+              () => alert('제작중이에요~~~') /* && handleNavigate('/theme') */
             }
           >
             <ListItemIcon>

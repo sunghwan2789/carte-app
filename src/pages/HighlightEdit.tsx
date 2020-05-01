@@ -103,7 +103,7 @@ export default function HighlightEdit() {
             variant="h6"
             color="inherit"
             style={{ flexGrow: 1 }}
-          ></Typography>
+          />
           <IconButton color="inherit" type="submit">
             <Done />
           </IconButton>
@@ -127,14 +127,12 @@ export default function HighlightEdit() {
             multiline
             fullWidth
             value={words.join('\n')}
-            onChange={(e) =>
-              setWords(
-                e.target.value
-                  .split('\n')
-                  .map((word) => word.trim())
-                  .filter(Boolean),
-              )
-            }
+            onChange={(e) => setWords(
+              e.target.value
+                .split('\n')
+                .map((word) => word.trim())
+                .filter(Boolean),
+            )}
           />
         </ListItem>
         <Divider />
@@ -151,11 +149,9 @@ export default function HighlightEdit() {
           <ListItemSecondaryAction>
             <Switch
               checked={Boolean(style?.backgroundColor)}
-              onClick={() =>
-                !style?.backgroundColor
-                  ? pickColor('배경색 선택', 'backgroundColor')
-                  : toggleBackgroundColor()
-              }
+              onClick={() => (!style?.backgroundColor
+                ? pickColor('배경색 선택', 'backgroundColor')
+                : toggleBackgroundColor())}
             />
           </ListItemSecondaryAction>
         </ListItem>
@@ -164,11 +160,9 @@ export default function HighlightEdit() {
           <ListItemSecondaryAction>
             <Switch
               checked={Boolean(style?.color)}
-              onClick={() =>
-                !style?.color
-                  ? pickColor('글자색 선택', 'color')
-                  : toggleColor()
-              }
+              onClick={() => (!style?.color
+                ? pickColor('글자색 선택', 'color')
+                : toggleColor())}
             />
           </ListItemSecondaryAction>
         </ListItem>

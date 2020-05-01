@@ -9,8 +9,8 @@ export default function CarteFood({ food }: CarteFoodProps) {
   const [highlights] = useHighlights();
 
   const { titleChunks, styleChunks } = useMemo(() => {
-    let titleChunks = Array.from(Array(food.length), () => '');
-    let styleChunks = Array.from(Array(food.length), () => ({}));
+    const titleChunks = Array.from(Array(food.length), () => '');
+    const styleChunks = Array.from(Array(food.length), () => ({}));
 
     [...highlights!].reverse().forEach((highlight) => {
       highlight.words.forEach((word) => {

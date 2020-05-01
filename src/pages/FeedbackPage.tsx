@@ -14,11 +14,11 @@ export default function FeedbackPage() {
   async function handleSend(e: any) {
     e.preventDefault();
     try {
-      let res = await fetch(e.target.action, {
+      const res = await fetch(e.target.action, {
         method: e.target.method,
         body: new FormData(e.target),
       });
-      let response = await res.text();
+      const response = await res.text();
       if (response == 'ok') {
         alert('고객님의 목소리가 전달됐습니다.\n의견 고맙습니다.');
       } else if (response == 'email') {
