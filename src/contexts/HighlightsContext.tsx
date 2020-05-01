@@ -1,4 +1,10 @@
-import React, { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
+import React, {
+  createContext,
+  Dispatch,
+  ReactNode,
+  useContext,
+  useReducer,
+} from 'react';
 
 type HighlightsState = Highlight[] | undefined;
 type Action =
@@ -35,6 +41,9 @@ function highlightsReducer(
         state!.findIndex((highlight) => highlight.id === action.highlight.id),
         1,
       );
+    }
+    default: {
+      throw new Error('Unhandled action type');
     }
   }
 }
