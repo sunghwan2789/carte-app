@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  Dispatch,
-  useState,
-  SetStateAction,
-} from 'react';
+import React, { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
 
 type SchoolState = SchoolDto | undefined;
 
@@ -15,7 +9,7 @@ export const SchoolContext = createContext<{
   setSchool: Dispatch<SetStateAction<SchoolState>>;
 }>({
   school: initialState,
-  setSchool: () => {},
+  setSchool: () => { },
 });
 
 export function SchoolProvider({ children }: { children: React.ReactNode }) {

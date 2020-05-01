@@ -1,8 +1,8 @@
-import React from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
+import React from 'react';
 
 const useStyles = makeStyles(() => createStyles({
   root: {

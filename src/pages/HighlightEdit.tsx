@@ -1,21 +1,21 @@
-import React, { useState, useMemo } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowBack from '@material-ui/icons/ArrowBack';
-import Done from '@material-ui/icons/Done';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Switch from '@material-ui/core/Switch';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Divider from '@material-ui/core/Divider';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import { useHighlights } from '../contexts/HighlightsContext';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import Done from '@material-ui/icons/Done';
+import React, { useMemo, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import ColorPickDialog from '../components/ColorPickerDialog';
+import { useHighlights } from '../contexts/HighlightsContext';
 
 export default function HighlightEdit() {
   const { highlightId } = useParams();

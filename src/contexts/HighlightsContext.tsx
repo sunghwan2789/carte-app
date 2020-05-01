@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  ReactNode,
-  useReducer,
-  Dispatch,
-  useContext,
-} from 'react';
+import React, { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 
 type HighlightsState = Highlight[] | undefined;
 type Action =
@@ -19,7 +13,7 @@ export const HighlightsContext = createContext<{
   dispatch: Dispatch<Action>;
 }>({
   state: initialState,
-  dispatch: () => {},
+  dispatch: () => { },
 });
 
 function highlightsReducer(

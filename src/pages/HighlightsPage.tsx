@@ -1,18 +1,18 @@
-import React from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowBack from '@material-ui/icons/ArrowBack';
-import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Delete from '@material-ui/icons/Delete';
-import Fab from '@material-ui/core/Fab';
+import ListItemText from '@material-ui/core/ListItemText';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/Add';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import Delete from '@material-ui/icons/Delete';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useHighlights } from '../contexts/HighlightsContext';
 
 const useStyles = makeStyles((theme) => createStyles({

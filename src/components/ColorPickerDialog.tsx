@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import Dialog, { DialogProps } from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
-import { CompactPicker, ColorResult } from 'react-color';
-
+import Dialog, { DialogProps } from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { useState } from 'react';
+import { ColorResult, CompactPicker } from 'react-color';
 
 type ColorPickDialogProps = {
   title?: string;

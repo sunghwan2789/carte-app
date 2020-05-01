@@ -1,14 +1,14 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HighlightsProvider } from './contexts/HighlightsContext';
+import { SchoolProvider } from './contexts/SchoolContext';
 import CartePage from './pages/CartePage';
-import SchoolsPage from './pages/SchoolsPage';
-import HighlightsPage from './pages/HighlightsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import HighlightEdit from './pages/HighlightEdit';
+import HighlightsPage from './pages/HighlightsPage';
 import InfoPage from './pages/InfoPage';
-import { SchoolProvider } from './contexts/SchoolContext';
-import { HighlightsProvider } from './contexts/HighlightsContext';
+import SchoolsPage from './pages/SchoolsPage';
 
 export default function App() {
   return (

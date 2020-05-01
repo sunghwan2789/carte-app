@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import Input from '@material-ui/core/Input';
+import Toolbar from '@material-ui/core/Toolbar';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { delay } from '../utils';
 import { useSchool } from '../contexts/SchoolContext';
+import { delay } from '../utils';
 
 export default function SchoolsPage() {
   const history = useHistory();
