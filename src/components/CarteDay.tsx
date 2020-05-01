@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
 import dayjs from 'dayjs';
 import React, { useMemo, useState } from 'react';
 import CarteFood from './CarteFood';
@@ -45,30 +46,35 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
     selectedMealName,
   ]);
 
-  if (isLoading) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 16 }}>
-        <CircularProgress />
-      </div>
-    );
-  } if (!carte) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 16 }}>
-        식단이 없다아...
-      </div>
-    );
-  }
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={selectedMealName} onChange={(e, v) => setSelectedMealName(v)}>
-          {carte.meals.map((meal) => (
+          {carte?.meals.map((meal) => (
             <Tab key={meal.name} value={meal.name} label={meal.name} />
           ))}
         </Tabs>
       </AppBar>
       <List>
-        {selectedMeal ? (
+        {!selectedMeal ? (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingTop: 16,
+            }}
+          >
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <Typography>
+                식단을 선택하세요
+                <br />
+                (없을 수도 있어요..!)
+              </Typography>
+            )}
+          </div>
+        ) : (
           selectedMeal.foods.map((food) => (
             <React.Fragment key={food}>
               <ListItem style={{ backgroundColor: 'white' }}>
@@ -77,18 +83,6 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
               <Divider />
             </React.Fragment>
           ))
-        ) : (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingTop: 16,
-            }}
-          >
-            식단을 선택하세요
-            <br />
-            (없을 수도 있어요..!)
-          </div>
         )}
       </List>
     </div>
