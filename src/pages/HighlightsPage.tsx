@@ -54,7 +54,7 @@ export default function HighlightsPage() {
               button
               divider
               key={highlight.id}
-              onClick={() => history.push(`/highlights/${highlight.id}/edit`)}
+              onClick={() => history.push(`/highlights/edit/${highlight.id}`)}
             >
               <ListItemText
                 primary={<span style={highlight.style}>{highlight.name}</span>}
@@ -72,7 +72,7 @@ export default function HighlightsPage() {
       <Fab
         className={classes.fab}
         color="secondary"
-        onClick={() => history.push('/highlights/new')}
+        onClick={() => history.push('/highlights/edit')}
       >
         <Add />
       </Fab>
