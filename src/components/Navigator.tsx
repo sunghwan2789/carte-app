@@ -83,7 +83,7 @@ export default function Navigator({
           {formatDate()}
         </Typography>
       </Button>
-      <Dialog open={isDayPicking}>
+      <Dialog open={isDayPicking} onClose={toggleDayPicker}>
         <DialogTitle>식단표 기준 날짜 선택</DialogTitle>
         <DialogContent>
           <DayPicker

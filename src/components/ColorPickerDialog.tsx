@@ -14,12 +14,12 @@ type ColorPickDialogProps = {
 export default function ColorPickDialog({
   title,
   handleClose,
-  ...props
+  open,
 }: ColorPickDialogProps & DialogProps) {
   const [color, setColor] = useState<string>();
 
-  function handleChange(color: ColorResult) {
-    setColor(color.hex);
+  function handleChange(newColor: ColorResult) {
+    setColor(newColor.hex);
   }
 
   function handleCancel() {
@@ -31,7 +31,7 @@ export default function ColorPickDialog({
   }
 
   return (
-    <Dialog {...props}>
+    <Dialog open={open} onClose={handleCancel}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         <CompactPicker color={color} onChangeComplete={handleChange} />
