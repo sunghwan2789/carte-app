@@ -26,21 +26,23 @@ const useStyles = makeStyles(() => createStyles({
 
 export default function CarteDay({ carte, isLoading }: CarteDayProps) {
   const classes = useStyles();
-  const [mealName, setMealName] = useState<MealName>(() => {
+  const [selectedMealName, setSelectedMealName] = useState<MealName>(() => {
     const hour = dayjs().hour();
 
     if (hour < 9) {
       return '조식';
-    } if (hour < 13) {
+    }
+    if (hour < 13) {
       return '중식';
-    } if (hour < 19) {
+    }
+    if (hour < 19) {
       return '석식';
     }
     return '조식';
   });
-  const meal = useMemo(() => carte?.meals.find((meal) => meal.name === mealName), [
+  const selectedMeal = useMemo(() => carte?.meals.find((meal) => meal.name === selectedMealName), [
     carte,
-    mealName,
+    selectedMealName,
   ]);
 
   if (isLoading) {
@@ -59,15 +61,15 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={mealName} onChange={(e, v) => setMealName(v)}>
+        <Tabs value={selectedMealName} onChange={(e, v) => setSelectedMealName(v)}>
           {carte.meals.map((meal) => (
             <Tab key={meal.name} value={meal.name} label={meal.name} />
           ))}
         </Tabs>
       </AppBar>
       <List>
-        {meal ? (
-          meal.foods.map((food) => (
+        {selectedMeal ? (
+          selectedMeal.foods.map((food) => (
             <React.Fragment key={food}>
               <ListItem style={{ backgroundColor: 'white' }}>
                 <ListItemText primary={<CarteFood food={food} />} />
