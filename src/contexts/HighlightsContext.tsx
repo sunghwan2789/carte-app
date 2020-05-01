@@ -5,6 +5,7 @@ import React, {
   useContext,
   useReducer,
 } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 type HighlightsState = Highlight[] | undefined;
 type Action =
@@ -28,8 +29,10 @@ function highlightsReducer(
 ): HighlightsState {
   switch (action.type) {
     case 'CREATE': {
-      const { highlight } = action;
-      // TODO: assign new id
+      const highlight: Highlight = {
+        ...action.highlight,
+        id: uuidv4(),
+      };
 
       return [...state!, highlight];
     }
