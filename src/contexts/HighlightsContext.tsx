@@ -5,6 +5,7 @@ import React, {
   useContext,
   useReducer,
   useEffect,
+  useMemo,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -40,6 +41,10 @@ function sanitizeWords(words: string[]) {
     .filter(Boolean);
 }
 
+function isSameHighlight(a: Highlight, b: Highlight) {
+  return a.id === b.id;
+}
+
 function highlightsReducer(
   state: HighlightsState,
   action: HighlightsAction,
@@ -57,7 +62,7 @@ function highlightsReducer(
     }
     case 'UPDATE': {
       const { words, ...other } = action.highlight;
-      const highlight = state.find((i) => i.id === action.highlight.id);
+      const highlight = state.find((i) => isSameHighlight(i, action.highlight));
       Object.assign(highlight, {
         ...other,
         words: sanitizeWords(words),
@@ -66,7 +71,7 @@ function highlightsReducer(
     }
     case 'DELETE': {
       state.splice(
-        state.findIndex((highlight) => highlight.id === action.highlight.id),
+        state.findIndex((i) => isSameHighlight(i, action.highlight)),
         1,
       );
       return [...state];
@@ -100,4 +105,12 @@ export function useHighlights(): [HighlightsState, Dispatch<HighlightsAction>] {
 
   // TODO: find highlight by id
   return [state, dispatch];
+}
+
+export function useHighlight(id: string): [Highlight | undefined, Dispatch<HighlightsAction>] {
+  const [state, dispatch] = useHighlights();
+
+  const highlight = state.find((i) => i.id === id);
+
+  return [highlight, dispatch];
 }

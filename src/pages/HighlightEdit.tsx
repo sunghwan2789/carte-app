@@ -15,7 +15,7 @@ import Done from '@material-ui/icons/Done';
 import React, { useMemo, useReducer } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import ColorPickerDialog from '../components/ColorPickerDialog';
-import { useHighlights } from '../contexts/HighlightsContext';
+import { useHighlight } from '../contexts/HighlightsContext';
 
 type EditState = {
   name?: string;
@@ -41,7 +41,7 @@ function reducer(state: EditState, action: EditAction): EditState {
     case 'SET_WORDS': {
       const { words } = action;
 
-      return { ...state, words };
+      return { ...state, words: words.split('\n') };
     }
     case 'TOGGLE_FONT_WEIGHT_BOLD': {
       const { fontWeight, ...style } = state.style;
@@ -98,11 +98,7 @@ function reducer(state: EditState, action: EditAction): EditState {
 
 export default function HighlightEdit() {
   const { highlightId } = useParams();
-  const [highlights, dispatchHighlights] = useHighlights();
-  const highlight = useMemo(
-    () => highlights?.find((highlight) => highlight.id === highlightId),
-    [highlightId, highlights],
-  );
+  const [highlight, dispatchHighlight] = useHighlight(highlightId);
 
   const [{
     name,
@@ -134,7 +130,7 @@ export default function HighlightEdit() {
   function handleSave(e: any) {
     e.preventDefault();
     if (!highlight) {
-      dispatchHighlights({
+      dispatchHighlight({
         type: 'CREATE',
         highlight: {
           name,
@@ -143,7 +139,7 @@ export default function HighlightEdit() {
         },
       });
     } else {
-      dispatchHighlights({
+      dispatchHighlight({
         type: 'UPDATE',
         highlight: {
           ...highlight,
