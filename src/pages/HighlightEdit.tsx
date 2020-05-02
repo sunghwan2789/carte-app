@@ -12,30 +12,129 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import Done from '@material-ui/icons/Done';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import ColorPickDialog from '../components/ColorPickerDialog';
+import ColorPickerDialog from '../components/ColorPickerDialog';
 import { useHighlights } from '../contexts/HighlightsContext';
+
+type EditState = {
+  name?: string;
+  words: string[];
+  style: React.CSSProperties;
+  colorPickerTarget?: 'backgroundColor' | 'color';
+};
+type EditAction =
+  | { type: 'SET_NAME', name: string }
+  | { type: 'SET_WORDS', words: string }
+  | { type: 'TOGGLE_FONT_WEIGHT_BOLD' }
+  | { type: 'TOGGLE_BACKGROUND_COLOR', forceSet?: boolean }
+  | { type: 'TOGGLE_COLOR', forceSet?: boolean }
+  | { type: 'SET_COLORPICKER_RESULT', color?: string };
+
+function reducer(state: EditState, action: EditAction): EditState {
+  switch (action.type) {
+    case 'SET_NAME': {
+      const { name } = action;
+
+      return { ...state, name };
+    }
+    case 'SET_WORDS': {
+      const { words } = action;
+
+      return { ...state, words };
+    }
+    case 'TOGGLE_FONT_WEIGHT_BOLD': {
+      const { fontWeight, ...style } = state.style;
+
+      if (!fontWeight) {
+        return {
+          ...state,
+          style: {
+            ...style,
+            fontWeight: 'bold',
+          },
+        };
+      }
+
+      return { ...state, style };
+    }
+    case 'TOGGLE_BACKGROUND_COLOR': {
+      const { backgroundColor, ...style } = state.style;
+
+      if (action.forceSet || !backgroundColor) {
+        return { ...state, colorPickerTarget: 'backgroundColor' };
+      }
+
+      return { ...state, style };
+    }
+    case 'TOGGLE_COLOR': {
+      const { color, ...style } = state.style;
+
+      if (action.forceSet || !color) {
+        return { ...state, colorPickerTarget: 'color' };
+      }
+
+      return { ...state, style };
+    }
+    case 'SET_COLORPICKER_RESULT': {
+      const { style, colorPickerTarget, ...newState } = state;
+      const { color } = action;
+
+      if (!colorPickerTarget) {
+        throw new Error('ColorPickerTarget not set');
+      }
+
+      if (!color) {
+        return { ...newState, style };
+      }
+
+      return { ...newState, style: { ...style, [colorPickerTarget]: color } };
+    }
+    default: {
+      throw new Error('Unhandled action type');
+    }
+  }
+}
 
 export default function HighlightEdit() {
   const { highlightId } = useParams();
-  const [highlights, dispatch] = useHighlights();
+  const [highlights, dispatchHighlights] = useHighlights();
   const highlight = useMemo(
     () => highlights?.find((highlight) => highlight.id === highlightId),
     [highlightId, highlights],
   );
 
-  const [name, setName] = useState(highlight?.name);
-  const [words, setWords] = useState(highlight?.words ?? []);
-  const [style, setStyle] = useState(highlight?.style as React.CSSProperties);
+  const [{
+    name,
+    words,
+    style,
+    colorPickerTarget,
+  }, dispatch] = useReducer(reducer, {
+    name: highlight?.name,
+    words: highlight?.words ?? [],
+    style: highlight?.style ?? {},
+  });
+
+  const colorPickerTitle = useMemo(() => {
+    switch (colorPickerTarget) {
+      case 'backgroundColor': {
+        return '배경색 선택';
+      }
+      case 'color': {
+        return '글자색 선택';
+      }
+      default: {
+        return colorPickerTarget;
+      }
+    }
+  }, [colorPickerTarget]);
+
   const history = useHistory();
-  const [colorPickerTitle, setColorPickerTitle] = useState<string>();
-  const [colorPickerName, setColorPickerName] = useState<string>();
 
   function handleSave(e: any) {
     e.preventDefault();
     if (!highlight) {
-      dispatch({
+      dispatchHighlights({
         type: 'CREATE',
         highlight: {
           name,
@@ -44,7 +143,7 @@ export default function HighlightEdit() {
         },
       });
     } else {
-      dispatch({
+      dispatchHighlights({
         type: 'UPDATE',
         highlight: {
           ...highlight,
@@ -55,41 +154,6 @@ export default function HighlightEdit() {
       });
     }
     history.goBack();
-  }
-
-  function toggleBold() {
-    if (style?.fontWeight) {
-      const { fontWeight, ...newStyle } = style;
-      setStyle(newStyle);
-    } else {
-      setStyle({ ...style, fontWeight: 'bold' });
-    }
-  }
-
-  function pickColor(title: string, name: string) {
-    setColorPickerTitle(title);
-    setColorPickerName(name);
-  }
-
-  function handleColorChange(color?: string) {
-    if (color) {
-      setStyle({ ...style, [colorPickerName!]: color });
-    }
-    setColorPickerName(undefined);
-  }
-
-  function toggleBackgroundColor() {
-    if (style?.backgroundColor) {
-      const { backgroundColor, ...newStyle } = style;
-      setStyle(newStyle);
-    }
-  }
-
-  function toggleColor() {
-    if (style?.color) {
-      const { color, ...newStyle } = style;
-      setStyle(newStyle);
-    }
   }
 
   return (
@@ -116,7 +180,7 @@ export default function HighlightEdit() {
             label="이름"
             fullWidth
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => dispatch({ type: 'SET_NAME', name: e.target.value })}
           />
         </ListItem>
         <ListItem>
@@ -127,12 +191,7 @@ export default function HighlightEdit() {
             multiline
             fullWidth
             value={words.join('\n')}
-            onChange={(e) => setWords(
-              e.target.value
-                .split('\n')
-                .map((word) => word.trim())
-                .filter(Boolean),
-            )}
+            onChange={(e) => dispatch({ type: 'SET_WORDS', words: e.target.value })}
           />
         </ListItem>
         <Divider />
@@ -141,45 +200,38 @@ export default function HighlightEdit() {
         <ListItem>
           <ListItemText primary={<span style={style}>미리보기</span>} />
         </ListItem>
-        <ListItem
-          button
-          onClick={() => pickColor('배경색 선택', 'backgroundColor')}
-        >
-          <ListItemText primary="배경색" secondary={style?.backgroundColor} />
+        <ListItem button onClick={() => dispatch({ type: 'TOGGLE_BACKGROUND_COLOR', forceSet: true })}>
+          <ListItemText primary="배경색" secondary={style.backgroundColor} />
           <ListItemSecondaryAction>
             <Switch
-              checked={Boolean(style?.backgroundColor)}
-              onClick={() => (!style?.backgroundColor
-                ? pickColor('배경색 선택', 'backgroundColor')
-                : toggleBackgroundColor())}
+              checked={Boolean(style.backgroundColor)}
+              onClick={() => dispatch({ type: 'TOGGLE_BACKGROUND_COLOR' })}
             />
           </ListItemSecondaryAction>
         </ListItem>
-        <ListItem button onClick={() => pickColor('글자색 선택', 'color')}>
-          <ListItemText primary="글자색" secondary={style?.color} />
+        <ListItem button onClick={() => dispatch({ type: 'TOGGLE_COLOR', forceSet: true })}>
+          <ListItemText primary="글자색" secondary={style.color} />
           <ListItemSecondaryAction>
             <Switch
-              checked={Boolean(style?.color)}
-              onClick={() => (!style?.color
-                ? pickColor('글자색 선택', 'color')
-                : toggleColor())}
+              checked={Boolean(style.color)}
+              onClick={() => dispatch({ type: 'TOGGLE_COLOR' })}
             />
           </ListItemSecondaryAction>
         </ListItem>
-        <ListItem button onClick={toggleBold}>
+        <ListItem button onClick={() => dispatch({ type: 'TOGGLE_FONT_WEIGHT_BOLD' })}>
           <ListItemText primary="굵게" />
           <ListItemSecondaryAction>
             <Switch
-              checked={style?.fontWeight === 'bold'}
-              onClick={toggleBold}
+              checked={Boolean(style.fontWeight)}
+              onClick={() => dispatch({ type: 'TOGGLE_FONT_WEIGHT_BOLD' })}
             />
           </ListItemSecondaryAction>
         </ListItem>
       </List>
-      <ColorPickDialog
-        open={Boolean(colorPickerName)}
+      <ColorPickerDialog
+        open={Boolean(colorPickerTarget)}
         title={colorPickerTitle}
-        handleClose={handleColorChange}
+        handleClose={(color) => dispatch({ type: 'SET_COLORPICKER_RESULT', color })}
       />
     </form>
   );

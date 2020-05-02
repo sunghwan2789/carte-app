@@ -34,22 +34,34 @@ function init(): HighlightsState {
   return initialState;
 }
 
+function sanitizeWords(words: string[]) {
+  return words
+    .map((word) => word.trim())
+    .filter(Boolean);
+}
+
 function highlightsReducer(
   state: HighlightsState,
   action: HighlightsAction,
 ): HighlightsState {
   switch (action.type) {
     case 'CREATE': {
+      const { words, ...other } = action.highlight;
       const highlight: Highlight = {
-        ...action.highlight,
+        ...other,
         id: uuidv4(),
+        words: sanitizeWords(words),
       };
 
       return [...state, highlight];
     }
     case 'UPDATE': {
+      const { words, ...other } = action.highlight;
       const highlight = state.find((i) => i.id === action.highlight.id);
-      Object.assign(highlight, action.highlight);
+      Object.assign(highlight, {
+        ...other,
+        words: sanitizeWords(words),
+      });
       return [...state];
     }
     case 'DELETE': {
