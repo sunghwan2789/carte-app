@@ -31,10 +31,6 @@ export default function HighlightsPage() {
   const classes = useStyles();
   const history = useHistory();
 
-  function deleteHighlight(highlight: Highlight) {
-    dispatch({ type: 'DELETE', highlight });
-  }
-
   return (
     <>
       <AppBar position="sticky">
@@ -61,7 +57,7 @@ export default function HighlightsPage() {
                 secondary={highlight.words.join(', ')}
               />
               <ListItemSecondaryAction>
-                <IconButton onClick={() => deleteHighlight(highlight)}>
+                <IconButton onClick={() => dispatch({ type: 'DELETE', highlight })}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
