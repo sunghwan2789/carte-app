@@ -40,10 +40,6 @@ function sanitizeWords(words: string[]) {
     .filter(Boolean);
 }
 
-function isSameHighlight(a: Highlight, b: Highlight) {
-  return a.id === b.id;
-}
-
 function highlightsReducer(
   state: HighlightsState,
   action: HighlightsAction,
@@ -51,6 +47,7 @@ function highlightsReducer(
   switch (action.type) {
     case 'CREATE': {
       const { words, ...other } = action.highlight;
+
       const highlight: Highlight = {
         ...other,
         id: uuidv4(),
@@ -60,20 +57,24 @@ function highlightsReducer(
       return [...state, highlight];
     }
     case 'UPDATE': {
-      const { words, ...other } = action.highlight;
-      const highlight = state.find((i) => isSameHighlight(i, action.highlight));
-      Object.assign(highlight, {
-        ...other,
-        words: sanitizeWords(words),
-      });
-      return [...state];
+      const { id, words, ...other } = action.highlight;
+
+      return [...state.map((highlight) => {
+        if (highlight.id === id) {
+          return {
+            ...other,
+            id,
+            words: sanitizeWords(words),
+          };
+        }
+
+        return highlight;
+      })];
     }
     case 'DELETE': {
-      state.splice(
-        state.findIndex((i) => isSameHighlight(i, action.highlight)),
-        1,
-      );
-      return [...state];
+      const { id } = action.highlight;
+
+      return [...state.filter((highlight) => highlight.id !== id)];
     }
     default: {
       throw new Error('Unhandled action type');
@@ -102,7 +103,6 @@ export function useHighlights(): [HighlightsState, Dispatch<HighlightsAction>] {
   }
   const { state, dispatch } = context;
 
-  // TODO: find highlight by id
   return [state, dispatch];
 }
 
