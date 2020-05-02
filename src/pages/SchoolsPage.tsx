@@ -63,7 +63,7 @@ export default function SchoolsPage() {
           </IconButton>
           <Input
             type="search"
-            placeholder="학교 검색"
+            placeholder="학교를 검색하세요"
             onChange={(e) => setQuery(e.target.value)}
             value={query}
             autoFocus
