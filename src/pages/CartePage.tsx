@@ -43,13 +43,10 @@ export default function CartePage() {
   const [currentCartes, setCurrentCartes] = useState<CarteDto[]>([]);
 
   useEffect(() => {
-    if (!school) {
-      return;
-    }
-
     let isCanceled = false;
 
     function getCarteFetchUrl() {
+      /* eslint-disable @typescript-eslint/camelcase */
       const { domain_code, course_code, school_code } = school!;
       const year = currentDate.year();
       const month = currentDate.month() + 1;
@@ -58,6 +55,7 @@ export default function CartePage() {
           date: `${year}-${month}`,
         },
       )}`;
+      /* eslint-enable @typescript-eslint/camelcase */
     }
 
     async function fetchCartes() {
@@ -75,8 +73,10 @@ export default function CartePage() {
     }
 
     // TODO: get carte from cache faster
-    if (!cartes.some((carte) => currentDate.isSame(carte.date, 'date'))) {
-      fetchCartes();
+    if (school) {
+      if (!cartes.some((carte) => currentDate.isSame(carte.date, 'date'))) {
+        fetchCartes();
+      }
     }
 
     return () => {
