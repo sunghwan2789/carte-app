@@ -1,4 +1,3 @@
-import AppBar from '@material-ui/core/AppBar';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
@@ -8,14 +7,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import Done from '@material-ui/icons/Done';
 import React, { useMemo, useReducer } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import ColorPickerDialog from '../components/ColorPickerDialog';
 import { useHighlight } from '../contexts/HighlightsContext';
+import BackTopBar from '../components/BackTopBar';
 
 type EditState = {
   name?: string;
@@ -154,21 +152,16 @@ export default function HighlightEdit() {
 
   return (
     <form onSubmit={handleSave}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton color="inherit" onClick={history.goBack}>
-            <ArrowBack />
-          </IconButton>
-          <Typography
-            variant="h6"
-            color="inherit"
-            style={{ flexGrow: 1 }}
-          />
-          <IconButton color="inherit" type="submit">
-            <Done />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <BackTopBar>
+        <Typography
+          variant="h6"
+          color="inherit"
+          style={{ flexGrow: 1 }}
+        />
+        <IconButton color="inherit" type="submit">
+          <Done />
+        </IconButton>
+      </BackTopBar>
       <List>
         <ListItem>
           <TextField

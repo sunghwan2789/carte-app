@@ -1,13 +1,10 @@
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
-import Toolbar from '@material-ui/core/Toolbar';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSchool } from '../contexts/SchoolContext';
 import { delay } from '../utils';
 import SchoolList from '../components/SchoolList';
+import BackTopBar from '../components/BackTopBar';
 
 export default function SchoolsPage() {
   const history = useHistory();
@@ -53,22 +50,17 @@ export default function SchoolsPage() {
 
   return (
     <>
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton color="inherit" onClick={history.goBack}>
-            <ArrowBack />
-          </IconButton>
-          <Input
-            type="search"
-            placeholder="학교를 검색하세요"
-            onChange={(e) => setQuery(e.target.value)}
-            value={query}
-            autoFocus
-            fullWidth
-            style={{ color: 'inherit' }}
-          />
-        </Toolbar>
-      </AppBar>
+      <BackTopBar>
+        <Input
+          type="search"
+          placeholder="학교를 검색하세요"
+          onChange={(e) => setQuery(e.target.value)}
+          value={query}
+          autoFocus
+          fullWidth
+          style={{ color: 'inherit' }}
+        />
+      </BackTopBar>
       <main>
         <SchoolList schools={schools} handleSchoolSelect={handleSchoolSelect} />
       </main>

@@ -1,16 +1,11 @@
-import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import Send from '@material-ui/icons/Send';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import BackTopBar from '../components/BackTopBar';
 
 export default function FeedbackPage() {
-  const history = useHistory();
-
   async function handleSend(e: any) {
     e.preventDefault();
     try {
@@ -33,19 +28,14 @@ export default function FeedbackPage() {
 
   return (
     <form action="/carte/send.php" method="post" onSubmit={handleSend}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton color="inherit" onClick={history.goBack}>
-            <ArrowBack />
-          </IconButton>
-          <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-            의견 보내기
-          </Typography>
-          <IconButton color="inherit" type="submit">
-            <Send />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <BackTopBar>
+        <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
+          의견 보내기
+        </Typography>
+        <IconButton color="inherit" type="submit">
+          <Send />
+        </IconButton>
+      </BackTopBar>
       <main>
         <TextField
           margin="normal"

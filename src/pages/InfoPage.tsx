@@ -1,17 +1,14 @@
-import AppBar from '@material-ui/core/AppBar';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Refresh from '@material-ui/icons/Refresh';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import BackTopBar from '../components/BackTopBar';
 
 const useStyles = makeStyles((theme) => createStyles({
   heading: {
@@ -21,21 +18,15 @@ const useStyles = makeStyles((theme) => createStyles({
 }));
 
 export default function InfoPage() {
-  const history = useHistory();
   const classes = useStyles();
 
   return (
     <div>
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton color="inherit" onClick={history.goBack}>
-            <ArrowBack />
-          </IconButton>
-          <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-            정보
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <BackTopBar>
+        <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
+          정보
+        </Typography>
+      </BackTopBar>
       <main>
         <ExpansionPanel>
           <ExpansionPanelSummary expandIcon={<ExpandMore />}>

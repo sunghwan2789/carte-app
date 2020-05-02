@@ -1,4 +1,3 @@
-import AppBar from '@material-ui/core/AppBar';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
@@ -6,14 +5,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Add from '@material-ui/icons/Add';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import Delete from '@material-ui/icons/Delete';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useHighlights } from '../contexts/HighlightsContext';
+import BackTopBar from '../components/BackTopBar';
 
 const useStyles = makeStyles((theme) => createStyles({
   list: {
@@ -33,16 +31,11 @@ export default function HighlightsPage() {
 
   return (
     <>
-      <AppBar position="sticky">
-        <Toolbar>
-          <IconButton color="inherit" onClick={history.goBack}>
-            <ArrowBack />
-          </IconButton>
-          <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
-            하이라이트
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <BackTopBar>
+        <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
+          하이라이트
+        </Typography>
+      </BackTopBar>
       <main>
         <List className={classes.list}>
           {highlights!.map((highlight) => (
