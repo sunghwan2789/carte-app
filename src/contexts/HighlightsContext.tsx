@@ -40,10 +40,7 @@ function sanitizeWords(words: string[]) {
     .filter(Boolean);
 }
 
-function highlightsReducer(
-  state: HighlightsState,
-  action: HighlightsAction,
-): HighlightsState {
+function reducer(state: HighlightsState, action: HighlightsAction): HighlightsState {
   switch (action.type) {
     case 'CREATE': {
       const { words, ...other } = action.highlight;
@@ -83,7 +80,7 @@ function highlightsReducer(
 }
 
 export function HighlightsProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(highlightsReducer, initialState, init);
+  const [state, dispatch] = useReducer(reducer, initialState, init);
 
   useEffect(() => {
     localStorage.setItem(cacheKey, JSON.stringify(state));
