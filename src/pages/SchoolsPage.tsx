@@ -1,16 +1,13 @@
 import AppBar from '@material-ui/core/AppBar';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Toolbar from '@material-ui/core/Toolbar';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSchool } from '../contexts/SchoolContext';
 import { delay } from '../utils';
+import SchoolList from '../components/SchoolList';
 
 export default function SchoolsPage() {
   const history = useHistory();
@@ -73,19 +70,7 @@ export default function SchoolsPage() {
         </Toolbar>
       </AppBar>
       <main>
-        <List>
-          {schools.map((school) => (
-            <React.Fragment key={school.school_code}>
-              <ListItem button onClick={() => handleSchoolSelect(school)}>
-                <ListItemText
-                  primary={school.name}
-                  secondary={school.address}
-                />
-              </ListItem>
-              <Divider />
-            </React.Fragment>
-          ))}
-        </List>
+        <SchoolList schools={schools} handleSchoolSelect={handleSchoolSelect} />
       </main>
     </>
   );
