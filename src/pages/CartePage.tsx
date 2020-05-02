@@ -189,11 +189,8 @@ export default function CartePage() {
           </ListItem>
           <ListItem
             button
-            onClick={
-              () => alert(
-                '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
-              ) /* && handleUnitChange('week') */
-            }
+            disabled
+            onClick={() => handleUnitChange('week')}
           >
             <ListItemIcon>
               <ViewWeek />
@@ -202,11 +199,8 @@ export default function CartePage() {
           </ListItem>
           <ListItem
             button
-            onClick={
-              () => alert(
-                '미구현이에요~~~\n많이들 필요하시면 만들게요~~~',
-              ) /* && handleUnitChange('month') */
-            }
+            disabled
+            onClick={() => handleUnitChange('month')}
           >
             <ListItemIcon>
               <ViewModule />
@@ -222,9 +216,8 @@ export default function CartePage() {
           </ListItem>
           <ListItem
             button
-            onClick={
-              () => alert('제작중이에요~~~') /* && handleNavigate('/theme') */
-            }
+            disabled
+            onClick={() => handleNavigate('/theme')}
           >
             <ListItemIcon>
               <Palette />
