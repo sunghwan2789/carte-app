@@ -82,7 +82,7 @@ export default function CartePage() {
     return () => {
       isCanceled = true;
     };
-  }, [school, currentDate, navigationUnit]);
+  }, [school, cartes, currentDate, navigationUnit]);
 
   useEffect(() => {
     function* getObservingDates() {
