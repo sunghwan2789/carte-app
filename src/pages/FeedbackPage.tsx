@@ -1,7 +1,7 @@
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Send from '@material-ui/icons/Send';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Send from '@mui/icons-material/Send';
 import React from 'react';
 import BackTopBar from '../components/BackTopBar';
 
@@ -38,6 +38,7 @@ export default function FeedbackPage() {
       </BackTopBar>
       <main>
         <TextField
+          variant="standard"
           margin="normal"
           name="email"
           type="email"
@@ -47,6 +48,7 @@ export default function FeedbackPage() {
           onKeyDown={(e) => e.keyCode === 13 && e.preventDefault()}
         />
         <TextField
+          variant="standard"
           margin="normal"
           name="message"
           label="불만사항 및 건의사항 및 사랑 고백"

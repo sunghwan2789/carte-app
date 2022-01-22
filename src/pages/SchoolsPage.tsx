@@ -1,4 +1,4 @@
-import Input from '@material-ui/core/Input';
+import Input from '@mui/material/Input';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSchool } from '../contexts/SchoolContext';

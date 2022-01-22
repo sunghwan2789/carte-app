@@ -1,32 +1,19 @@
-import Fab from '@material-ui/core/Fab';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Add from '@material-ui/icons/Add';
-import Delete from '@material-ui/icons/Delete';
+import Fab from '@mui/material/Fab';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import Add from '@mui/icons-material/Add';
+import Delete from '@mui/icons-material/Delete';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useHighlights } from '../contexts/HighlightsContext';
 import BackTopBar from '../components/BackTopBar';
 
-const useStyles = makeStyles((theme) => createStyles({
-  list: {
-    backgroundColor: theme.palette.background.paper,
-  },
-  fab: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-}));
-
 export default function HighlightsPage() {
   const [highlights, dispatch] = useHighlights();
-  const classes = useStyles();
   const history = useHistory();
 
   return (
@@ -37,7 +24,7 @@ export default function HighlightsPage() {
         </Typography>
       </BackTopBar>
       <main>
-        <List className={classes.list}>
+        <List sx={{ backgroundColor: 'background.paper' }}>
           {highlights!.map((highlight) => (
             <ListItem
               button
@@ -59,7 +46,13 @@ export default function HighlightsPage() {
         </List>
       </main>
       <Fab
-        className={classes.fab}
+        sx={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          marginBottom: 2,
+          marginRight: 2,
+        }}
         color="secondary"
         onClick={() => history.push('/highlights/edit')}
       >

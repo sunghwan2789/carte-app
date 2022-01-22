@@ -1,10 +1,9 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
 import dayjs, { Dayjs, OpUnitType } from 'dayjs';
 import React, { useState } from 'react';
 import DayPicker from 'react-day-picker';
@@ -16,19 +15,12 @@ type NavigatorProps = {
   handleDateChange?: (date: Dayjs) => void;
 };
 
-const useStyles = makeStyles(() => createStyles({
-  date: {
-    color: 'inherit',
-  },
-}));
-
 export default function Navigator({
   currentDate,
   navigateUnit,
   handleDateChange,
 }: NavigatorProps) {
   const [isDayPicking, setIsDayPicking] = useState(false);
-  const classes = useStyles();
 
   function toggleDayPicker() {
     setIsDayPicking(!isDayPicking);
@@ -79,7 +71,7 @@ export default function Navigator({
         style={{ justifyContent: 'start', padding: 0 }}
         onClick={toggleDayPicker}
       >
-        <Typography variant="h6" className={classes.date}>
+        <Typography variant="h6">
           {formatDate()}
         </Typography>
       </Button>

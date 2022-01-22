@@ -1,22 +1,8 @@
-import IconButton from '@material-ui/core/IconButton';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
+import { Box } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import ChevronRight from '@mui/icons-material/ChevronRight';
 import React from 'react';
-
-const useStyles = makeStyles(() => createStyles({
-  root: {
-    marginLeft: 8,
-    marginRight: 8,
-    display: 'flex',
-  },
-  btn: {
-    width: 32,
-    height: 32,
-    padding: '0 12px',
-    color: 'inherit',
-  },
-}));
 
 type NavigateButtonsProps = {
   handleBackward?: () => void;
@@ -27,16 +13,14 @@ export default function NavigateButtons({
   handleBackward,
   handleForward,
 }: NavigateButtonsProps) {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <IconButton className={classes.btn} onClick={handleBackward}>
+    <Box sx={{ marginX: 1, display: 'flex' }}>
+      <IconButton sx={{ width: 32, height: 32, color: 'inherit' }} onClick={handleBackward}>
         <ChevronLeft />
       </IconButton>
-      <IconButton className={classes.btn} onClick={handleForward}>
+      <IconButton sx={{ width: 32, height: 32, color: 'inherit' }} onClick={handleForward}>
         <ChevronRight />
       </IconButton>
-    </div>
+    </Box>
   );
 }

@@ -1,14 +1,14 @@
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Done from '@material-ui/icons/Done';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import ListSubheader from '@mui/material/ListSubheader';
+import Switch from '@mui/material/Switch';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Done from '@mui/icons-material/Done';
 import React, { useMemo, useReducer } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import ColorPickerDialog from '../components/ColorPickerDialog';
@@ -165,6 +165,7 @@ export default function HighlightEdit() {
       <List>
         <ListItem>
           <TextField
+            variant="standard"
             name="name"
             label="이름"
             fullWidth
@@ -174,6 +175,7 @@ export default function HighlightEdit() {
         </ListItem>
         <ListItem>
           <TextField
+            variant="standard"
             name="words"
             label="단어"
             helperText="줄바꿈으로 여러 단어를 사용할 수 있습니다."

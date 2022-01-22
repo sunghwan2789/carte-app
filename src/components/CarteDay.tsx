@@ -1,13 +1,13 @@
-import AppBar from '@material-ui/core/AppBar';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Tab from '@material-ui/core/Tab';
-import Tabs from '@material-ui/core/Tabs';
-import Typography from '@material-ui/core/Typography';
+import { Box } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import CircularProgress from '@mui/material/CircularProgress';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 import React, { useMemo, useState } from 'react';
 import CarteFood from './CarteFood';
@@ -19,14 +19,7 @@ type CarteDayProps = {
 
 type MealName = '조식' | '중식' | '석식';
 
-const useStyles = makeStyles(() => createStyles({
-  root: {
-    overflow: 'hidden',
-  },
-}));
-
 export default function CarteDay({ carte, isLoading }: CarteDayProps) {
-  const classes = useStyles();
   const [selectedMealName, setSelectedMealName] = useState<MealName>(() => {
     const hour = dayjs().hour();
 
@@ -47,9 +40,14 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
   ]);
 
   return (
-    <div className={classes.root}>
+    <Box sx={{ overflow: 'hidden' }}>
       <AppBar position="static">
-        <Tabs value={selectedMealName} onChange={(e, v) => setSelectedMealName(v)}>
+        <Tabs
+          value={selectedMealName}
+          onChange={(e, v) => setSelectedMealName(v)}
+          indicatorColor="primary"
+          textColor="inherit"
+        >
           {carte?.meals.map((meal) => (
             <Tab key={meal.name} value={meal.name} label={meal.name} />
           ))}
@@ -85,6 +83,6 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
           ))
         )}
       </List>
-    </div>
+    </Box>
   );
 }

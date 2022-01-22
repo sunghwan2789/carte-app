@@ -1,40 +1,30 @@
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import Grid from '@material-ui/core/Grid';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Refresh from '@material-ui/icons/Refresh';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Refresh from '@mui/icons-material/Refresh';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import BackTopBar from '../components/BackTopBar';
 
-const useStyles = makeStyles((theme) => createStyles({
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-}));
-
 export default function InfoPage() {
-  const classes = useStyles();
-
   return (
-    <div>
+    <>
       <BackTopBar>
         <Typography variant="h6" color="inherit" style={{ flexGrow: 1 }}>
           정보
         </Typography>
       </BackTopBar>
       <main>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-            <Typography className={classes.heading}>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography>
               인터넷에 연결하지 않아도 되나요?
             </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          </AccordionSummary>
+          <AccordionDetails>
             <div>
               <Typography paragraph>
                 네!
@@ -54,15 +44,15 @@ export default function InfoPage() {
                 사용하실 수 있는 거죠! 흠흠.
               </Typography>
             </div>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-            <Typography className={classes.heading}>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography>
               음식 뒤에 숫자는 무슨 의미인가요?
             </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          </AccordionSummary>
+          <AccordionDetails>
             <div>
               <Typography paragraph>
                 교육청에서 발췌한 알레르기 정보에요.
@@ -97,15 +87,15 @@ export default function InfoPage() {
                 ))}
               </Grid>
             </div>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-            <Typography className={classes.heading}>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography>
               음식 뒤에 이상한 글자가... "고"? "조"? 뭐죠?
             </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          </AccordionSummary>
+          <AccordionDetails>
             <div>
               <Typography paragraph>앗... 아아...</Typography>
               <Typography paragraph>
@@ -114,15 +104,15 @@ export default function InfoPage() {
                 이해할 수 없는 글자를 입력하신 것으로 보이네요... 대충 걸러서 봐주세요... ㅎ하.
               </Typography>
             </div>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel>
-          <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-            <Typography className={classes.heading}>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Typography>
               하이라이트는 어떤 순서로 적용되나요?
             </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          </AccordionSummary>
+          <AccordionDetails>
             <div>
               <Typography paragraph>
                 <Link to="/highlights">하이라이트</Link>
@@ -130,9 +120,9 @@ export default function InfoPage() {
                 목록 재정렬 기능을 추가할 예정입니다.
               </Typography>
             </div>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
       </main>
-    </div>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { CssBaseline } from '@material-ui/core';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HighlightsProvider } from './contexts/HighlightsContext';
@@ -10,9 +10,11 @@ import HighlightsPage from './pages/HighlightsPage';
 import InfoPage from './pages/InfoPage';
 import SchoolsPage from './pages/SchoolsPage';
 
+const theme = createTheme();
+
 export default function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <HighlightsProvider>
         <SchoolProvider>
@@ -33,6 +35,6 @@ export default function App() {
           </BrowserRouter>
         </SchoolProvider>
       </HighlightsProvider>
-    </>
+    </ThemeProvider>
   );
 }
