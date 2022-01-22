@@ -81,6 +81,7 @@ export default function Navigator({
           <DayPicker
             selectedDays={currentDate.toDate()}
             initialMonth={currentDate.toDate()}
+            fixedWeeks
             localeUtils={DayPickerKoreanUtils}
             onDayClick={handleDayPick}
           />
