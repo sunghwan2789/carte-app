@@ -6,6 +6,6 @@
     "target": "ES2019",
     "jsx": "react"
   },
-  "exclude": ["node_modules", "build", ".cache", ".parcel-cache"],
+  "exclude": ["node_modules", "build", ".parcel-cache"],
   "include": ["src/**/*"]
 }
