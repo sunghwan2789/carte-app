@@ -1,64 +1,64 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Typography from '@mui/material/Typography';
-import dayjs, { Dayjs, OpUnitType } from 'dayjs';
-import React, { useState } from 'react';
-import DayPicker from 'react-day-picker';
-import DayPickerKoreanUtils from '../lib/DayPickerKoreanUtils';
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Typography from '@mui/material/Typography'
+import dayjs, { Dayjs, OpUnitType } from 'dayjs'
+import React, { useState } from 'react'
+import DayPicker from 'react-day-picker'
+import DayPickerKoreanUtils from '../lib/DayPickerKoreanUtils'
 
 type NavigatorProps = {
-  currentDate: Dayjs;
-  navigateUnit: OpUnitType;
-  handleDateChange?: (date: Dayjs) => void;
-};
+  currentDate: Dayjs
+  navigateUnit: OpUnitType
+  handleDateChange?: (date: Dayjs) => void
+}
 
 export default function Navigator({
   currentDate,
   navigateUnit,
-  handleDateChange,
+  handleDateChange
 }: NavigatorProps) {
-  const [isDayPicking, setIsDayPicking] = useState(false);
+  const [isDayPicking, setIsDayPicking] = useState(false)
 
   function toggleDayPicker() {
-    setIsDayPicking(!isDayPicking);
+    setIsDayPicking(!isDayPicking)
   }
 
   function formatDate() {
     function getWeekNumberOfMonth() {
       const startDateOfStartWeekOfMonth = currentDate
         .startOf('month')
-        .startOf('week');
-      return currentDate.diff(startDateOfStartWeekOfMonth, 'week') + 1;
+        .startOf('week')
+      return currentDate.diff(startDateOfStartWeekOfMonth, 'week') + 1
     }
 
     function getShortDayName() {
-      const names = '일월화수목금토';
-      return names.charAt(currentDate.day());
+      const names = '일월화수목금토'
+      return names.charAt(currentDate.day())
     }
 
     switch (navigateUnit) {
       case 'day': {
-        return `${currentDate.format('M월 D일')} (${getShortDayName()})`;
+        return `${currentDate.format('M월 D일')} (${getShortDayName()})`
       }
       case 'week': {
-        return `${currentDate.format('M월')} ${getWeekNumberOfMonth()}주`;
+        return `${currentDate.format('M월')} ${getWeekNumberOfMonth()}주`
       }
       case 'month': {
-        return currentDate.format('YYYY년 M월');
+        return currentDate.format('YYYY년 M월')
       }
       default: {
-        return '';
+        return ''
       }
     }
   }
 
   function handleDayPick(day: Date) {
-    toggleDayPicker();
+    toggleDayPicker()
     if (handleDateChange) {
-      handleDateChange(dayjs(day).startOf('day'));
+      handleDateChange(dayjs(day).startOf('day'))
     }
   }
 
@@ -71,9 +71,7 @@ export default function Navigator({
         style={{ justifyContent: 'start', padding: 0 }}
         onClick={toggleDayPicker}
       >
-        <Typography variant="h6">
-          {formatDate()}
-        </Typography>
+        <Typography variant="h6">{formatDate()}</Typography>
       </Button>
       <Dialog open={isDayPicking} onClose={toggleDayPicker}>
         <DialogTitle>식단표 기준 날짜 선택</DialogTitle>
@@ -99,5 +97,5 @@ export default function Navigator({
         </DialogActions>
       </Dialog>
     </>
-  );
+  )
 }

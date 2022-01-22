@@ -1,14 +1,14 @@
-import React, { ReactNode } from 'react';
-import { AppBar, Toolbar, IconButton } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
-import { useHistory } from 'react-router-dom';
+import React, { ReactNode } from 'react'
+import { AppBar, Toolbar, IconButton } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
+import { useHistory } from 'react-router-dom'
 
 type BackTopBarProps = {
-  children?: ReactNode;
-};
+  children?: ReactNode
+}
 
 export default function BackTopBar({ children }: BackTopBarProps) {
-  const { goBack } = useHistory();
+  const { goBack } = useHistory()
 
   return (
     <AppBar position="sticky">
@@ -19,5 +19,5 @@ export default function BackTopBar({ children }: BackTopBarProps) {
         {children}
       </Toolbar>
     </AppBar>
-  );
+  )
 }

@@ -1,33 +1,33 @@
-import Button from '@mui/material/Button';
-import Dialog, { DialogProps } from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import React, { useState } from 'react';
-import { ColorResult, CompactPicker } from 'react-color';
+import Button from '@mui/material/Button'
+import Dialog, { DialogProps } from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import React, { useState } from 'react'
+import { ColorResult, CompactPicker } from 'react-color'
 
 type ColorPickDialogProps = {
-  title?: string;
-  handleClose: (value?: string) => void;
-};
+  title?: string
+  handleClose: (value?: string) => void
+}
 
 export default function ColorPickDialog({
   title,
   handleClose,
-  open,
+  open
 }: ColorPickDialogProps & DialogProps) {
-  const [color, setColor] = useState<string>();
+  const [color, setColor] = useState<string>()
 
   function handleChange(newColor: ColorResult) {
-    setColor(newColor.hex);
+    setColor(newColor.hex)
   }
 
   function handleCancel() {
-    handleClose();
+    handleClose()
   }
 
   function handleOk() {
-    handleClose(color);
+    handleClose(color)
   }
 
   return (
@@ -45,5 +45,5 @@ export default function ColorPickDialog({
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

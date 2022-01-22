@@ -1,131 +1,130 @@
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Toolbar from '@mui/material/Toolbar';
-import Feedback from '@mui/icons-material/Feedback';
-import Info from '@mui/icons-material/Info';
-import Menu from '@mui/icons-material/Menu';
-import Palette from '@mui/icons-material/Palette';
-import Refresh from '@mui/icons-material/Refresh';
-import Star from '@mui/icons-material/Star';
-import ViewDay from '@mui/icons-material/ViewDay';
-import ViewModule from '@mui/icons-material/ViewModule';
-import ViewWeek from '@mui/icons-material/ViewWeek';
-import dayjs, { Dayjs, OpUnitType } from 'dayjs';
-import React, { useEffect, useState } from 'react';
-import 'react-day-picker/lib/style.css';
-import { useHistory } from 'react-router-dom';
-import CarteDay from '../components/CarteDay';
-import NavigateButtons from '../components/NavigateButtons';
-import Navigator from '../components/Navigator';
-import { useSchool } from '../contexts/SchoolContext';
-import { delay } from '../utils';
+import AppBar from '@mui/material/AppBar'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import ListSubheader from '@mui/material/ListSubheader'
+import SwipeableDrawer from '@mui/material/SwipeableDrawer'
+import Toolbar from '@mui/material/Toolbar'
+import Feedback from '@mui/icons-material/Feedback'
+import Info from '@mui/icons-material/Info'
+import Menu from '@mui/icons-material/Menu'
+import Palette from '@mui/icons-material/Palette'
+import Refresh from '@mui/icons-material/Refresh'
+import Star from '@mui/icons-material/Star'
+import ViewDay from '@mui/icons-material/ViewDay'
+import ViewModule from '@mui/icons-material/ViewModule'
+import ViewWeek from '@mui/icons-material/ViewWeek'
+import dayjs, { Dayjs, OpUnitType } from 'dayjs'
+import React, { useEffect, useState } from 'react'
+import 'react-day-picker/lib/style.css'
+import { useHistory } from 'react-router-dom'
+import CarteDay from '../components/CarteDay'
+import NavigateButtons from '../components/NavigateButtons'
+import Navigator from '../components/Navigator'
+import { useSchool } from '../contexts/SchoolContext'
+import { delay } from '../utils'
 
 export default function CartePage() {
-  const [school] = useSchool();
-  const [isDrawerOpened, setIsDrawerOpened] = useState(!school);
-  const [cartes, setCartes] = useState<CarteDto[]>([]);
+  const [school] = useSchool()
+  const [isDrawerOpened, setIsDrawerOpened] = useState(!school)
+  const [cartes, setCartes] = useState<CarteDto[]>([])
   const [currentDate, setCurrentDate] = useState(
     dayjs().hour() < 19
       ? dayjs().startOf('day')
-      : dayjs().startOf('day').add(1, 'day'),
-  );
-  const [navigationUnit, setNavigationUnit] = useState<OpUnitType>('day');
-  const history = useHistory();
-  const [currentCartes, setCurrentCartes] = useState<CarteDto[]>([]);
+      : dayjs().startOf('day').add(1, 'day')
+  )
+  const [navigationUnit, setNavigationUnit] = useState<OpUnitType>('day')
+  const history = useHistory()
+  const [currentCartes, setCurrentCartes] = useState<CarteDto[]>([])
 
   useEffect(() => {
-    let isCanceled = false;
+    let isCanceled = false
 
     function getCarteFetchUrl() {
-      /* eslint-disable @typescript-eslint/camelcase */
-      const { domain_code, course_code, school_code } = school!;
-      const year = currentDate.year();
-      const month = currentDate.month() + 1;
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      const { domain_code, course_code, school_code } = school!
+      const year = currentDate.year()
+      const month = currentDate.month() + 1
       return `/carte/api/v1/cartes/${domain_code}/${course_code}/${school_code}?${new URLSearchParams(
         {
-          date: `${year}-${month}`,
-        },
-      )}`;
-      /* eslint-enable @typescript-eslint/camelcase */
+          date: `${year}-${month}`
+        }
+      )}`
     }
 
     async function fetchCartes() {
-      await delay(400);
+      await delay(400)
       if (isCanceled) {
-        return;
+        return
       }
 
-      const result = await fetch(getCarteFetchUrl());
+      const result = await fetch(getCarteFetchUrl())
       if (!result.ok || isCanceled) {
-        return;
+        return
       }
 
-      setCartes(await result.json());
+      setCartes(await result.json())
     }
 
     // TODO: get carte from cache faster
     if (school) {
       if (!cartes.some((carte) => currentDate.isSame(carte.date, 'date'))) {
-        fetchCartes();
+        fetchCartes()
       }
     }
 
     return () => {
-      isCanceled = true;
-    };
-  }, [school, cartes, currentDate, navigationUnit]);
+      isCanceled = true
+    }
+  }, [school, cartes, currentDate, navigationUnit])
 
   useEffect(() => {
     function* getObservingDates() {
-      const startDate = currentDate.startOf(navigationUnit);
-      const endDate = currentDate.endOf(navigationUnit);
+      const startDate = currentDate.startOf(navigationUnit)
+      const endDate = currentDate.endOf(navigationUnit)
 
-      let it = startDate.clone();
+      let it = startDate.clone()
       while (it.isBefore(endDate)) {
-        yield it;
+        yield it
 
-        it = it.add(1, 'day');
+        it = it.add(1, 'day')
       }
     }
 
     // TODO: fetch cartes incrementally from startDate to endDate
     const observingCartes = Array.from(getObservingDates()).map(
-      (date) => cartes.find((carte) => date.isSame(carte.date, 'date'))!,
-    );
+      (date) => cartes.find((carte) => date.isSame(carte.date, 'date'))!
+    )
 
-    setCurrentCartes(observingCartes);
-  }, [cartes, currentDate, navigationUnit]);
+    setCurrentCartes(observingCartes)
+  }, [cartes, currentDate, navigationUnit])
 
   function toggleDrawer() {
-    setIsDrawerOpened(!isDrawerOpened);
+    setIsDrawerOpened(!isDrawerOpened)
   }
   function handleBackward() {
-    setCurrentDate(currentDate.add(-1, navigationUnit));
+    setCurrentDate(currentDate.add(-1, navigationUnit))
   }
   function handleForward() {
-    setCurrentDate(currentDate.add(1, navigationUnit));
+    setCurrentDate(currentDate.add(1, navigationUnit))
   }
   function handleDateChange(date: Dayjs) {
-    setCurrentDate(date);
+    setCurrentDate(date)
   }
   function handleRefresh() {
     // TODO: invalidate cartes cache
   }
   function handleNavigate(url: string) {
-    history.push(url);
+    history.push(url)
   }
   function handleUnitChange(unit: OpUnitType) {
-    setNavigationUnit(unit);
-    toggleDrawer();
+    setNavigationUnit(unit)
+    toggleDrawer()
   }
 
   return (
@@ -187,21 +186,13 @@ export default function CartePage() {
             </ListItemIcon>
             <ListItemText primary="일간" />
           </ListItem>
-          <ListItem
-            button
-            disabled
-            onClick={() => handleUnitChange('week')}
-          >
+          <ListItem button disabled onClick={() => handleUnitChange('week')}>
             <ListItemIcon>
               <ViewWeek />
             </ListItemIcon>
             <ListItemText primary="주간" />
           </ListItem>
-          <ListItem
-            button
-            disabled
-            onClick={() => handleUnitChange('month')}
-          >
+          <ListItem button disabled onClick={() => handleUnitChange('month')}>
             <ListItemIcon>
               <ViewModule />
             </ListItemIcon>
@@ -214,11 +205,7 @@ export default function CartePage() {
             </ListItemIcon>
             <ListItemText primary="하이라이트" />
           </ListItem>
-          <ListItem
-            button
-            disabled
-            onClick={() => handleNavigate('/theme')}
-          >
+          <ListItem button disabled onClick={() => handleNavigate('/theme')}>
             <ListItemIcon>
               <Palette />
             </ListItemIcon>
@@ -244,5 +231,5 @@ export default function CartePage() {
         )}
       </main>
     </>
-  );
+  )
 }

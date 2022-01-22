@@ -1,43 +1,43 @@
-import { Box } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
-import CircularProgress from '@mui/material/CircularProgress';
-import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Typography from '@mui/material/Typography';
-import dayjs from 'dayjs';
-import React, { useMemo, useState } from 'react';
-import CarteFood from './CarteFood';
+import { Box } from '@mui/material'
+import AppBar from '@mui/material/AppBar'
+import CircularProgress from '@mui/material/CircularProgress'
+import Divider from '@mui/material/Divider'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
+import Typography from '@mui/material/Typography'
+import dayjs from 'dayjs'
+import React, { useMemo, useState } from 'react'
+import CarteFood from './CarteFood'
 
 type CarteDayProps = {
-  carte: CarteDto;
-  isLoading: boolean;
-};
+  carte: CarteDto
+  isLoading: boolean
+}
 
-type MealName = '조식' | '중식' | '석식';
+type MealName = '조식' | '중식' | '석식'
 
 export default function CarteDay({ carte, isLoading }: CarteDayProps) {
   const [selectedMealName, setSelectedMealName] = useState<MealName>(() => {
-    const hour = dayjs().hour();
+    const hour = dayjs().hour()
 
     if (hour < 9) {
-      return '조식';
+      return '조식'
     }
     if (hour < 13) {
-      return '중식';
+      return '중식'
     }
     if (hour < 19) {
-      return '석식';
+      return '석식'
     }
-    return '조식';
-  });
-  const selectedMeal = useMemo(() => carte?.meals.find((meal) => meal.name === selectedMealName), [
-    carte,
-    selectedMealName,
-  ]);
+    return '조식'
+  })
+  const selectedMeal = useMemo(
+    () => carte?.meals.find((meal) => meal.name === selectedMealName),
+    [carte, selectedMealName]
+  )
 
   return (
     <Box sx={{ overflow: 'hidden' }}>
@@ -59,7 +59,7 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
             style={{
               display: 'flex',
               justifyContent: 'center',
-              paddingTop: 16,
+              paddingTop: 16
             }}
           >
             {isLoading ? (
@@ -84,5 +84,5 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
         )}
       </List>
     </Box>
-  );
+  )
 }

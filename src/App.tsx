@@ -1,16 +1,16 @@
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { HighlightsProvider } from './contexts/HighlightsContext';
-import { SchoolProvider } from './contexts/SchoolContext';
-import CartePage from './pages/CartePage';
-import FeedbackPage from './pages/FeedbackPage';
-import HighlightEdit from './pages/HighlightEdit';
-import HighlightsPage from './pages/HighlightsPage';
-import InfoPage from './pages/InfoPage';
-import SchoolsPage from './pages/SchoolsPage';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { HighlightsProvider } from './contexts/HighlightsContext'
+import { SchoolProvider } from './contexts/SchoolContext'
+import CartePage from './pages/CartePage'
+import FeedbackPage from './pages/FeedbackPage'
+import HighlightEdit from './pages/HighlightEdit'
+import HighlightsPage from './pages/HighlightsPage'
+import InfoPage from './pages/InfoPage'
+import SchoolsPage from './pages/SchoolsPage'
 
-const theme = createTheme();
+const theme = createTheme()
 
 export default function App() {
   return (
@@ -36,5 +36,5 @@ export default function App() {
         </SchoolProvider>
       </HighlightsProvider>
     </ThemeProvider>
-  );
+  )
 }

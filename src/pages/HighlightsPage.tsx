@@ -1,20 +1,20 @@
-import Fab from '@mui/material/Fab';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import Add from '@mui/icons-material/Add';
-import Delete from '@mui/icons-material/Delete';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { useHighlights } from '../contexts/HighlightsContext';
-import BackTopBar from '../components/BackTopBar';
+import Fab from '@mui/material/Fab'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
+import ListItemText from '@mui/material/ListItemText'
+import Typography from '@mui/material/Typography'
+import Add from '@mui/icons-material/Add'
+import Delete from '@mui/icons-material/Delete'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
+import { useHighlights } from '../contexts/HighlightsContext'
+import BackTopBar from '../components/BackTopBar'
 
 export default function HighlightsPage() {
-  const [highlights, dispatch] = useHighlights();
-  const history = useHistory();
+  const [highlights, dispatch] = useHighlights()
+  const history = useHistory()
 
   return (
     <>
@@ -37,7 +37,9 @@ export default function HighlightsPage() {
                 secondary={highlight.words.join(', ')}
               />
               <ListItemSecondaryAction>
-                <IconButton onClick={() => dispatch({ type: 'DELETE', highlight })}>
+                <IconButton
+                  onClick={() => dispatch({ type: 'DELETE', highlight })}
+                >
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -51,7 +53,7 @@ export default function HighlightsPage() {
           bottom: 0,
           right: 0,
           marginBottom: 2,
-          marginRight: 2,
+          marginRight: 2
         }}
         color="secondary"
         onClick={() => history.push('/highlights/edit')}
@@ -59,5 +61,5 @@ export default function HighlightsPage() {
         <Add />
       </Fab>
     </>
-  );
+  )
 }

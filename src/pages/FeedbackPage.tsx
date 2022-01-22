@@ -1,28 +1,28 @@
-import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Send from '@mui/icons-material/Send';
-import React from 'react';
-import BackTopBar from '../components/BackTopBar';
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import Send from '@mui/icons-material/Send'
+import React from 'react'
+import BackTopBar from '../components/BackTopBar'
 
 export default function FeedbackPage() {
   async function handleSend(e: any) {
-    e.preventDefault();
+    e.preventDefault()
     try {
       const res = await fetch(e.target.action, {
         method: e.target.method,
-        body: new FormData(e.target),
-      });
-      const response = await res.text();
+        body: new FormData(e.target)
+      })
+      const response = await res.text()
       if (response == 'ok') {
-        alert('고객님의 목소리가 전달됐습니다.\n의견 고맙습니다.');
+        alert('고객님의 목소리가 전달됐습니다.\n의견 고맙습니다.')
       } else if (response == 'email') {
-        alert('수신 가능한 이메일 주소를 입력해주세요.');
+        alert('수신 가능한 이메일 주소를 입력해주세요.')
       } else {
-        alert('서버 프로그램에 문제가 발생하여 목소리를 전달하지 못했습니다.');
+        alert('서버 프로그램에 문제가 발생하여 목소리를 전달하지 못했습니다.')
       }
     } catch ($e) {
-      alert('목소리를 전달하지 못했습니다.');
+      alert('목소리를 전달하지 못했습니다.')
     }
   }
 
@@ -65,5 +65,5 @@ export default function FeedbackPage() {
         </Typography>
       </main>
     </form>
-  );
+  )
 }

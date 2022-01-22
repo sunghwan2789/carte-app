@@ -4,58 +4,58 @@ import React, {
   SetStateAction,
   useContext,
   useState,
-  useEffect,
-} from 'react';
+  useEffect
+} from 'react'
 
-type SchoolState = SchoolDto | undefined;
+type SchoolState = SchoolDto | undefined
 
-const initialState: SchoolState = undefined;
+const initialState: SchoolState = undefined
 
 export const SchoolContext = createContext<{
-  school: SchoolState;
-  setSchool: Dispatch<SetStateAction<SchoolState>>;
+  school: SchoolState
+  setSchool: Dispatch<SetStateAction<SchoolState>>
 }>({
   school: initialState,
-  setSchool: () => { },
-});
+  setSchool: () => {}
+})
 
-const cacheKey = 'carte-v2-school';
+const cacheKey = 'carte-v2-school'
 
 function init(): SchoolState {
-  const cache = localStorage.getItem(cacheKey);
+  const cache = localStorage.getItem(cacheKey)
   if (cache) {
-    return JSON.parse(cache);
+    return JSON.parse(cache)
   }
-  return initialState;
+  return initialState
 }
 
 export function SchoolProvider({ children }: { children: React.ReactNode }) {
-  const [school, setSchool] = useState(init);
+  const [school, setSchool] = useState(init)
 
   useEffect(() => {
     if (school) {
-      localStorage.setItem(cacheKey, JSON.stringify(school));
+      localStorage.setItem(cacheKey, JSON.stringify(school))
     } else {
-      localStorage.removeItem(cacheKey);
+      localStorage.removeItem(cacheKey)
     }
-  }, [school]);
+  }, [school])
 
   return (
     <SchoolContext.Provider value={{ school, setSchool }}>
       {children}
     </SchoolContext.Provider>
-  );
+  )
 }
 
 export function useSchool(): [
   SchoolState,
-  Dispatch<SetStateAction<SchoolState>>,
+  Dispatch<SetStateAction<SchoolState>>
 ] {
-  const context = useContext(SchoolContext);
+  const context = useContext(SchoolContext)
   if (!context) {
-    throw new Error('useSchool must be used within a SchoolProvider');
+    throw new Error('useSchool must be used within a SchoolProvider')
   }
-  const { school, setSchool } = context;
+  const { school, setSchool } = context
 
-  return [school, setSchool];
+  return [school, setSchool]
 }

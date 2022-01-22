@@ -1,51 +1,51 @@
-import Input from '@mui/material/Input';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useSchool } from '../contexts/SchoolContext';
-import { delay } from '../utils';
-import SchoolList from '../components/SchoolList';
-import BackTopBar from '../components/BackTopBar';
+import Input from '@mui/material/Input'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSchool } from '../contexts/SchoolContext'
+import { delay } from '../utils'
+import SchoolList from '../components/SchoolList'
+import BackTopBar from '../components/BackTopBar'
 
 export default function SchoolsPage() {
-  const history = useHistory();
-  const [query, setQuery] = useState('');
-  const [schools, setSchools] = useState<SchoolDto[]>([]);
-  const [, setSchool] = useSchool();
+  const history = useHistory()
+  const [query, setQuery] = useState('')
+  const [schools, setSchools] = useState<SchoolDto[]>([])
+  const [, setSchool] = useSchool()
 
   useEffect(() => {
-    let isCanceled = false;
+    let isCanceled = false
 
     async function fetchSchools() {
       // debounce multiple fetches in short time
-      await delay(500);
+      await delay(500)
       if (isCanceled) {
-        return;
+        return
       }
 
       const result = await fetch(
         `/carte/api/v1/schools?${new URLSearchParams({
-          q: query,
-        })}`,
-      );
+          q: query
+        })}`
+      )
       if (!result.ok || isCanceled) {
-        return;
+        return
       }
 
-      setSchools(await result.json());
+      setSchools(await result.json())
     }
 
     if (query) {
-      fetchSchools();
+      fetchSchools()
     }
 
     return () => {
-      isCanceled = true;
-    };
-  }, [query]);
+      isCanceled = true
+    }
+  }, [query])
 
   function handleSchoolSelect(school: SchoolDto) {
-    setSchool(school);
-    history.push('/');
+    setSchool(school)
+    history.push('/')
   }
 
   return (
@@ -65,5 +65,5 @@ export default function SchoolsPage() {
         <SchoolList schools={schools} handleSchoolSelect={handleSchoolSelect} />
       </main>
     </>
-  );
+  )
 }
