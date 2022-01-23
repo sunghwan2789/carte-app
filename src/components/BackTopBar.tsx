@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react'
-import { AppBar, Toolbar, IconButton } from '@mui/material'
 import { ArrowBack } from '@mui/icons-material'
+import { AppBar, IconButton, Toolbar } from '@mui/material'
+import React, { ReactNode } from 'react'
 import { useHistory } from 'react-router-dom'
 
 type BackTopBarProps = {

@@ -1,16 +1,17 @@
-import Fab from '@mui/material/Fab'
-import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-import ListItemText from '@mui/material/ListItemText'
-import Typography from '@mui/material/Typography'
-import Add from '@mui/icons-material/Add'
-import Delete from '@mui/icons-material/Delete'
+import { Add, Delete } from '@mui/icons-material'
+import {
+  Fab,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Typography
+} from '@mui/material'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { useHighlights } from '../contexts/HighlightsContext'
 import BackTopBar from '../components/BackTopBar'
+import { useHighlights } from '../contexts/HighlightsContext'
 
 export default function HighlightsPage() {
   const [highlights, dispatch] = useHighlights()

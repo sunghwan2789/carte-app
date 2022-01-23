@@ -1,11 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
-import Accordion from '@mui/material/Accordion'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import Refresh from '@mui/icons-material/Refresh'
+import { ExpandMore, Refresh } from '@mui/icons-material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid,
+  Typography
+} from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import BackTopBar from '../components/BackTopBar'

@@ -1,4 +1,4 @@
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { HighlightsProvider } from './contexts/HighlightsContext'

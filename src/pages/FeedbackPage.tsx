@@ -1,7 +1,5 @@
-import IconButton from '@mui/material/IconButton'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import Send from '@mui/icons-material/Send'
+import { Send } from '@mui/icons-material'
+import { IconButton, TextField, Typography } from '@mui/material'
 import React from 'react'
 import BackTopBar from '../components/BackTopBar'
 

@@ -1,7 +1,5 @@
-import { Box } from '@mui/material'
-import IconButton from '@mui/material/IconButton'
-import ChevronLeft from '@mui/icons-material/ChevronLeft'
-import ChevronRight from '@mui/icons-material/ChevronRight'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
+import { Box, IconButton } from '@mui/material'
 import React from 'react'
 
 type NavigateButtonsProps = {

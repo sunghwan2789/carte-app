@@ -1,10 +1,10 @@
 import React, {
-  createContext,
   Dispatch,
   SetStateAction,
+  createContext,
   useContext,
-  useState,
-  useEffect
+  useEffect,
+  useState
 } from 'react'
 
 type SchoolState = SchoolDto | undefined

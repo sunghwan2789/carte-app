@@ -1,13 +1,15 @@
-import { Box } from '@mui/material'
-import AppBar from '@mui/material/AppBar'
-import CircularProgress from '@mui/material/CircularProgress'
-import Divider from '@mui/material/Divider'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
-import Typography from '@mui/material/Typography'
+import {
+  AppBar,
+  Box,
+  CircularProgress,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Tab,
+  Tabs,
+  Typography
+} from '@mui/material'
 import dayjs from 'dayjs'
 import React, { useMemo, useState } from 'react'
 import CarteFood from './CarteFood'

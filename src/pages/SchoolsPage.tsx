@@ -1,10 +1,10 @@
-import Input from '@mui/material/Input'
+import { Input } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import BackTopBar from '../components/BackTopBar'
+import SchoolList from '../components/SchoolList'
 import { useSchool } from '../contexts/SchoolContext'
 import { delay } from '../utils'
-import SchoolList from '../components/SchoolList'
-import BackTopBar from '../components/BackTopBar'
 
 export default function SchoolsPage() {
   const history = useHistory()

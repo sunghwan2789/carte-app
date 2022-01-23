@@ -1,19 +1,21 @@
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-import ListItemText from '@mui/material/ListItemText'
-import ListSubheader from '@mui/material/ListSubheader'
-import Switch from '@mui/material/Switch'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import Done from '@mui/icons-material/Done'
+import { Done } from '@mui/icons-material'
+import {
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  ListSubheader,
+  Switch,
+  TextField,
+  Typography
+} from '@mui/material'
 import React, { useMemo, useReducer } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import BackTopBar from '../components/BackTopBar'
 import ColorPickerDialog from '../components/ColorPickerDialog'
 import { useHighlight } from '../contexts/HighlightsContext'
-import BackTopBar from '../components/BackTopBar'
 
 type EditState = {
   name?: string
