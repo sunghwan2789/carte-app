@@ -1,11 +1,22 @@
 import { Send } from '@mui/icons-material'
-import { IconButton, TextField, Typography } from '@mui/material'
-import React from 'react'
+import {
+  Backdrop,
+  CircularProgress,
+  IconButton,
+  TextField,
+  Typography
+} from '@mui/material'
+import React, { useState } from 'react'
 import BackTopBar from '../components/BackTopBar'
 
 export default function FeedbackPage() {
+  const [sending, setSending] = useState(false)
+
   async function handleSend(e: any) {
     e.preventDefault()
+    if (sending) return
+
+    setSending(true)
     try {
       const res = await fetch(e.target.action, {
         method: e.target.method,
@@ -21,6 +32,8 @@ export default function FeedbackPage() {
       }
     } catch ($e) {
       alert('목소리를 전달하지 못했습니다.')
+    } finally {
+      setSending(false)
     }
   }
 
@@ -62,6 +75,12 @@ export default function FeedbackPage() {
           보내주세요. 흐흐.
         </Typography>
       </main>
+      <Backdrop
+        open={sending}
+        sx={{ color: 'white', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </form>
   )
 }
