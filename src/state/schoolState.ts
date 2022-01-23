@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil'
+import { atom } from 'recoil'
 
 type SchoolState = SchoolDto | undefined
 
@@ -14,21 +14,17 @@ function init(): SchoolState {
   return initialState
 }
 
-const school = atom<SchoolState>({
-  key: `${cacheKey}/atom`,
-  default: init()
-})
-
-export const schoolState = selector<SchoolState>({
+export const schoolState = atom<SchoolState>({
   key: cacheKey,
-  get: ({ get }) => get(school),
-  set: ({ set }, newValue) => {
-    if (newValue) {
-      localStorage.setItem(cacheKey, JSON.stringify(newValue))
-    } else {
-      localStorage.removeItem(cacheKey)
-    }
-
-    set(school, newValue)
-  }
+  default: init(),
+  effects_UNSTABLE: [
+    ({ onSet }) =>
+      onSet((newValue) => {
+        if (newValue) {
+          localStorage.setItem(cacheKey, JSON.stringify(newValue))
+        } else {
+          localStorage.removeItem(cacheKey)
+        }
+      })
+  ]
 })
