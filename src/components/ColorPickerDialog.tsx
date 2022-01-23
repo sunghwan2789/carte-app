@@ -10,15 +10,16 @@ import React, { useState } from 'react'
 import { ColorResult, CompactPicker } from 'react-color'
 
 type ColorPickDialogProps = {
+  open: DialogProps['open']
   title?: string
-  handleClose: (value?: string) => void
+  onClose?: (value?: string) => void
 }
 
 export default function ColorPickDialog({
+  open,
   title,
-  handleClose,
-  open
-}: ColorPickDialogProps & DialogProps) {
+  onClose
+}: ColorPickDialogProps) {
   const [color, setColor] = useState<string>()
 
   function handleChange(newColor: ColorResult) {
@@ -26,11 +27,11 @@ export default function ColorPickDialog({
   }
 
   function handleCancel() {
-    handleClose()
+    onClose?.()
   }
 
   function handleOk() {
-    handleClose(color)
+    onClose?.(color)
   }
 
   return (

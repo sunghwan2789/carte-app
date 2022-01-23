@@ -3,25 +3,25 @@ import { Box, IconButton } from '@mui/material'
 import React from 'react'
 
 type NavigateButtonsProps = {
-  handleBackward?: () => void
-  handleForward?: () => void
+  onBackward?: () => void
+  onForward?: () => void
 }
 
 export default function NavigateButtons({
-  handleBackward,
-  handleForward
+  onBackward,
+  onForward
 }: NavigateButtonsProps) {
   return (
     <Box sx={{ marginX: 1, display: 'flex' }}>
       <IconButton
         sx={{ width: 32, height: 32, color: 'inherit' }}
-        onClick={handleBackward}
+        onClick={onBackward}
       >
         <ChevronLeft />
       </IconButton>
       <IconButton
         sx={{ width: 32, height: 32, color: 'inherit' }}
-        onClick={handleForward}
+        onClick={onForward}
       >
         <ChevronRight />
       </IconButton>

@@ -43,7 +43,7 @@ export default function FeedbackPage() {
           label="고객님 이메일 주소"
           required
           fullWidth
-          onKeyDown={(e) => e.keyCode === 13 && e.preventDefault()}
+          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
         />
         <TextField
           variant="standard"

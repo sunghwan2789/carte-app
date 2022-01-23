@@ -20,5 +20,5 @@ type Highlight = {
   id?: string
   name?: string
   words: string[]
-  style: any
+  style: React.CSSProperties
 }

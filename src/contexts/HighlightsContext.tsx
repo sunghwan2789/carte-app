@@ -107,7 +107,7 @@ export function useHighlights(): [HighlightsState, Dispatch<HighlightsAction>] {
 }
 
 export function useHighlight(
-  id: string
+  id: string | undefined
 ): [Highlight | undefined, Dispatch<HighlightsAction>] {
   const [state, dispatch] = useHighlights()
 

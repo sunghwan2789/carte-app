@@ -15,13 +15,13 @@ import React, { useMemo, useState } from 'react'
 import CarteFood from './CarteFood'
 
 type CarteDayProps = {
-  carte: CarteDto
-  isLoading: boolean
+  loading: boolean
+  carte?: CarteDto
 }
 
 type MealName = '조식' | '중식' | '석식'
 
-export default function CarteDay({ carte, isLoading }: CarteDayProps) {
+export default function CarteDay({ loading, carte }: CarteDayProps) {
   const [selectedMealName, setSelectedMealName] = useState<MealName>(() => {
     const hour = dayjs().hour()
 
@@ -56,15 +56,15 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
         </Tabs>
       </AppBar>
       <List>
-        {!selectedMeal ? (
-          <div
-            style={{
+        {loading || !selectedMeal ? (
+          <Box
+            sx={{
               display: 'flex',
               justifyContent: 'center',
-              paddingTop: 16
+              marginTop: 2
             }}
           >
-            {isLoading ? (
+            {loading ? (
               <CircularProgress />
             ) : (
               <Typography>
@@ -73,7 +73,7 @@ export default function CarteDay({ carte, isLoading }: CarteDayProps) {
                 (없을 수도 있어요..!)
               </Typography>
             )}
-          </div>
+          </Box>
         ) : (
           selectedMeal.foods.map((food) => (
             <React.Fragment key={food}>

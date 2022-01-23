@@ -43,7 +43,7 @@ let abortController = new AbortController()
 
 const getCartesQuery = selectorFamily<
   CarteDto[],
-  { school: SchoolDto | undefined; year: number; month: number }
+  { school?: SchoolDto; year: number; month: number }
 >({
   key: 'carte',
   get:
@@ -82,7 +82,7 @@ const getCartesQuery = selectorFamily<
 
 const getCartesObservingQuery = selectorFamily<
   CarteDto[],
-  { school: SchoolDto | undefined; date: Dayjs; unit: OpUnitType }
+  { school?: SchoolDto; date: Dayjs; unit: OpUnitType }
 >({
   key: 'carte-ob',
   get:
@@ -108,40 +108,25 @@ const getCartesObservingQuery = selectorFamily<
 export default function CartePage() {
   const school = useRecoilValue(schoolState)
   const [isDrawerOpened, setIsDrawerOpened] = useState(!school)
-  const [currentDate, setCurrentDate] = useState(
+  const [date, setDate] = useState(
     dayjs().hour() < 19
       ? dayjs().startOf('day')
       : dayjs().startOf('day').add(1, 'day')
   )
-  const [navigationUnit, setNavigationUnit] = useState<OpUnitType>('day')
+  const [unit, setUnit] = useState<OpUnitType>('day')
   const cartes = useRecoilValueLoadable(
-    getCartesObservingQuery({ school, date: currentDate, unit: navigationUnit })
+    getCartesObservingQuery({ school, date, unit })
   )
   const refreshCartes = useRecoilRefresher_UNSTABLE(
-    getCartesObservingQuery({ school, date: currentDate, unit: navigationUnit })
+    getCartesObservingQuery({ school, date, unit })
   )
   const navigate = useNavigate()
 
   function toggleDrawer() {
     setIsDrawerOpened(!isDrawerOpened)
   }
-  function handleBackward() {
-    setCurrentDate(currentDate.add(-1, navigationUnit))
-  }
-  function handleForward() {
-    setCurrentDate(currentDate.add(1, navigationUnit))
-  }
-  function handleDateChange(date: Dayjs) {
-    setCurrentDate(date)
-  }
-  function handleRefresh() {
-    refreshCartes()
-  }
-  function handleNavigate(url: string) {
-    navigate(url)
-  }
-  function handleUnitChange(unit: OpUnitType) {
-    setNavigationUnit(unit)
+  function handleUnitChange(newUnit: OpUnitType) {
+    setUnit(newUnit)
     toggleDrawer()
   }
 
@@ -153,19 +138,11 @@ export default function CartePage() {
             <Menu />
           </IconButton>
           <NavigateButtons
-            handleBackward={handleBackward}
-            handleForward={handleForward}
+            onBackward={() => setDate(date.add(-1, unit))}
+            onForward={() => setDate(date.add(1, unit))}
           />
-          <Navigator
-            currentDate={currentDate}
-            navigateUnit={navigationUnit}
-            handleDateChange={handleDateChange}
-          />
-          <IconButton
-            color="inherit"
-            title="새로고침"
-            onClick={() => handleRefresh()}
-          >
+          <Navigator date={date} unit={unit} onChange={setDate} />
+          <IconButton color="inherit" title="새로고침" onClick={refreshCartes}>
             <Refresh />
           </IconButton>
         </Toolbar>
@@ -182,7 +159,7 @@ export default function CartePage() {
                 학교
               </Grid>
               <Grid item>
-                <Button size="small" onClick={() => handleNavigate('/schools')}>
+                <Button size="small" onClick={() => navigate('/schools')}>
                   변경
                 </Button>
               </Grid>
@@ -217,25 +194,25 @@ export default function CartePage() {
             <ListItemText primary="월간" />
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => handleNavigate('/highlights')}>
+          <ListItem button onClick={() => navigate('/highlights')}>
             <ListItemIcon>
               <Star />
             </ListItemIcon>
             <ListItemText primary="하이라이트" />
           </ListItem>
-          <ListItem button disabled onClick={() => handleNavigate('/theme')}>
+          <ListItem button disabled onClick={() => navigate('/theme')}>
             <ListItemIcon>
               <Palette />
             </ListItemIcon>
             <ListItemText primary="테마" />
           </ListItem>
-          <ListItem button onClick={() => handleNavigate('/info')}>
+          <ListItem button onClick={() => navigate('/info')}>
             <ListItemIcon>
               <Info />
             </ListItemIcon>
             <ListItemText primary="정보" />
           </ListItem>
-          <ListItem button onClick={() => handleNavigate('/feedback')}>
+          <ListItem button onClick={() => navigate('/feedback')}>
             <ListItemIcon>
               <Feedback />
             </ListItemIcon>
@@ -244,10 +221,10 @@ export default function CartePage() {
         </List>
       </SwipeableDrawer>
       <main>
-        {navigationUnit === 'day' && (
+        {unit === 'day' && (
           <CarteDay
+            loading={cartes.state === 'loading'}
             carte={cartes.contents[0]}
-            isLoading={cartes.state === 'loading'}
           />
         )}
       </main>

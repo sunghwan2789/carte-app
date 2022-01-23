@@ -233,9 +233,7 @@ export default function HighlightEdit() {
       <ColorPickerDialog
         open={Boolean(colorPickerTarget)}
         title={colorPickerTitle}
-        handleClose={(color) =>
-          dispatch({ type: 'SET_COLORPICKER_RESULT', color })
-        }
+        onClose={(color) => dispatch({ type: 'SET_COLORPICKER_RESULT', color })}
       />
     </form>
   )

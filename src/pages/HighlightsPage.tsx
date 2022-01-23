@@ -25,8 +25,10 @@ export default function HighlightsPage() {
         </Typography>
       </BackTopBar>
       <main>
-        <List sx={{ backgroundColor: 'background.paper' }}>
-          {highlights!.map((highlight) => (
+        <List
+          sx={{ backgroundColor: (theme) => theme.palette.background.paper }}
+        >
+          {highlights.map((highlight) => (
             <ListItem
               button
               divider

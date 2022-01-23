@@ -1,4 +1,4 @@
-import { CircularProgress, Input } from '@mui/material'
+import { Input } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -29,17 +29,17 @@ const getSchoolsQuery = selectorFamily<SchoolDto[], { query: string }>({
 
       await delay(500)
 
-      const result = await fetch(
+      const response = await fetch(
         `/carte/api/v1/schools?${new URLSearchParams({
           q: query
         })}`,
         { signal: fetchController.signal }
       )
-      if (!result.ok) {
+      if (!response.ok) {
         throw new Error('data fetch error')
       }
 
-      return result.json()
+      return response.json()
     }
 })
 
@@ -75,23 +75,11 @@ export default function SchoolsPage() {
         />
       </BackTopBar>
       <main>
-        {schools.state !== 'hasValue' && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              paddingTop: 16
-            }}
-          >
-            <CircularProgress />
-          </div>
-        )}
-        {schools.state === 'hasValue' && (
-          <SchoolList
-            schools={schools.contents}
-            handleSchoolSelect={handleSchoolSelect}
-          />
-        )}
+        <SchoolList
+          loading={schools.state !== 'hasValue'}
+          schools={schools.contents}
+          onSelect={handleSchoolSelect}
+        />
       </main>
     </>
   )

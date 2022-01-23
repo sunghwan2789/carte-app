@@ -12,16 +12,12 @@ import DayPicker from 'react-day-picker'
 import DayPickerKoreanUtils from '../lib/DayPickerKoreanUtils'
 
 type NavigatorProps = {
-  currentDate: Dayjs
-  navigateUnit: OpUnitType
-  handleDateChange?: (date: Dayjs) => void
+  date: Dayjs
+  unit: OpUnitType
+  onChange?: (date: Dayjs) => void
 }
 
-export default function Navigator({
-  currentDate,
-  navigateUnit,
-  handleDateChange
-}: NavigatorProps) {
+export default function Navigator({ date, unit, onChange }: NavigatorProps) {
   const [isDayPicking, setIsDayPicking] = useState(false)
 
   function toggleDayPicker() {
@@ -30,26 +26,24 @@ export default function Navigator({
 
   function formatDate() {
     function getWeekNumberOfMonth() {
-      const startDateOfStartWeekOfMonth = currentDate
-        .startOf('month')
-        .startOf('week')
-      return currentDate.diff(startDateOfStartWeekOfMonth, 'week') + 1
+      const startDateOfStartWeekOfMonth = date.startOf('month').startOf('week')
+      return date.diff(startDateOfStartWeekOfMonth, 'week') + 1
     }
 
     function getShortDayName() {
       const names = '일월화수목금토'
-      return names.charAt(currentDate.day())
+      return names.charAt(date.day())
     }
 
-    switch (navigateUnit) {
+    switch (unit) {
       case 'day': {
-        return `${currentDate.format('M월 D일')} (${getShortDayName()})`
+        return `${date.format('M월 D일')} (${getShortDayName()})`
       }
       case 'week': {
-        return `${currentDate.format('M월')} ${getWeekNumberOfMonth()}주`
+        return `${date.format('M월')} ${getWeekNumberOfMonth()}주`
       }
       case 'month': {
-        return currentDate.format('YYYY년 M월')
+        return date.format('YYYY년 M월')
       }
       default: {
         return ''
@@ -59,9 +53,7 @@ export default function Navigator({
 
   function handleDayPick(day: Date) {
     toggleDayPicker()
-    if (handleDateChange) {
-      handleDateChange(dayjs(day).startOf('day'))
-    }
+    onChange?.(dayjs(day).startOf('day'))
   }
 
   // TODO: check popper pops up
@@ -79,8 +71,8 @@ export default function Navigator({
         <DialogTitle>식단표 기준 날짜 선택</DialogTitle>
         <DialogContent>
           <DayPicker
-            selectedDays={currentDate.toDate()}
-            initialMonth={currentDate.toDate()}
+            selectedDays={date.toDate()}
+            initialMonth={date.toDate()}
             fixedWeeks
             localeUtils={DayPickerKoreanUtils}
             onDayClick={handleDayPick}
