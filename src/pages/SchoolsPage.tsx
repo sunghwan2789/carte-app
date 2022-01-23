@@ -1,48 +1,60 @@
-import { Input } from '@mui/material'
+import { CircularProgress, Input } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
+import {
+  selectorFamily,
+  useRecoilRefresher_UNSTABLE,
+  useRecoilValueLoadable,
+  useSetRecoilState
+} from 'recoil'
 import BackTopBar from '../components/BackTopBar'
 import SchoolList from '../components/SchoolList'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
-export default function SchoolsPage() {
-  const navigate = useNavigate()
-  const [query, setQuery] = useState('')
-  const [schools, setSchools] = useState<SchoolDto[]>([])
-  const setSchool = useSetRecoilState(schoolState)
+let abortController = new AbortController()
 
-  useEffect(() => {
-    let isCanceled = false
+const getSchoolsQuery = selectorFamily<SchoolDto[], { query: string }>({
+  key: 'schools',
+  get:
+    ({ query }) =>
+    async () => {
+      abortController.abort()
+      const fetchController = new AbortController()
+      abortController = fetchController
 
-    async function fetchSchools() {
-      // debounce multiple fetches in short time
-      await delay(500)
-      if (isCanceled) {
-        return
+      if (!query) {
+        return []
       }
+
+      await delay(500)
 
       const result = await fetch(
         `/carte/api/v1/schools?${new URLSearchParams({
           q: query
-        })}`
+        })}`,
+        { signal: fetchController.signal }
       )
-      if (!result.ok || isCanceled) {
-        return
+      if (!result.ok) {
+        throw new Error('data fetch error')
       }
 
-      setSchools(await result.json())
+      return result.json()
     }
+})
 
-    if (query) {
-      fetchSchools()
-    }
+export default function SchoolsPage() {
+  const navigate = useNavigate()
+  const [query, setQuery] = useState('')
+  const schools = useRecoilValueLoadable(getSchoolsQuery({ query }))
+  const refreshSchools = useRecoilRefresher_UNSTABLE(getSchoolsQuery({ query }))
+  const setSchool = useSetRecoilState(schoolState)
 
-    return () => {
-      isCanceled = true
+  useEffect(() => {
+    if (schools.state === 'hasError') {
+      refreshSchools()
     }
-  }, [query])
+  }, [schools, refreshSchools])
 
   function handleSchoolSelect(school: SchoolDto) {
     setSchool(school)
@@ -63,7 +75,23 @@ export default function SchoolsPage() {
         />
       </BackTopBar>
       <main>
-        <SchoolList schools={schools} handleSchoolSelect={handleSchoolSelect} />
+        {schools.state !== 'hasValue' && (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingTop: 16
+            }}
+          >
+            <CircularProgress />
+          </div>
+        )}
+        {schools.state === 'hasValue' && (
+          <SchoolList
+            schools={schools.contents}
+            handleSchoolSelect={handleSchoolSelect}
+          />
+        )}
       </main>
     </>
   )
