@@ -24,90 +24,103 @@ import {
   Toolbar
 } from '@mui/material'
 import dayjs, { Dayjs, OpUnitType } from 'dayjs'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import 'react-day-picker/lib/style.css'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import {
+  selectorFamily,
+  useRecoilRefresher_UNSTABLE,
+  useRecoilValue,
+  useRecoilValueLoadable
+} from 'recoil'
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
 import Navigator from '../components/Navigator'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
+let abortController = new AbortController()
+
+const getCartesQuery = selectorFamily<
+  CarteDto[],
+  { school: SchoolDto | undefined; year: number; month: number }
+>({
+  key: 'carte',
+  get:
+    ({ school, year, month }) =>
+    async () => {
+      abortController.abort()
+      const fetchController = new AbortController()
+      abortController = fetchController
+
+      if (!school) {
+        return []
+      }
+
+      function getCarteFetchUrl() {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        const { domain_code, course_code, school_code } = school!
+        return `/carte/api/v1/cartes/${domain_code}/${course_code}/${school_code}?${new URLSearchParams(
+          {
+            date: `${year}-${month}`
+          }
+        )}`
+      }
+
+      await delay(400)
+
+      const response = await fetch(getCarteFetchUrl(), {
+        signal: fetchController.signal
+      })
+      if (!response.ok) {
+        throw new Error('data fetch error')
+      }
+
+      return response.json()
+    }
+})
+
+const getCartesObservingQuery = selectorFamily<
+  CarteDto[],
+  { school: SchoolDto | undefined; date: Dayjs; unit: OpUnitType }
+>({
+  key: 'carte-ob',
+  get:
+    ({ school, date, unit }) =>
+    ({ get }) =>
+      get(
+        // TODO: refresh inner selector?
+        getCartesQuery({ school, year: date.year(), month: date.month() + 1 })
+      ).filter((carte) => {
+        const startDate = date.startOf(unit)
+        const endDate = date.endOf(unit)
+
+        const cdate = dayjs(carte.date)
+
+        return (
+          cdate.isSame(startDate, 'date') ||
+          cdate.isSame(endDate, 'date') ||
+          (cdate.isAfter(startDate, 'date') && cdate.isBefore(endDate, 'date'))
+        )
+      })
+})
+
 export default function CartePage() {
   const school = useRecoilValue(schoolState)
   const [isDrawerOpened, setIsDrawerOpened] = useState(!school)
-  const [cartes, setCartes] = useState<CarteDto[]>([])
   const [currentDate, setCurrentDate] = useState(
     dayjs().hour() < 19
       ? dayjs().startOf('day')
       : dayjs().startOf('day').add(1, 'day')
   )
   const [navigationUnit, setNavigationUnit] = useState<OpUnitType>('day')
+  const cartes = useRecoilValueLoadable(
+    getCartesObservingQuery({ school, date: currentDate, unit: navigationUnit })
+  )
+  const refreshCartes = useRecoilRefresher_UNSTABLE(
+    getCartesObservingQuery({ school, date: currentDate, unit: navigationUnit })
+  )
   const navigate = useNavigate()
-  const [currentCartes, setCurrentCartes] = useState<CarteDto[]>([])
-
-  useEffect(() => {
-    let isCanceled = false
-
-    function getCarteFetchUrl() {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { domain_code, course_code, school_code } = school!
-      const year = currentDate.year()
-      const month = currentDate.month() + 1
-      return `/carte/api/v1/cartes/${domain_code}/${course_code}/${school_code}?${new URLSearchParams(
-        {
-          date: `${year}-${month}`
-        }
-      )}`
-    }
-
-    async function fetchCartes() {
-      await delay(400)
-      if (isCanceled) {
-        return
-      }
-
-      const result = await fetch(getCarteFetchUrl())
-      if (!result.ok || isCanceled) {
-        return
-      }
-
-      setCartes(await result.json())
-    }
-
-    // TODO: get carte from cache faster
-    if (school) {
-      if (!cartes.some((carte) => currentDate.isSame(carte.date, 'date'))) {
-        fetchCartes()
-      }
-    }
-
-    return () => {
-      isCanceled = true
-    }
-  }, [school, cartes, currentDate, navigationUnit])
-
-  useEffect(() => {
-    function* getObservingDates() {
-      const startDate = currentDate.startOf(navigationUnit)
-      const endDate = currentDate.endOf(navigationUnit)
-
-      let it = startDate.clone()
-      while (it.isBefore(endDate)) {
-        yield it
-
-        it = it.add(1, 'day')
-      }
-    }
-
-    // TODO: fetch cartes incrementally from startDate to endDate
-    const observingCartes = Array.from(getObservingDates()).map(
-      (date) => cartes.find((carte) => date.isSame(carte.date, 'date'))!
-    )
-
-    setCurrentCartes(observingCartes)
-  }, [cartes, currentDate, navigationUnit])
 
   function toggleDrawer() {
     setIsDrawerOpened(!isDrawerOpened)
@@ -122,7 +135,7 @@ export default function CartePage() {
     setCurrentDate(date)
   }
   function handleRefresh() {
-    // TODO: invalidate cartes cache
+    refreshCartes()
   }
   function handleNavigate(url: string) {
     navigate(url)
@@ -232,7 +245,10 @@ export default function CartePage() {
       </SwipeableDrawer>
       <main>
         {navigationUnit === 'day' && (
-          <CarteDay carte={currentCartes[0]} isLoading={false} />
+          <CarteDay
+            carte={cartes.contents[0]}
+            isLoading={cartes.state === 'loading'}
+          />
         )}
       </main>
     </>
