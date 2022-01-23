@@ -28,9 +28,7 @@ import React, { useEffect, useState } from 'react'
 import 'react-day-picker/lib/style.css'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
-  DefaultValue,
   selectorFamily,
-  useRecoilRefresher_UNSTABLE,
   useRecoilValue,
   useRecoilValueLoadable,
   useSetRecoilState
@@ -38,6 +36,7 @@ import {
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
 import Navigator from '../components/Navigator'
+import { cartesState } from '../state/cartesState'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
@@ -65,7 +64,9 @@ const getCartesQuery = selectorFamily<
   key: 'carte',
   get:
     ({ school, year, month }) =>
-    async () => {
+    async ({ get }) => {
+      get(cartesState)
+
       abortController.abort()
       const fetchController = new AbortController()
       abortController = fetchController
@@ -113,12 +114,7 @@ const getCartesQuery = selectorFamily<
       ])
 
       return cartes
-    },
-  set: () => (_, newValue) => {
-    if (!(newValue instanceof DefaultValue)) throw new Error('not supported')
-
-    setCachedCartes(undefined)
-  }
+    }
 })
 
 const getCartesBetweenQuery = selectorFamily<
@@ -151,29 +147,6 @@ const getCartesBetweenQuery = selectorFamily<
           })
         )
       ]
-    },
-  set:
-    ({ school, startDate, endDate }) =>
-    ({ reset }, newValue) => {
-      if (!(newValue instanceof DefaultValue)) throw new Error('not supported')
-
-      reset(
-        getCartesQuery({
-          school,
-          year: startDate.year(),
-          month: startDate.month() + 1
-        })
-      )
-
-      if (!startDate.isSame(endDate, 'month')) {
-        reset(
-          getCartesQuery({
-            school,
-            year: endDate.year(),
-            month: endDate.month() + 1
-          })
-        )
-      }
     }
 })
 
@@ -199,17 +172,6 @@ const getCartesObservingQuery = selectorFamily<
           )
         }
       )
-    },
-  set:
-    ({ school, date, unit }) =>
-    ({ reset }, newValue) => {
-      if (!(newValue instanceof DefaultValue) && newValue.length)
-        throw new Error('not supported')
-
-      const startDate = date.startOf(unit)
-      const endDate = date.endOf(unit)
-
-      reset(getCartesBetweenQuery({ school, startDate, endDate }))
     }
 })
 
@@ -229,13 +191,8 @@ export default function CartePage() {
       : getNextEatingDay()
   )
   const [unit, setUnit] = useState<OpUnitType>('day')
+  const resetCartes = useSetRecoilState(cartesState)
   const cartes = useRecoilValueLoadable(
-    getCartesObservingQuery({ school, date, unit })
-  )
-  const refreshCartes = useRecoilRefresher_UNSTABLE(
-    getCartesObservingQuery({ school, date, unit })
-  )
-  const setCartes = useSetRecoilState(
     getCartesObservingQuery({ school, date, unit })
   )
   const navigate = useNavigate()
@@ -257,10 +214,7 @@ export default function CartePage() {
     toggleDrawer()
   }
   function handleRefresh() {
-    // resetting value is required
-    // refreshCartes does not trigger sub queries to reset
-    setCartes([])
-    refreshCartes()
+    resetCartes(Date.now())
   }
 
   return (

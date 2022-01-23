@@ -50,7 +50,7 @@ export default function SchoolsPage() {
   const schools = useRecoilValueLoadable(getSchoolsQuery({ query }))
   const refreshSchools = useRecoilRefresher_UNSTABLE(getSchoolsQuery({ query }))
   const setSchool = useSetRecoilState(schoolState)
-  const setCartes = useSetRecoilState(cartesState)
+  const resetCartes = useSetRecoilState(cartesState)
 
   useEffect(() => {
     if (schools.state === 'hasError') {
@@ -60,7 +60,7 @@ export default function SchoolsPage() {
 
   function handleSchoolSelect(school: SchoolDto) {
     setSchool(school)
-    setCartes(undefined)
+    resetCartes(Date.now())
     navigate('/')
   }
 
