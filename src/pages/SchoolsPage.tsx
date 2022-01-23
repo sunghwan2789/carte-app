@@ -9,13 +9,13 @@ import {
 } from 'recoil'
 import BackTopBar from '../components/BackTopBar'
 import SchoolList from '../components/SchoolList'
-import { cartesState } from '../state/cartesState'
+import { useRefreshCartes } from '../state/cartesState'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
 let abortController = new AbortController()
 
-const getSchoolsQuery = selectorFamily<SchoolDto[], { query: string }>({
+const schoolsQuery = selectorFamily<SchoolDto[], { query: string }>({
   key: 'schools',
   get:
     ({ query }) =>
@@ -47,10 +47,10 @@ const getSchoolsQuery = selectorFamily<SchoolDto[], { query: string }>({
 export default function SchoolsPage() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
-  const schools = useRecoilValueLoadable(getSchoolsQuery({ query }))
-  const refreshSchools = useRecoilRefresher_UNSTABLE(getSchoolsQuery({ query }))
+  const schools = useRecoilValueLoadable(schoolsQuery({ query }))
+  const refreshSchools = useRecoilRefresher_UNSTABLE(schoolsQuery({ query }))
   const setSchool = useSetRecoilState(schoolState)
-  const resetCartes = useSetRecoilState(cartesState)
+  const refreshCartes = useRefreshCartes()
 
   useEffect(() => {
     if (schools.state === 'hasError') {
@@ -60,7 +60,7 @@ export default function SchoolsPage() {
 
   function handleSchoolSelect(school: SchoolDto) {
     setSchool(school)
-    resetCartes(Date.now())
+    refreshCartes()
     navigate('/')
   }
 

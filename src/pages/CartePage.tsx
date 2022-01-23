@@ -27,37 +27,21 @@ import dayjs, { Dayjs, OpUnitType } from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import 'react-day-picker/lib/style.css'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import {
-  selectorFamily,
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useSetRecoilState
-} from 'recoil'
+import { selectorFamily, useRecoilValue, useRecoilValueLoadable } from 'recoil'
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
 import Navigator from '../components/Navigator'
-import { cartesState } from '../state/cartesState'
+import {
+  cartesState,
+  useCachedCartes,
+  useRefreshCartes
+} from '../state/cartesState'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
-const cacheKey = 'carte-v2-cartes'
-
-function getCachedCartes(): CarteDto[] {
-  const cache = localStorage.getItem(cacheKey)
-  return cache ? JSON.parse(cache) : []
-}
-
-function setCachedCartes(cartes: CarteDto[] | undefined) {
-  if (cartes) {
-    localStorage.setItem(cacheKey, JSON.stringify(cartes))
-  } else {
-    localStorage.removeItem(cacheKey)
-  }
-}
-
 let abortController = new AbortController()
 
-const getCartesQuery = selectorFamily<
+const cartesQuery = selectorFamily<
   CarteDto[],
   { school?: SchoolDto; year: number; month: number }
 >({
@@ -76,7 +60,7 @@ const getCartesQuery = selectorFamily<
       }
 
       // expecting cartesState being reset on setting school
-      const cachedCartes = getCachedCartes()
+      const [cachedCartes, setCachedCartes] = useCachedCartes()
       if (cachedCartes.length) {
         const cartes = cachedCartes.filter((carte) => {
           const date = dayjs(carte.date)
@@ -117,7 +101,7 @@ const getCartesQuery = selectorFamily<
     }
 })
 
-const getCartesBetweenQuery = selectorFamily<
+const cartesBetweenQuery = selectorFamily<
   CarteDto[],
   { school?: SchoolDto; startDate: Dayjs; endDate: Dayjs }
 >({
@@ -126,7 +110,7 @@ const getCartesBetweenQuery = selectorFamily<
     ({ school, startDate, endDate }) =>
     ({ get }) => {
       const cartes = get(
-        getCartesQuery({
+        cartesQuery({
           school,
           year: startDate.year(),
           month: startDate.month() + 1
@@ -140,7 +124,7 @@ const getCartesBetweenQuery = selectorFamily<
       return [
         ...cartes,
         ...get(
-          getCartesQuery({
+          cartesQuery({
             school,
             year: endDate.year(),
             month: endDate.month() + 1
@@ -150,7 +134,7 @@ const getCartesBetweenQuery = selectorFamily<
     }
 })
 
-const getCartesObservingQuery = selectorFamily<
+export const cartesObservingQuery = selectorFamily<
   CarteDto[],
   { school?: SchoolDto; date: Dayjs; unit: OpUnitType }
 >({
@@ -161,7 +145,7 @@ const getCartesObservingQuery = selectorFamily<
       const startDate = date.startOf(unit)
       const endDate = date.endOf(unit)
 
-      return get(getCartesBetweenQuery({ school, startDate, endDate })).filter(
+      return get(cartesBetweenQuery({ school, startDate, endDate })).filter(
         (carte) => {
           const cdate = dayjs(carte.date)
           return (
@@ -191,9 +175,9 @@ export default function CartePage() {
       : getNextEatingDay()
   )
   const [unit, setUnit] = useState<OpUnitType>('day')
-  const resetCartes = useSetRecoilState(cartesState)
+  const refreshCartes = useRefreshCartes()
   const cartes = useRecoilValueLoadable(
-    getCartesObservingQuery({ school, date, unit })
+    cartesObservingQuery({ school, date, unit })
   )
   const navigate = useNavigate()
 
@@ -213,9 +197,6 @@ export default function CartePage() {
     setUnit(newUnit)
     toggleDrawer()
   }
-  function handleRefresh() {
-    resetCartes(Date.now())
-  }
 
   return (
     <>
@@ -229,7 +210,7 @@ export default function CartePage() {
             onForward={() => setDate(date.add(1, unit))}
           />
           <Navigator date={date} unit={unit} onChange={setDate} />
-          <IconButton color="inherit" title="새로고침" onClick={handleRefresh}>
+          <IconButton color="inherit" title="새로고침" onClick={refreshCartes}>
             <Refresh />
           </IconButton>
         </Toolbar>
