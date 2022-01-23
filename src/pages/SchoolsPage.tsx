@@ -9,6 +9,7 @@ import {
 } from 'recoil'
 import BackTopBar from '../components/BackTopBar'
 import SchoolList from '../components/SchoolList'
+import { cartesState } from '../state/cartesState'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
@@ -49,6 +50,7 @@ export default function SchoolsPage() {
   const schools = useRecoilValueLoadable(getSchoolsQuery({ query }))
   const refreshSchools = useRecoilRefresher_UNSTABLE(getSchoolsQuery({ query }))
   const setSchool = useSetRecoilState(schoolState)
+  const setCartes = useSetRecoilState(cartesState)
 
   useEffect(() => {
     if (schools.state === 'hasError') {
@@ -58,6 +60,7 @@ export default function SchoolsPage() {
 
   function handleSchoolSelect(school: SchoolDto) {
     setSchool(school)
+    setCartes(undefined)
     navigate('/')
   }
 

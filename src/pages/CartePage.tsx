@@ -28,16 +28,33 @@ import React, { useEffect, useState } from 'react'
 import 'react-day-picker/lib/style.css'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
+  DefaultValue,
   selectorFamily,
   useRecoilRefresher_UNSTABLE,
   useRecoilValue,
-  useRecoilValueLoadable
+  useRecoilValueLoadable,
+  useSetRecoilState
 } from 'recoil'
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
 import Navigator from '../components/Navigator'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
+
+const cacheKey = 'carte-v2-cartes'
+
+function getCachedCartes(): CarteDto[] {
+  const cache = localStorage.getItem(cacheKey)
+  return cache ? JSON.parse(cache) : []
+}
+
+function setCachedCartes(cartes: CarteDto[] | undefined) {
+  if (cartes) {
+    localStorage.setItem(cacheKey, JSON.stringify(cartes))
+  } else {
+    localStorage.removeItem(cacheKey)
+  }
+}
 
 let abortController = new AbortController()
 
@@ -55,6 +72,18 @@ const getCartesQuery = selectorFamily<
 
       if (!school) {
         return []
+      }
+
+      // expecting cartesState being reset on setting school
+      const cachedCartes = getCachedCartes()
+      if (cachedCartes.length) {
+        const cartes = cachedCartes.filter((carte) => {
+          const date = dayjs(carte.date)
+          return date.year() === year && date.month() + 1 === month
+        })
+        if (cartes.length) {
+          return cartes
+        }
       }
 
       function getCarteFetchUrl() {
@@ -76,7 +105,75 @@ const getCartesQuery = selectorFamily<
         throw new Error('data fetch error')
       }
 
-      return response.json()
+      const cartes: CarteDto[] = await response.json()
+      setCachedCartes([
+        ...cachedCartes.filter((carte) => carte.date < cartes[0].date),
+        ...cartes,
+        ...cachedCartes.filter((carte) => carte.date > cartes[0].date)
+      ])
+
+      return cartes
+    },
+  set: () => (_, newValue) => {
+    if (!(newValue instanceof DefaultValue)) throw new Error('not supported')
+
+    setCachedCartes(undefined)
+  }
+})
+
+const getCartesBetweenQuery = selectorFamily<
+  CarteDto[],
+  { school?: SchoolDto; startDate: Dayjs; endDate: Dayjs }
+>({
+  key: 'carte-range',
+  get:
+    ({ school, startDate, endDate }) =>
+    ({ get }) => {
+      const cartes = get(
+        getCartesQuery({
+          school,
+          year: startDate.year(),
+          month: startDate.month() + 1
+        })
+      )
+
+      if (startDate.isSame(endDate, 'month')) {
+        return cartes
+      }
+
+      return [
+        ...cartes,
+        ...get(
+          getCartesQuery({
+            school,
+            year: endDate.year(),
+            month: endDate.month() + 1
+          })
+        )
+      ]
+    },
+  set:
+    ({ school, startDate, endDate }) =>
+    ({ reset }, newValue) => {
+      if (!(newValue instanceof DefaultValue)) throw new Error('not supported')
+
+      reset(
+        getCartesQuery({
+          school,
+          year: startDate.year(),
+          month: startDate.month() + 1
+        })
+      )
+
+      if (!startDate.isSame(endDate, 'month')) {
+        reset(
+          getCartesQuery({
+            school,
+            year: endDate.year(),
+            month: endDate.month() + 1
+          })
+        )
+      }
     }
 })
 
@@ -87,22 +184,33 @@ const getCartesObservingQuery = selectorFamily<
   key: 'carte-ob',
   get:
     ({ school, date, unit }) =>
-    ({ get }) =>
-      get(
-        // TODO: refresh inner selector?
-        getCartesQuery({ school, year: date.year(), month: date.month() + 1 })
-      ).filter((carte) => {
-        const startDate = date.startOf(unit)
-        const endDate = date.endOf(unit)
+    ({ get }) => {
+      const startDate = date.startOf(unit)
+      const endDate = date.endOf(unit)
 
-        const cdate = dayjs(carte.date)
+      return get(getCartesBetweenQuery({ school, startDate, endDate })).filter(
+        (carte) => {
+          const cdate = dayjs(carte.date)
+          return (
+            cdate.isSame(startDate, 'date') ||
+            cdate.isSame(endDate, 'date') ||
+            (cdate.isAfter(startDate, 'date') &&
+              cdate.isBefore(endDate, 'date'))
+          )
+        }
+      )
+    },
+  set:
+    ({ school, date, unit }) =>
+    ({ reset }, newValue) => {
+      if (!(newValue instanceof DefaultValue) && newValue.length)
+        throw new Error('not supported')
 
-        return (
-          cdate.isSame(startDate, 'date') ||
-          cdate.isSame(endDate, 'date') ||
-          (cdate.isAfter(startDate, 'date') && cdate.isBefore(endDate, 'date'))
-        )
-      })
+      const startDate = date.startOf(unit)
+      const endDate = date.endOf(unit)
+
+      reset(getCartesBetweenQuery({ school, startDate, endDate }))
+    }
 })
 
 function getNextEatingDay() {
@@ -127,6 +235,9 @@ export default function CartePage() {
   const refreshCartes = useRecoilRefresher_UNSTABLE(
     getCartesObservingQuery({ school, date, unit })
   )
+  const setCartes = useSetRecoilState(
+    getCartesObservingQuery({ school, date, unit })
+  )
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -145,6 +256,12 @@ export default function CartePage() {
     setUnit(newUnit)
     toggleDrawer()
   }
+  function handleRefresh() {
+    // resetting value is required
+    // refreshCartes does not trigger sub queries to reset
+    setCartes([])
+    refreshCartes()
+  }
 
   return (
     <>
@@ -158,7 +275,7 @@ export default function CartePage() {
             onForward={() => setDate(date.add(1, unit))}
           />
           <Navigator date={date} unit={unit} onChange={setDate} />
-          <IconButton color="inherit" title="새로고침" onClick={refreshCartes}>
+          <IconButton color="inherit" title="새로고침" onClick={handleRefresh}>
             <Refresh />
           </IconButton>
         </Toolbar>
