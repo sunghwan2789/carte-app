@@ -1,6 +1,6 @@
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 import { HighlightsProvider } from './contexts/HighlightsContext'
 import { SchoolProvider } from './contexts/SchoolContext'
 import CartePage from './pages/CartePage'
@@ -13,28 +13,29 @@ import SchoolsPage from './pages/SchoolsPage'
 const theme = createTheme()
 
 export default function App() {
+  const routes = useRoutes([
+    { index: true, element: <CartePage /> },
+    { path: 'schools', element: <SchoolsPage /> },
+    {
+      path: 'highlights',
+      children: [
+        { index: true, element: <HighlightsPage /> },
+        { path: 'edit', element: <HighlightEdit /> },
+        { path: 'edit/:id', element: <HighlightEdit /> }
+      ]
+    },
+    { path: 'info', element: <InfoPage /> },
+    { path: 'feedback', element: <FeedbackPage /> }
+  ])
+
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <HighlightsProvider>
-        <SchoolProvider>
-          <BrowserRouter basename="/">
-            <Switch>
-              <Route exact path="/" component={CartePage} />
-              <Route exact path="/schools" component={SchoolsPage} />
-              <Route exact path="/highlights" component={HighlightsPage} />
-              <Route exact path="/highlights/edit" component={HighlightEdit} />
-              <Route
-                exact
-                path="/highlights/edit/:highlightId"
-                component={HighlightEdit}
-              />
-              <Route exact path="/info" component={InfoPage} />
-              <Route exact path="/feedback" component={FeedbackPage} />
-            </Switch>
-          </BrowserRouter>
-        </SchoolProvider>
-      </HighlightsProvider>
+      <SchoolProvider>
+        <HighlightsProvider>
+          <CssBaseline />
+          {routes}
+        </HighlightsProvider>
+      </SchoolProvider>
     </ThemeProvider>
   )
 }

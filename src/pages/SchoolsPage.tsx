@@ -1,13 +1,13 @@
 import { Input } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import BackTopBar from '../components/BackTopBar'
 import SchoolList from '../components/SchoolList'
 import { useSchool } from '../contexts/SchoolContext'
 import { delay } from '../utils'
 
 export default function SchoolsPage() {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [schools, setSchools] = useState<SchoolDto[]>([])
   const [, setSchool] = useSchool()
@@ -45,7 +45,7 @@ export default function SchoolsPage() {
 
   function handleSchoolSelect(school: SchoolDto) {
     setSchool(school)
-    history.push('/')
+    navigate('/')
   }
 
   return (

@@ -26,7 +26,7 @@ import {
 import dayjs, { Dayjs, OpUnitType } from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import 'react-day-picker/lib/style.css'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
 import Navigator from '../components/Navigator'
@@ -43,7 +43,7 @@ export default function CartePage() {
       : dayjs().startOf('day').add(1, 'day')
   )
   const [navigationUnit, setNavigationUnit] = useState<OpUnitType>('day')
-  const history = useHistory()
+  const navigate = useNavigate()
   const [currentCartes, setCurrentCartes] = useState<CarteDto[]>([])
 
   useEffect(() => {
@@ -124,7 +124,7 @@ export default function CartePage() {
     // TODO: invalidate cartes cache
   }
   function handleNavigate(url: string) {
-    history.push(url)
+    navigate(url)
   }
   function handleUnitChange(unit: OpUnitType) {
     setNavigationUnit(unit)

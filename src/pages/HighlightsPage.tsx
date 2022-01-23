@@ -9,13 +9,13 @@ import {
   Typography
 } from '@mui/material'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import BackTopBar from '../components/BackTopBar'
 import { useHighlights } from '../contexts/HighlightsContext'
 
 export default function HighlightsPage() {
   const [highlights, dispatch] = useHighlights()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   return (
     <>
@@ -31,7 +31,7 @@ export default function HighlightsPage() {
               button
               divider
               key={highlight.id}
-              onClick={() => history.push(`/highlights/edit/${highlight.id}`)}
+              onClick={() => navigate(`edit/${highlight.id}`)}
             >
               <ListItemText
                 primary={<span style={highlight.style}>{highlight.name}</span>}
@@ -57,7 +57,7 @@ export default function HighlightsPage() {
           marginRight: 2
         }}
         color="secondary"
-        onClick={() => history.push('/highlights/edit')}
+        onClick={() => navigate('edit')}
       >
         <Add />
       </Fab>

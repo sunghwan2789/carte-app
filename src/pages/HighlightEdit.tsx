@@ -12,7 +12,7 @@ import {
   Typography
 } from '@mui/material'
 import React, { useMemo, useReducer } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import BackTopBar from '../components/BackTopBar'
 import ColorPickerDialog from '../components/ColorPickerDialog'
 import { useHighlight } from '../contexts/HighlightsContext'
@@ -97,8 +97,8 @@ function reducer(state: EditState, action: EditAction): EditState {
 }
 
 export default function HighlightEdit() {
-  const { highlightId } = useParams()
-  const [highlight, dispatchHighlight] = useHighlight(highlightId)
+  const { id } = useParams()
+  const [highlight, dispatchHighlight] = useHighlight(id)
 
   const [{ name, words, style, colorPickerTarget }, dispatch] = useReducer(
     reducer,
@@ -123,7 +123,7 @@ export default function HighlightEdit() {
     }
   }, [colorPickerTarget])
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   function handleSave(e: any) {
     e.preventDefault()
@@ -147,7 +147,7 @@ export default function HighlightEdit() {
         }
       })
     }
-    history.goBack()
+    navigate(-1)
   }
 
   return (
