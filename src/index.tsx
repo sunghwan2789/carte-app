@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
+import { RecoilRoot } from 'recoil'
 import App from './App'
 
 const rootElement = document.getElementById('root')
@@ -8,9 +9,12 @@ if (!rootElement) throw new Error('Failed to find the root element')
 
 const root = ReactDOM.createRoot(rootElement)
 root.render(
-  <React.StrictMode>
-    <BrowserRouter basename="/">
+  // disable strictmode for recoil getters
+  // <React.StrictMode>
+  <BrowserRouter basename="/">
+    <RecoilRoot>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>
+    </RecoilRoot>
+  </BrowserRouter>
+  // </React.StrictMode>
 )

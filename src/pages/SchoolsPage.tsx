@@ -1,16 +1,17 @@
 import { Input } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
 import BackTopBar from '../components/BackTopBar'
 import SchoolList from '../components/SchoolList'
-import { useSchool } from '../contexts/SchoolContext'
+import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
 export default function SchoolsPage() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [schools, setSchools] = useState<SchoolDto[]>([])
-  const [, setSchool] = useSchool()
+  const setSchool = useSetRecoilState(schoolState)
 
   useEffect(() => {
     let isCanceled = false

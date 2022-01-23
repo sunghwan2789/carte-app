@@ -27,14 +27,15 @@ import dayjs, { Dayjs, OpUnitType } from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import 'react-day-picker/lib/style.css'
 import { useNavigate } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
 import Navigator from '../components/Navigator'
-import { useSchool } from '../contexts/SchoolContext'
+import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
 export default function CartePage() {
-  const [school] = useSchool()
+  const school = useRecoilValue(schoolState)
   const [isDrawerOpened, setIsDrawerOpened] = useState(!school)
   const [cartes, setCartes] = useState<CarteDto[]>([])
   const [currentDate, setCurrentDate] = useState(

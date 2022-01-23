@@ -2,7 +2,6 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
 import React from 'react'
 import { useRoutes } from 'react-router-dom'
 import { HighlightsProvider } from './contexts/HighlightsContext'
-import { SchoolProvider } from './contexts/SchoolContext'
 import CartePage from './pages/CartePage'
 import FeedbackPage from './pages/FeedbackPage'
 import HighlightEdit from './pages/HighlightEdit'
@@ -30,12 +29,10 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SchoolProvider>
-        <HighlightsProvider>
-          <CssBaseline />
-          {routes}
-        </HighlightsProvider>
-      </SchoolProvider>
+      <HighlightsProvider>
+        <CssBaseline />
+        {routes}
+      </HighlightsProvider>
     </ThemeProvider>
   )
 }
