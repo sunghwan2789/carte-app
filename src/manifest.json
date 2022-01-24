@@ -1,13 +1,13 @@
 {
-  "short_name": "식단표",
   "name": "전국 학교 식단표",
+  "short_name": "식단표",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "assets/icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }
   ],
-  "start_url": ".",
-  "display": "standalone"
+  "display": "standalone",
+  "start_url": "."
 }

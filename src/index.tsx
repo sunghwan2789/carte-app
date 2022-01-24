@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import App from './App'
+import registerServiceWorker from './registerServiceWorker'
 
 const rootElement = document.getElementById('root')
 if (!rootElement) throw new Error('Failed to find the root element')
@@ -18,3 +19,5 @@ root.render(
   </BrowserRouter>
   // </React.StrictMode>
 )
+
+registerServiceWorker()

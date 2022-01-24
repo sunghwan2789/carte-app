@@ -3,9 +3,10 @@
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
-    "target": "ES2019",
-    "jsx": "react",
-    "types": ["react/next", "react-dom/next"]
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "preserve",
+    "types": ["react/next", "react-dom/next", "node"]
   },
   "exclude": ["node_modules", "build", ".parcel-cache"],
   "include": ["src/**/*"]
