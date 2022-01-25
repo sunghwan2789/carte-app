@@ -6,8 +6,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "jsx": "preserve",
+    "lib": ["WebWorker", "ESNext", "DOM"],
     "types": ["react/next", "react-dom/next", "node"]
   },
-  "exclude": ["node_modules", "build", ".parcel-cache"],
   "include": ["src/**/*"]
 }
