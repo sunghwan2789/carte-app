@@ -31,11 +31,7 @@ import { selectorFamily, useRecoilValue, useRecoilValueLoadable } from 'recoil'
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
 import Navigator from '../components/Navigator'
-import {
-  cartesState,
-  useCachedCartes,
-  useRefreshCartes
-} from '../state/cartesState'
+import { cartesRefreshToken, useRefreshCartes } from '../state/cartesState'
 import { schoolState } from '../state/schoolState'
 import { delay } from '../utils'
 
@@ -49,7 +45,7 @@ const cartesQuery = selectorFamily<
   get:
     ({ school, year, month }) =>
     async ({ get }) => {
-      get(cartesState)
+      get(cartesRefreshToken)
 
       abortController.abort()
       const fetchController = new AbortController()
@@ -57,18 +53,6 @@ const cartesQuery = selectorFamily<
 
       if (!school) {
         return []
-      }
-
-      // expecting cartesState being reset on setting school
-      const [cachedCartes, setCachedCartes] = useCachedCartes()
-      if (cachedCartes.length) {
-        const cartes = cachedCartes.filter((carte) => {
-          const date = dayjs(carte.date)
-          return date.year() === year && date.month() + 1 === month
-        })
-        if (cartes.length) {
-          return cartes
-        }
       }
 
       function getCarteFetchUrl() {
@@ -90,14 +74,7 @@ const cartesQuery = selectorFamily<
         throw new Error('data fetch error')
       }
 
-      const cartes: CarteDto[] = await response.json()
-      setCachedCartes([
-        ...cachedCartes.filter((carte) => carte.date < cartes[0].date),
-        ...cartes,
-        ...cachedCartes.filter((carte) => carte.date > cartes[0].date)
-      ])
-
-      return cartes
+      return response.json()
     }
 })
 
