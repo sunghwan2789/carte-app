@@ -11,6 +11,25 @@ function init(): SchoolState {
   if (cache) {
     return JSON.parse(cache)
   }
+
+  const v1Cache = localStorage.getItem('carte-v1-school-store')
+  if (v1Cache) {
+    const v1Transform = ({
+      address,
+      code: school_code,
+      courseCode: course_code,
+      domainCode: domain_code,
+      name
+    }: any) => ({
+      address,
+      course_code,
+      domain_code,
+      name,
+      school_code
+    })
+    return v1Transform(JSON.parse(v1Cache).selectedSchool)
+  }
+
   return initialState
 }
 

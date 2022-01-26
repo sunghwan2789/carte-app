@@ -31,6 +31,12 @@ function init(): HighlightsState {
   if (cache) {
     return JSON.parse(cache)
   }
+
+  const v1Cache = localStorage.getItem('carte-v1-highlight-store')
+  if (v1Cache) {
+    return JSON.parse(v1Cache).highlights
+  }
+
   return initialState
 }
 
