@@ -39,3 +39,13 @@ self.addEventListener('fetch', (e) =>
       .catch(() => caches.match('index.html') as Promise<Response>)
   )
 )
+
+self.addEventListener('message', async (e) => {
+  const { type } = e.data
+  switch (type) {
+    case 'refresh-cartes':
+      await caches.delete(apiCacheKey)
+      e.ports[0].postMessage('💖')
+      break
+  }
+})
