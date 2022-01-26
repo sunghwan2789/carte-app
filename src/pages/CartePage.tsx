@@ -24,9 +24,9 @@ import {
   Toolbar
 } from '@mui/material'
 import dayjs, { Dayjs, OpUnitType } from 'dayjs'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import 'react-day-picker/lib/style.css'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { selectorFamily, useRecoilValue, useRecoilValueLoadable } from 'recoil'
 import CarteDay from '../components/CarteDay'
 import NavigateButtons from '../components/NavigateButtons'
@@ -168,27 +168,13 @@ function getNextEatingDay() {
 export default function CartePage() {
   const school = useRecoilValue(schoolState)
   const [isDrawerOpened, setIsDrawerOpened] = useState(!school)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [date, setDate] = useState(
-    searchParams.has('date')
-      ? dayjs(searchParams.get('date'))
-      : getNextEatingDay()
-  )
+  const [date, setDate] = useState(getNextEatingDay())
   const [unit, setUnit] = useState<OpUnitType>('day')
   const refreshCartes = useRefreshCartes()
   const cartes = useRecoilValueLoadable(
     cartesObservingQuery({ school, date, unit })
   )
   const navigate = useNavigate()
-
-  useEffect(() => {
-    setSearchParams(
-      date.isSame(getNextEatingDay(), 'date')
-        ? []
-        : [['date', `${date.year()}-${date.month() + 1}-${date.date()}`]],
-      { replace: true }
-    )
-  }, [date, setSearchParams])
 
   function toggleDrawer() {
     setIsDrawerOpened(!isDrawerOpened)
